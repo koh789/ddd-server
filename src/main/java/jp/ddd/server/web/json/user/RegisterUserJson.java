@@ -1,6 +1,6 @@
 package jp.ddd.server.web.json.user;
 
-import jp.ddd.server.web.json.BaseJson;
+import jp.ddd.server.web.json.Json;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RegisterUserJson extends BaseJson {
+public class RegisterUserJson implements Json {
   private static final long serialVersionUID = 1L;
 
   private Integer userId;

@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import jp.ddd.server.utils.Msg;
-import jp.ddd.server.web.form.BaseForm;
+import jp.ddd.server.web.form.Form;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MessageForm extends BaseForm {
+public class MessageForm implements Form {
 
   private static final long serialVersionUID = 1L;
 

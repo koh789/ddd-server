@@ -22,53 +22,54 @@ import jp.ddd.server.domain.entity.SesUser;
  */
 @Component
 public class VisitorManager {
-  private static final Logger log = LoggerFactory.getLogger(Requests.class);
+    private static final Logger log = LoggerFactory.getLogger(Requests.class);
 
-  @Autowired
-  private SesUserRepository sesUserRepository;
-  @Autowired
-  private SesAdminRepository sesAdminRepository;
+    @Autowired
+    private SesUserRepository sesUserRepository;
+    @Autowired
+    private SesAdminRepository sesAdminRepository;
 
-  public void loginUser(String sid, SesUser sesUser) {
-    sesUserRepository.save(sid, sesUser);
-  }
-
-  public void loginAdmin(String sid, SesAdmin sesAdmin) {
-    sesAdminRepository.save(sid, sesAdmin);
-  }
-
-  /**
-   * ユーザのvisitor情報のみキャッシュします。
-   */
-  public void store(VisitParam param) {
-    SesUser storedEntity = sesUserRepository.get(param.getSessionId());
-
-    if (storedEntity == null) {//ストア済みがない場合新規でvisitor情報作成。
-      sesUserRepository.save(param.getSessionId(), EntityFuncs.VISITOR_TO_SES_USER.apply(param));
-    } else {
-      SesUser entity = EntityFuncs.VISITOR_AND_SES_USER_TO_SES_USER.apply(param, storedEntity);
-      sesUserRepository.save(entity.getSessionId(), entity);
+    public void loginUser(String sid, SesUser sesUser) {
+        sesUserRepository.save(sid, sesUser);
     }
-  }
 
-  public Optional<SesUser> getSesUserOpt(String sid) {
-    return sesUserRepository.getOpt(sid);
-  }
-
-  public Optional<SesAdmin> getSesAdminOpt(String sid) {
-    return sesAdminRepository.getOpt(sid);
-  }
-
-  public boolean isLoginUser(String sid) {
-    Optional<Boolean> isLoginOpt = getSesUserOpt(sid).map(sesUser -> sesUser.isLogin());
-    if (isLoginOpt.isPresent()) {
-      return isLoginOpt.get();
-    } else {
-      return false;
+    public void loginAdmin(String sid, SesAdmin sesAdmin) {
+        sesAdminRepository.save(sid, sesAdmin);
     }
-  }
 
-  public void logoutUser(String sid) {
-    sesUserRepository.del(sid);
-  }
+    /**
+     * ユーザのvisitor情報のみキャッシュします。
+     */
+    public void store(VisitParam param) {
+        sesUserRepository.getOpt(param.getSessionId()).map(savedEntity -> {
+            SesUser entity = EntityFuncs.VISITOR_AND_SES_USER_TO_SES_USER.apply(param, savedEntity);
+            sesUserRepository.save(entity.getSessionId(), entity);
+            return entity;
+        }).orElseGet(() -> {
+            SesUser entity = EntityFuncs.VISITOR_TO_SES_USER.apply(param);
+            sesUserRepository.save(param.getSessionId(), EntityFuncs.VISITOR_TO_SES_USER.apply(param));
+            return entity;
+        });
+    }
+
+    public Optional<SesUser> getSesUserOpt(String sid) {
+        return sesUserRepository.getOpt(sid);
+    }
+
+    public Optional<SesAdmin> getSesAdminOpt(String sid) {
+        return sesAdminRepository.getOpt(sid);
+    }
+
+    public boolean isLoginUser(String sid) {
+        Optional<Boolean> isLoginOpt = getSesUserOpt(sid).map(sesUser -> sesUser.isLogin());
+        if (isLoginOpt.isPresent()) {
+            return isLoginOpt.get();
+        } else {
+            return false;
+        }
+    }
+
+    public void logoutUser(String sid) {
+        sesUserRepository.del(sid);
+    }
 }

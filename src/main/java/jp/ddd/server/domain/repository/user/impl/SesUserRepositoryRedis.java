@@ -18,27 +18,22 @@ import jp.ddd.server.domain.entity.SesUser;
 @Repository
 public class SesUserRepositoryRedis extends RedisMapper<SesUser> implements SesUserRepository {
 
-  private String nameSpace = "SesUserRepositoryRedis";
+    private String nameSpace = "SesUserRepositoryRedis";
 
-  @Override
-  public void save(String sid, SesUser sesUser) {
-    Key key = generateStrKey(SesUser.class, nameSpace, sid);
-    saveValue(key, sesUser);
-  }
+    @Override
+    public void save(String sid, SesUser sesUser) {
+        Key key = generateStrKey(SesUser.class, nameSpace, sid);
+        saveValue(key, sesUser);
+    }
 
-  @Override
-  public SesUser get(String sid) {
-    return getValue(generateStrKey(SesUser.class, nameSpace, sid));
-  }
+    @Override
+    public Optional<SesUser> getOpt(String sid) {
+        Key key = generateStrKey(SesUser.class, nameSpace, sid);
+        return Optional.ofNullable(getValue(key));
+    }
 
-  @Override
-  public Optional<SesUser> getOpt(String sid) {
-    Key key = generateStrKey(SesUser.class, nameSpace, sid);
-    return Optional.ofNullable(getValue(key));
-  }
-
-  @Override
-  public void del(String sid) {
-    template.delete(generateStrKey(SesUser.class, nameSpace, sid));
-  }
+    @Override
+    public void del(String sid) {
+        template.delete(generateStrKey(SesUser.class, nameSpace, sid));
+    }
 }

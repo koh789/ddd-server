@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 import jp.ddd.server.utils.Msg;
 import jp.ddd.server.utils.Regex;
-import jp.ddd.server.web.form.BaseForm;
+import jp.ddd.server.web.form.Form;
 import lombok.Data;
 
 /**
@@ -15,7 +15,7 @@ import lombok.Data;
  * @author noguchi_kohei
  */
 @Data
-public class LoginForm extends BaseForm {
+public class LoginForm implements Form {
   private static final long serialVersionUID = 1L;
 
   @NotNull(message = Msg.NOT_NULL)

@@ -14,8 +14,6 @@ public interface SesUserRepository {
 
   void save(String sid, SesUser sesUser);
 
-  SesUser get(String sid);
-
   Optional<SesUser> getOpt(String sid);
 
   void del(String sid);

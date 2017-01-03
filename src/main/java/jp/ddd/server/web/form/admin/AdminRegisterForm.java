@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Email;
 
 import jp.ddd.server.utils.Msg;
 import jp.ddd.server.utils.Regex;
-import jp.ddd.server.web.form.BaseForm;
+import jp.ddd.server.web.form.Form;
 import lombok.Data;
 
 /**
@@ -19,7 +19,7 @@ import lombok.Data;
  * @author noguchi_kohei
  */
 @Data
-public class AdminRegisterForm extends BaseForm {
+public class AdminRegisterForm implements Form {
   private static final long serialVersionUID = 1L;
 
   @NotNull(message = Msg.NOT_NULL)

@@ -4,14 +4,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import jp.ddd.server.utils.Regex;
-import jp.ddd.server.web.form.BaseForm;
+import jp.ddd.server.web.form.Form;
 
 /**
  * ログインフォーム
  *
  * @author noguchi_kohei
  */
-public class LoginForm extends BaseForm {
+public class LoginForm implements Form {
   private static final long serialVersionUID = 1L;
 
   @NotNull(message = "入力必須です。")
