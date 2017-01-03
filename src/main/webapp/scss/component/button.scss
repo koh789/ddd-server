@@ -1,0 +1,12 @@
+@mixin btnShadow($width:120px, $color: #FFFFFF , $background: #0099FF, $shadow: #0066CC) {
+  border: none;
+  display: block;
+  padding: $width/8 $width/6;
+  font-size: $width/8;
+  width: $width;
+  font-weight: bold;
+  border-radius: $width/12;
+  color: $color;
+  background: $background;
+  box-shadow: 0px 3px 0px #0066CC;
+}

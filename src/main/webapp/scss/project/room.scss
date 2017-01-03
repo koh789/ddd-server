@@ -1,0 +1,107 @@
+@import "utility/layout.scss";
+@import "utility/font.scss";
+@import "component/button.scss";
+
+/* タイプセレクタは使わない */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background: #111111;
+  font-family: 'Didact Gothic', sans-serif;
+  font-size: 12pt;
+  font-weight: 200;
+  color: #FFF;
+}
+
+.p-room_wrapper {
+  display: flex;
+  height: 100%;
+  /*********************************************************************************/
+  /* roomList                                                                   */
+  /*********************************************************************************/
+  .p-room_list {
+    flex: 1;
+    flex: 0 0 20%;
+    border: 2px solid rgba(187, 192, 201, 1);
+    border-radius: 2px;
+    max-width: 420px;
+    min-width: 320px;
+    background: #EEEEEE none;
+    overflow: scroll;
+    overflow-x: hidden;
+
+    .p-room_list_navi {
+      border-bottom: 1px solid rgba(0, 0, 0, .10);
+      box-sizing: border-box;
+      height: 50px;
+      justify-content: space-between;
+      padding: 8px;
+      width: 100%;
+      .p-room_list_navi_title {
+        @extend .u-fsml;
+        margin: 7px 0 0;
+        color: #000022;
+        overflow: hidden;
+        text-align: center;
+      }
+    }
+
+    .p-room_list_timeline {
+      display: block;
+      @extend .u-pls;
+      ul {
+        .p-room_box {
+          position: relative;
+          height: 72px;
+          padding: 8px 0px;
+          border-bottom: solid 1px rgba(192, 192, 200, 1);
+          .p-room_box_sbj {
+            display: flex;
+            color: #444444;
+            .p-room_box_name {
+              flex: 1;
+              @extend .u-f_wsnowrap_ofhid;
+              text-overflow: ellipsis;
+              @extend .u-fsm;
+            }
+            .p-room_box_date {
+              display: box;
+              @extend .u-fsmini;
+            }
+          }
+          .p-room_box_content {
+            display: flex;
+            .p-room_box_message {
+              margin-right: 24px;
+              font-size: 14px;
+              color: rgba(153, 153, 153, 1);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /*********************************************************************************/
+  /* messageList                                                                   */
+  /*********************************************************************************/
+
+  .p-message_wrapper {
+    flex: 2;
+    @include bgImgRock();
+    .p-container {
+      padding-top: 120px;
+      text-align: center;
+      .p-title h2 {
+        font-size: 4em;
+        .p-byline {
+          font-size: 2em;
+        }
+      }
+    }
+  }
+}

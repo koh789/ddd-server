@@ -1,0 +1,9 @@
+@mixin inputLogin($width:300px, $pad:15px, $bgCol:rgba(221,221,221,1), $inCol:rgba(0,0,51,1)) {
+  background-color: $bgCol;
+  color: $inCol;
+  border: none;
+  display: block;
+  width: $width;
+  padding: $pad;
+  border-radius: 10px;
+}

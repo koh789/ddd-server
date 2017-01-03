@@ -1,0 +1,56 @@
+@mixin direct($t, $r, $b, $l) {
+  top: $t;
+  right: $r;
+  bottom: $b;
+  left: $l;
+}
+
+html, body {
+  height: 100%;
+}
+
+.p-login_header {
+  width: 100%;
+  max-height: 80px;
+  min-height: 60px;
+  height: 70px;
+  background: #111111;
+  position: relative;
+  display: flex;
+
+  .p-header_logo {
+    flex: 0 0 40%;
+    justify-content: flex-start;
+    padding: 0% 5%;
+    h3 {
+      color: white;
+      font-size: 20px;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  .p-header_menu {
+    flex: 0 0 50%;
+    ul {
+      padding: 1% 5%;
+      text-align: right;
+      li {
+        display: inline-flex;
+        margin: 0px 10px;
+        a {
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          text-decoration: none;
+          font-size: 15px;
+          color: white;
+          span:hover {
+            border: 2px solid white;
+            border-radius: 12px/12px;
+            padding: 1.0em;
+          }
+        }
+      }
+    }
+  }
+}

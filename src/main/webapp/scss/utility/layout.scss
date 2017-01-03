@@ -1,0 +1,175 @@
+@mixin bgImgRock {
+  position: relative;
+  padding: 70px 0px 120px 0px;
+  background: #111111 url("../img/header-bg.jpg") no-repeat center;
+  background-size: cover;
+}
+
+.u-ms { // Small
+  margin: 8px;
+}
+
+.u-mm { // Medium
+  margin: 16px;
+}
+
+.u-ml { // Large
+  margin: 24px;
+}
+
+.u-mg { // Giga
+  margin: 32px;
+}
+
+.u-mts { // Small
+  margin-top: 8px;
+}
+
+.u-mtm { // Medium
+  margin-top: 16px;
+}
+
+.u-mtl { // Large
+  margin-top: 24px;
+}
+
+.u-mtg { // Giga
+  margin-top: 32px;
+}
+
+.u-mbs { // Small
+  margin-bottom: 8px;
+}
+
+.u-mbm { // Medium
+  margin-bottom: 16px;
+}
+
+.u-mbl { // Large
+  margin-bottom: 24px;
+}
+
+.u-mbg { // Giga
+  margin-bottom: 32px;
+}
+
+.u-mls { // Small
+  margin-left: 8px;
+}
+
+.u-mlm { // Medium
+  margin-left: 16px;
+}
+
+.u-mll { // Large
+  margin-left: 24px;
+}
+
+.u-mlg { // Giga
+  margin-left: 32px;
+}
+
+.u-mrs { // Small
+  margin-right: 8px;
+}
+
+.u-mrm { // Medium
+  margin-right: 16px;
+}
+
+.u-mrl { // Large
+  margin-right: 24px;
+}
+
+.u-mrg { // Giga
+  margin-right: 32px;
+}
+
+.u-mlrAuto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.u-ps { // Small
+  padding: 8px;
+}
+
+.u-pm { // Medium
+  padding: 16px;
+}
+
+.u-pl { // Large
+  padding: 24px;
+}
+
+.u-pg { // Giga
+  padding: 32px;
+}
+
+.u-pts { // Small
+  padding-top: 8px;
+}
+
+.u-ptm { // Medium
+  padding-top: 16px;
+}
+
+.u-ptl { // Large
+  padding-top: 24px;
+}
+
+.u-ptg { // Giga
+  padding-top: 32px;
+}
+
+.u-pbs { // Small
+  padding-bottom: 8px;
+}
+
+.u-pbm { // Medium
+  padding-bottom: 16px;
+}
+
+.u-pbl { // Large
+  padding-bottom: 24px;
+}
+
+.u-pbg { // Giga
+  padding-bottom: 32px;
+}
+
+.u-pls { // Small
+  padding-left: 8px;
+}
+
+.u-plm { // Medium
+  padding-left: 16px;
+}
+
+.u-pll { // Large
+  padding-left: 24px;
+}
+
+.u-plg { // Giga
+  padding-left: 32px;
+}
+
+.u-prs { // Small
+  padding-right: 8px;
+}
+
+.u-prm { // Medium
+  padding-right: 16px;
+}
+
+.u-prl { // Large
+  padding-right: 24px;
+}
+
+.u-prg { // Giga
+  padding-right: 32px;
+}
+
+.u-list_none {
+  list-style-type: none;
+}
