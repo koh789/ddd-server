@@ -19,26 +19,23 @@ import lombok.Data;
 public class BaseEntity implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "deleted")
-  private byte deleted;
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_at")
+  private Date createAt;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "create_time")
-  private Date createTime;
-
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "update_time")
-  private Date updateTime;
+  @Column(name = "update_at")
+  private Date updateAt;
 
   @PrePersist
   public void setPrePersist() {
     this.deleted = Deleted.PUBLIC.getCode();
-    this.createTime = Dates.now();
-    this.updateTime = Dates.now();
+    this.createAt = Dates.now();
+    this.updateAt = Dates.now();
   }
 
   @PreUpdate
   public void setPreUpdate() {
-    this.updateTime = Dates.now();
+    this.updateAt = Dates.now();
   }
 }

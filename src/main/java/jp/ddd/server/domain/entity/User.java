@@ -1,52 +1,40 @@
 package jp.ddd.server.domain.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-
 import jp.ddd.server.domain.entity.base.BaseEntity;
 import lombok.Data;
+
+import javax.persistence.*;
 
 /**
  * The persistent class for the user database table.
  */
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @NamedQueries({// 
   @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),//
-  @NamedQuery(//
-    name = "User.findByIdList",//
+  @NamedQuery(name = "User.findByIdList",//
     query = "SELECT u FROM User u WHERE u.id in (:idList) AND u.deleted = :deleted")//
 })
 public class User extends BaseEntity {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-  @Lob
-  private String discription;
+    private byte deleted;
 
-  @Column(name = "e_mail")
-  private String eMail;
+    private String email;
 
-  @Column(name = "login_id")
-  private String loginId;
+    @Column(name = "login_id")
+    private String loginId;
 
-  @Column(name = "login_id_type")
-  private byte loginIdType;
+    private String name;
 
-  private String name;
+    private String pass;
 
-  private String password;
-
-  private String tel;
+    private String tel;
 
 }

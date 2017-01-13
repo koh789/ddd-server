@@ -45,8 +45,12 @@ public class MessageRead extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
+  @Column(name = "deleted")
+  private byte deleted;
+
   @Temporal(TemporalType.TIMESTAMP)
-  private Date date;
+  @Column(name="read_dt")
+  private Date readDt;
 
   @Column(name = "message_id")
   private Long messageId;
