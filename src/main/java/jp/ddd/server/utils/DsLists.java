@@ -12,66 +12,66 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 import org.springframework.util.CollectionUtils;
 
-public class PsLists {
+public class DsLists {
 
-  public static <T> ImmutableList<T> toImt(List<T> list) {
-    return Lists.immutable.ofAll(list);
-  }
+    public static <T> ImmutableList<T> toImt(List<T> list) {
+        return Lists.immutable.ofAll(list);
+    }
 
-  public static <T> MutableList<T> toMt(List<T> list) {
-    return isEmpty(list) ? Lists.mutable.empty() : Lists.mutable.ofAll(list);
-  }
+    public static <T> MutableList<T> toMt(List<T> list) {
+        return isEmpty(list) ? Lists.mutable.empty() : Lists.mutable.ofAll(list);
+    }
 
-  public static <T> ImmutableList<T> toImt(ImmutableList<Optional<T>> objOptList) {
+    public static <T> ImmutableList<T> toImt(ImmutableList<Optional<T>> objOptList) {
 
-    return objOptList.flatCollect(objOpt -> {
-      if (objOpt.isPresent()) {
-        return Lists.immutable.of(objOpt.get());
-      } else {
-        return Lists.immutable.empty();
-      }
-    });
-  }
+        return objOptList.flatCollect(objOpt -> {
+            if (objOpt.isPresent()) {
+                return Lists.immutable.of(objOpt.get());
+            } else {
+                return Lists.immutable.empty();
+            }
+        });
+    }
 
-  /**
-   * MutableListを作成する際はnullチェックが必要なので注意。
-   */
-  public static <T> List<T> toList(MutableList<T> mtList) {
+    /**
+     * MutableListを作成する際はnullチェックが必要なので注意。
+     */
+    public static <T> List<T> toList(MutableList<T> mtList) {
 
-    return mtList.stream().collect(Collectors.toList());
-  }
+        return mtList.stream().collect(Collectors.toList());
+    }
 
-  public static <T> List<T> toList(ImmutableList<T> imtList) {
-    return imtList.toList().stream().collect(Collectors.toList());
-  }
+    public static <T> List<T> toList(ImmutableList<T> imtList) {
+        return imtList.toList().stream().collect(Collectors.toList());
+    }
 
-  public static boolean isEmpty(Collection<?> collection) {
-    return CollectionUtils.isEmpty(collection);
-  }
+    public static boolean isEmpty(Collection<?> collection) {
+        return CollectionUtils.isEmpty(collection);
+    }
 
-  public static boolean isNotEmpty(Collection<?> collection) {
-    return !CollectionUtils.isEmpty(collection);
-  }
+    public static boolean isNotEmpty(Collection<?> collection) {
+        return !CollectionUtils.isEmpty(collection);
+    }
 
-  public static boolean isEmpty(Map<?, ?> map) {
-    return CollectionUtils.isEmpty(map);
-  }
+    public static boolean isEmpty(Map<?, ?> map) {
+        return CollectionUtils.isEmpty(map);
+    }
 
-  public static boolean isNotEmpty(Map<?, ?> map) {
-    return !CollectionUtils.isEmpty(map);
-  }
+    public static boolean isNotEmpty(Map<?, ?> map) {
+        return !CollectionUtils.isEmpty(map);
+    }
 
-  public static <T> Stream<T> toStm(Stream<Optional<T>> objOptStm) {
-    return objOptStm.flatMap(objOpt -> {
-      if (objOpt.isPresent()) {
-        return Stream.of(objOpt.get());
-      } else {
-        return Stream.empty();
-      }
-    });
-  }
+    public static <T> Stream<T> toStm(Stream<Optional<T>> objOptStm) {
+        return objOptStm.flatMap(objOpt -> {
+            if (objOpt.isPresent()) {
+                return Stream.of(objOpt.get());
+            } else {
+                return Stream.empty();
+            }
+        });
+    }
 
-  public static <T> Stream<T> toStm(Optional<Stream<T>> objStmOpt) {
-    return objStmOpt.orElse(Stream.empty());
-  }
+    public static <T> Stream<T> toStm(Optional<Stream<T>> objStmOpt) {
+        return objStmOpt.orElse(Stream.empty());
+    }
 }

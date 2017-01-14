@@ -1,4 +1,4 @@
-package jp.ddd.server.domain.entity.base;
+package jp.ddd.server.redis.data;
 
 /**
  * 訪問者を表現するマーカーインターフェースです。

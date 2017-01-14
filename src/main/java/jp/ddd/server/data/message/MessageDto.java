@@ -12,7 +12,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 import jp.ddd.server.data.user.UserDto;
 import jp.ddd.server.domain.entity.MessageRead;
-import jp.ddd.server.utils.PsLists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,68 +25,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MessageDto extends BaseDto {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private Integer roomId;
+    private Integer roomId;
 
-  private Long messageId;
+    private Long messageId;
 
-  private Integer messageUserId;
+    private Integer messageUserId;
 
-  private String messageUserName;
+    private String messageUserName;
 
-  private String messageLoginId;
+    private String messageLoginId;
 
-  private String content;
+    private String content;
 
-  private Date messageDate;
+    private Date messageDate;
 
-  private List<ReadDto> readList;
+    private List<ReadDto> readList;
 
-  /**
-   * messageDtoの既読情報のみ作成します。
-   */
-  public MessageDto createRead(Stream<MessageRead> messageReadStm, Map<Integer, UserDto> userMap) {
-
-    List<ReadDto> readList = messageReadStm.map(mrEnt -> {
-
-      ReadDto readDto = new ReadDto();
-      readDto.setMesseageId(mrEnt.getMessageId());
-      readDto.setReadUserId(mrEnt.getUserId());
-      readDto.setReadDate(Dates.toString(mrEnt.getDate()));
-
-      UserDto userDto = userMap.get(mrEnt.getUserId());
-      if (userDto != null) {
-        readDto.setReadUserName(userDto.getName());
-        readDto.setReadLoginId(userDto.getLoginId());
-      }
-
-      return readDto;
-    }).collect(Collectors.toList());
-    this.setReadList(readList);
-    return this;
-  }
-
-  /**
-   * messageDtoの既読情報のみ作成します。
-   */
-  public MessageDto createRead(ImmutableList<MessageRead> messageReadList, Map<Integer, UserDto> userMap) {
-
-    ImmutableList<ReadDto> readList = messageReadList.collect(mrEt -> {
-      ReadDto readDto = new ReadDto();
-      readDto.setMesseageId(mrEt.getMessageId());
-      readDto.setReadUserId(mrEt.getUserId());
-      readDto.setReadDate(Dates.toString(mrEt.getDate()));
-
-      UserDto userDto = userMap.get(mrEt.getUserId());
-      if (userDto != null) {
-        readDto.setReadUserName(userDto.getName());
-        readDto.setReadLoginId(userDto.getLoginId());
-      }
-
-      return readDto;
-    });
-    this.setReadList(PsLists.toList(readList));
-    return this;
-  }
 }

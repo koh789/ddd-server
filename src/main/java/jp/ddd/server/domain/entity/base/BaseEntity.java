@@ -29,7 +29,6 @@ public class BaseEntity implements Serializable {
 
   @PrePersist
   public void setPrePersist() {
-    this.deleted = Deleted.PUBLIC.getCode();
     this.createAt = Dates.now();
     this.updateAt = Dates.now();
   }

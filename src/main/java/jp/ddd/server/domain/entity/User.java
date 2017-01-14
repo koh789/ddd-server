@@ -1,7 +1,9 @@
 package jp.ddd.server.domain.entity;
 
 import jp.ddd.server.domain.entity.base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
