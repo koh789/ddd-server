@@ -1,8 +1,6 @@
-package jp.ddd.server.web.json;
+package jp.ddd.server.web.data;
 
 import java.io.Serializable;
-
-import lombok.Data;
 
 /**
  * APIのレスポンスを表現するマーカーインターフェースです。
