@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import jp.ddd.server.utils.Cookies;
-import jp.ddd.server.utils.Requests;
+import jp.ddd.server.other.utils.Cookies;
+import jp.ddd.server.other.utils.Requests;
 
 public class IOInterceptor extends HandlerInterceptorAdapter {
   private final Logger log = LoggerFactory.getLogger(this.getClass());

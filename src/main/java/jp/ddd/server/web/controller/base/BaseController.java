@@ -5,16 +5,16 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ddd.server.exception.IllegalArgumentException;
+import jp.ddd.server.other.exception.IllegalArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import jp.ddd.server.exception.AccessPermissonException;
-import jp.ddd.server.exception.AuthException;
-import jp.ddd.server.exception.CoreException;
-import jp.ddd.server.exception.NotFoundException;
+import jp.ddd.server.other.exception.AccessPermissonException;
+import jp.ddd.server.other.exception.AuthException;
+import jp.ddd.server.other.exception.CoreException;
+import jp.ddd.server.other.exception.NotFoundException;
 
 /**
  * jsonAPI用エラーハンドラー基底クラス。
