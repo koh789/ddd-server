@@ -467,7 +467,6 @@ public final class Dates {
    * メソッドが呼び出された日時から{amount}時間後のlong<br>
    * 返り値は、UTC秒のlong型(UTCミリ秒ではないので注意)
    *
-   * @param 何時間活かしておくか amount
    * @return {amount}日後のUTC long
    */
   public static long createXtInUTCWithHour(int amount) {
@@ -486,8 +485,6 @@ public final class Dates {
    * ExpirationTimeを生成する<br>
    * メソッドが呼び出された日時から{amount}日後の23時59分59秒のlong<br>
    * 返り値は、UTC秒のlong型(UTCミリ秒ではないので注意)
-   *
-   * @param 何日間活かしておくか amount
    * @return {amount}日後のUTC long
    */
   public static long createXtInUTC(int amount) {
@@ -504,8 +501,7 @@ public final class Dates {
   /**
    * ExpirationTimeを生成する 指定した{date}から{amount}日後のlong 返り値は、UTC秒のlong型(UTCミリ秒ではないので注意)
    *
-   * @param 基準日        date
-   * @param 何日間活かしておくか amount
+   * @param  date 基準日
    * @return {amount}日後のUTC long
    */
   public static long createXtInUTC(Date date, int amount) {

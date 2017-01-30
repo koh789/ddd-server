@@ -1,20 +1,12 @@
 package jp.ddd.server.data.message;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import jp.ddd.server.data.BaseDto;
-import jp.ddd.server.utils.Dates;
-import org.eclipse.collections.api.list.ImmutableList;
-
-import jp.ddd.server.data.user.UserDto;
-import jp.ddd.server.domain.entity.MessageRead;
+import jp.ddd.server.data.Dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * メッセージを表現するdtoです。
@@ -24,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MessageDto extends BaseDto {
+public class MessageDto implements Dto {
     private static final long serialVersionUID = 1L;
 
     private Integer roomId;

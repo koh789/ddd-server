@@ -1,15 +1,9 @@
 package jp.ddd.server.domain.model.user;
 
-<<<<<<< HEAD:src/main/java/jp/ddd/server/domain/model/user/User.java
 import jp.ddd.server.domain.model.base.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-=======
-import jp.ddd.server.domain.entity.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
->>>>>>> 6941ca9919d255ef643c1bc0b48a2a836e5e0ed7:src/main/java/jp/ddd/server/domain/entity/User.java
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
