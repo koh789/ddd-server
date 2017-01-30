@@ -17,10 +17,10 @@ import javax.persistence.*;
 @Data
 @Entity
 @NamedQueries({
-  @NamedQuery(name = "Message.findById", query = "SELECT m FROM Message m WHERE m.id = :id AND m.deleted = :deleted"),
-  @NamedQuery(name = "Message.findByRoomId", query = "SELECT m FROM Message m WHERE m.roomId = :roomId AND m.deleted = :deleted ORDER BY m.id DESC"),
-  @NamedQuery(name = "Message.findByRoomIdLessThanLastId", query = "SELECT m FROM Message m WHERE m.roomId = :roomId AND m.deleted = :deleted AND m.id < :lastId ORDER BY m.id DESC"),
-  @NamedQuery(name = "Message.findByUserId", query = "SELECT m FROM Message m WHERE m.roomId = :roomId AND m.deleted = :deleted ORDER BY m.id DESC") })
+  @NamedQuery(name = "Message.findById", query = "SELECT m FROM Message m WHERE m.id = :id AND m.deleted = 0"),
+  @NamedQuery(name = "Message.findByRoomId", query = "SELECT m FROM Message m WHERE m.roomId = :rid AND m.deleted = 0 ORDER BY m.id DESC"),
+  @NamedQuery(name = "Message.findByRoomIdLessThanLastId", query = "SELECT m FROM Message m WHERE m.roomId = :rid AND m.deleted = 0 AND m.id < :lastId ORDER BY m.id DESC"),
+  @NamedQuery(name = "Message.findByUserId", query = "SELECT m FROM Message m WHERE m.roomId = :rid AND m.deleted = 0 ORDER BY m.id DESC") })
 public class Message extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,6 @@ public class Message extends BaseEntity {
 
     @Column(name = "deleted")
     private byte deleted;
-
 
     @Column(name = "message_dt")
     @Embedded

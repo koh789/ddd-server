@@ -21,13 +21,13 @@ import java.util.Date;
 @NamedQueries({// 
   @NamedQuery(//
     name = "MessageRead.findByMsgId",//
-    query = "SELECT m FROM MessageRead m WHERE m.messageId = :messageId AND m.deleted = :deleted ORDER BY m.id DESC"),
+    query = "SELECT m FROM MessageRead m WHERE m.messageId = :mdi AND m.deleted = 0 ORDER BY m.id DESC"),
   @NamedQuery(//
     name = "MessageRead.findByMsgListAndUserId",//
-    query = "SELECT m FROM MessageRead m WHERE m.messageId in (:messageIdList) AND m.userId = :userId AND m.deleted in (:deletedList) ORDER BY m.id DESC"),
+    query = "SELECT m FROM MessageRead m WHERE m.messageId in (:mids) AND m.userId = :uid AND m.deleted in (:dels) ORDER BY m.id DESC"),
   @NamedQuery(//
     name = "MessageRead.findByUnique",//
-    query = "SELECT m FROM MessageRead m WHERE m.messageId = :messageId AND m.userId = :userId AND m.deleted in (:deletedList) ORDER BY m.id DESC") })
+    query = "SELECT m FROM MessageRead m WHERE m.messageId = :mid AND m.userId = :uid AND m.deleted in (:dels) ORDER BY m.id DESC") })
 
 public class MessageRead extends BaseEntity {
     private static final long serialVersionUID = 2377932200497420692L;

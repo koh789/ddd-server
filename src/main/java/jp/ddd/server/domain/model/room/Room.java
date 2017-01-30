@@ -17,8 +17,8 @@ import javax.persistence.*;
 @Data
 @Entity
 @NamedQueries({ //
-  @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id AND r.deleted = :deleted"),
-  @NamedQuery(name = "Room.findByUserIdOrderByMsgDateDesc", query = "SELECT r FROM Room r WHERE r.userId = :userId AND r.deleted = :deleted ORDER BY r.lastMessageDate DESC") })
+  @NamedQuery(name = "Room.findById", query = "SELECT r FROM Room r WHERE r.id = :id AND r.deleted = 0"),
+  @NamedQuery(name = "Room.findByUserIdOrderByMsgDateDesc", query = "SELECT r FROM Room r WHERE r.userId = :uid AND r.deleted = 0 ORDER BY r.lastMessageDate DESC") })
 public class Room extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
