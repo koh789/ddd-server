@@ -21,19 +21,18 @@ public class Cookies {
 
     private static final String SESSION_COOKIE_NAME = "JSESSIONID";
 
-    public static String createKey(HttpServletRequest req, HttpServletResponse res) {
-        Optional<String> keyOpt = getKeyOpt(req);
-        if (keyOpt.isPresent()) {
-            return keyOpt.get();
-        }
-        String key = UUID.randomUUID().toString();
-        Cookie cookie = new Cookie(SESSION_COOKIE_NAME, key);
+    public static String setKey(HttpServletRequest req, HttpServletResponse res) {
+        return getKeyOpt(req) //
+          .orElseGet(() -> {
+              String key = UUID.randomUUID().toString();
+              Cookie cookie = new Cookie(SESSION_COOKIE_NAME, key);
 
-        cookie.setSecure(req.isSecure());
-        cookie.setMaxAge(Integer.MAX_VALUE);
-        cookie.setPath(Strings.defaultIfEmpty(req.getContextPath(), "/"));
-        res.addCookie(cookie);
-        return key;
+              cookie.setSecure(req.isSecure());
+              cookie.setMaxAge(Integer.MAX_VALUE);
+              cookie.setPath(Strings.defaultIfEmpty(req.getContextPath(), "/"));
+              res.addCookie(cookie);
+              return key;
+          });
     }
 
     public static Optional<String> getKeyOpt(HttpServletRequest req) {

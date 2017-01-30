@@ -6,12 +6,14 @@ import jp.ddd.server.other.utils.DsLists;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
 /**
  * Created by noguchi_kohei 
  */
+@Repository
 public class MessageRepositoryImpl implements MessageRepositoryCtm {
     @Autowired
     private EntityManager em;

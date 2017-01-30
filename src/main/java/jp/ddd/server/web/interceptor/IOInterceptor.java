@@ -19,7 +19,7 @@ public class IOInterceptor extends HandlerInterceptorAdapter {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
     throws Exception {
-    Cookies.createKey(request, response);
+    Cookies.setKey(request, response);
 
     log.info("[request]URL -> " + request.getMethod() + " " + request.getRequestURI() + " "
       + request.getQueryString());

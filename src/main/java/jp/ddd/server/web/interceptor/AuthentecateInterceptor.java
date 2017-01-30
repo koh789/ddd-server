@@ -1,7 +1,13 @@
 package jp.ddd.server.web.interceptor;
 
+import jp.ddd.server.domain.model.user.SessionUser;
+import jp.ddd.server.domain.repository.SessionUserRepository;
+import jp.ddd.server.other.annotation.NotLoginRequired;
+import jp.ddd.server.other.exception.AuthException;
+import jp.ddd.server.other.utils.Cookies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,13 +23,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AuthentecateInterceptor extends HandlerInterceptorAdapter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private SessionUserRepository sessionUserRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        //visitor情報をストア
+        //固有クッキーセット
+        Cookies.setKey(req, res);
+        NotLoginRequired notLoginRequired = ((HandlerMethod) handler).getMethodAnnotation(NotLoginRequired.class);
+        if (notLoginRequired != null) {
+            return true;
+        }
+        if (SessionUser.isLogin(sessionUserRepository, Cookies.getKey(req))) {
+            throw new AuthException("login required!");
+        }
+
         return true;
     }
 

@@ -1,8 +1,8 @@
 package jp.ddd.server.web.controller.api;
 
 import jp.ddd.server.web.controller.base.BaseApi;
-import jp.ddd.server.web.data.form.user.RegisterUserJson;
 import jp.ddd.server.web.data.form.user.UserForm;
+import jp.ddd.server.web.data.json.user.SavedUserJson;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RoomController extends BaseApi {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public RegisterUserJson register(@RequestBody @Validated UserForm userForm, HttpServletRequest req) {
+    public SavedUserJson register(@RequestBody @Validated UserForm userForm, HttpServletRequest req) {
 
         //TODO
         return null;

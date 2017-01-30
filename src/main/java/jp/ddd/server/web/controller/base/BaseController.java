@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ddd.server.other.exception.IllegalArgumentException;
+import jp.ddd.server.other.exception.IllegalDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public abstract class BaseController {
     if (e instanceof CoreException) {
       msgForUser = ((CoreException) e).getMessageForUser();
 
-      if (e instanceof IllegalArgumentException) {
+      if (e instanceof IllegalDataException) {
         res.setStatus(HttpStatus.BAD_REQUEST.value());
         setRedirect(res, "/errors/400.html");
       } else if (e instanceof AuthException) {

@@ -30,6 +30,7 @@
 
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <commons.lang.version>2.6</commons.lang.version>
+        <commons.fileupload.version>1.2.2</commons.fileupload.version>
         <commons.validator.version>1.4.0</commons.validator.version>
         <async-http-client.version>1.7.8</async-http-client.version>
         <commons.codec.version>1.6</commons.codec.version>
@@ -181,6 +182,11 @@
             <version>${commons.lang.version}</version>
         </dependency>
         <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons.fileupload.version}</version>
+        </dependency>
+        <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons.validator.version}</version>
@@ -308,13 +314,29 @@
                     <tag>${releaseVersion}</tag>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+            </plugin>
         </plugins>
     </build>
 
-
-    <!-- develop -->
     <profiles>
-        <profile>
+        <profile><!-- local -->
+            <id>local</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/java</directory>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile><!-- develop -->
             <id>dev</id>
             <build>
                 <resources>
@@ -328,13 +350,6 @@
                         <directory>src/main/resources</directory>
                     </resource>
                 </resources>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <version>2.1.1</version>
-                    </plugin>
-                </plugins>
             </build>
         </profile>
     </profiles>

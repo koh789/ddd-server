@@ -1,6 +1,6 @@
 package jp.ddd.server.other.exception;
 
-public class IllegalArgumentException extends CoreException {
+public class IllegalDataException extends CoreException {
 
   /**
    *
@@ -10,7 +10,7 @@ public class IllegalArgumentException extends CoreException {
   /**
    * デフォルトコンストラクタ。
    */
-  public IllegalArgumentException() {
+  public IllegalDataException() {
     super();
 
   }
@@ -20,11 +20,11 @@ public class IllegalArgumentException extends CoreException {
    *
    * @param message 例外メッセージ
    */
-  public IllegalArgumentException(String message) {
+  public IllegalDataException(String message) {
     super(message);
   }
 
-  public IllegalArgumentException(String message, boolean isToUser) {
+  public IllegalDataException(String message, boolean isToUser) {
     super(message, isToUser);
 
   }
@@ -34,7 +34,7 @@ public class IllegalArgumentException extends CoreException {
    *
    * @param cause 例外
    */
-  public IllegalArgumentException(Throwable cause) {
+  public IllegalDataException(Throwable cause) {
     super(cause);
   }
 
@@ -44,7 +44,7 @@ public class IllegalArgumentException extends CoreException {
    * @param message 例外メッセージ
    * @param cause   例外
    */
-  public IllegalArgumentException(Throwable cause, String message) {
+  public IllegalDataException(Throwable cause, String message) {
     super(message, cause);
   }
 
@@ -55,7 +55,7 @@ public class IllegalArgumentException extends CoreException {
    * @param cause         例外
    * @param transitionUrl 遷移URL
    */
-  public IllegalArgumentException(Throwable cause, String message, String transitionUrl) {
+  public IllegalDataException(Throwable cause, String message, String transitionUrl) {
     super(message, cause, transitionUrl);
   }
 
@@ -65,7 +65,7 @@ public class IllegalArgumentException extends CoreException {
    * @param message        例外メッセージ
    * @param messageForUser ユーザ通知用メッセージ
    */
-  public IllegalArgumentException(String message, String messageForUser) {
+  public IllegalDataException(String message, String messageForUser) {
     super(message, messageForUser);
 
   }
@@ -77,7 +77,7 @@ public class IllegalArgumentException extends CoreException {
    * @param messageForUser ユーザ通知用メッセージ
    * @param transitionUrl  遷移URL
    */
-  public IllegalArgumentException(String message, String messageForUser, String transitionUrl) {
+  public IllegalDataException(String message, String messageForUser, String transitionUrl) {
     super(message, messageForUser, transitionUrl);
   }
 
@@ -88,7 +88,7 @@ public class IllegalArgumentException extends CoreException {
    * @param messageForUser ユーザ通知用メッセージ
    * @param cause          例外
    */
-  public IllegalArgumentException(String message, String messageForUser, Throwable cause) {
+  public IllegalDataException(String message, String messageForUser, Throwable cause) {
     super(message, messageForUser, cause);
 
   }
@@ -101,7 +101,7 @@ public class IllegalArgumentException extends CoreException {
    * @param transitionUrl  遷移URL
    * @param cause          例外
    */
-  public IllegalArgumentException(String message, String messageForUser, String transitionUrl, Throwable cause) {
+  public IllegalDataException(String message, String messageForUser, String transitionUrl, Throwable cause) {
     super(message, messageForUser, transitionUrl, cause);
   }
 
