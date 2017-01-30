@@ -1,7 +1,7 @@
 <!DOCTYPE htm>
 <head>
     <title>Registration</title>
-<#include "/common/resource.ftl" >
+<#include "../common/resource.ftl" >
 </head>
 
 <body>
@@ -11,7 +11,7 @@
 </div>
 </#if>
 
-<#include "/common/header.ftl" >
+<#include "../common/header.ftl" >
 
 <!-- 登録フォーム -->
 <!-- <form modelAttribute="adminRegisterForm" method="post" action="/staff/register">

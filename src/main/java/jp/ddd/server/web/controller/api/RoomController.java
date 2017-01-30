@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  * Created by noguchi_kohei 
  */
 @RestController
-@RequestMapping(value = "/api/v1/users", produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController extends BaseApi{
+@RequestMapping(value = "/api/v1/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+public class RoomController extends BaseApi {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public RegisterUserJson register(@RequestBody @Validated UserForm userForm, HttpServletRequest req) {

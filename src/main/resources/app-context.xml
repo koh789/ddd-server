@@ -17,6 +17,9 @@
 		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd"
        default-autowire="byName">
 
+    <context:annotation-config/>
+    <context:component-scan base-package="jp.ddd.server"/>
+
     <!-- インターセプター設定 -->
     <mvc:annotation-driven/>
     <mvc:interceptors>
@@ -30,16 +33,11 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <context:annotation-config/>
-    <context:component-scan base-package="jp.ddd.server"/>
-
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <tx:annotation-driven proxy-target-class="true"
-                          order="2"/>
-
     <context:property-placeholder
             location="classpath:core.properties, classpath:spring/dataSource.properties, classpath:messages/validator_ja.properties"/>
 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <tx:annotation-driven proxy-target-class="true" order="2"/>
     <!-- messages -->
     <bean id="validator"
           class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>

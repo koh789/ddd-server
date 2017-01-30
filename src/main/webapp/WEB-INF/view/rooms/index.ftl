@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
     <title>Message</title>
-<#include "/common/resource.ftl" >
+<#include "../common/resource.ftl" >
 </head>
 
 <body>
-<#include "/common/header.ftl" >
+<#include "../common/header.ftl" >
 <!-- 左メニューroomList -->
 <div class="p-room_wrapper">
     <div class="p-room_list">

@@ -11,6 +11,7 @@ public class Msg {
   public final static String INVALID = "不正なリクエストです。";
   public final static String NOT_NULL = "入力必須です。";
   public final static String ONLY_TEL_OR_EMAIL = "電話番号かメールアドレスを入力してください。";
+  public final static String ONLY_TEL = "電話番号を入力してください。";
   public final static String ONLY_EN_OR_NUM = "英数字のみ入力してください。";
   public final static String INPUT_3TO30 = "入力は3文字以上３０文字までです。";
   public final static String INPUT_5TO30 = "入力は5文字以上３０文字までです。";

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
     <title>MyPage</title>
-<#include "/common/resource.ftl" >
+<#include "../common/resource.ftl" >
 </head>
 
 <body>
-<#include "/common/header.ftl" >
+<#include "../common/header.ftl" >
 <div class="p-login_wrapper">
     <div class="p-container">
         <div class="p-title">

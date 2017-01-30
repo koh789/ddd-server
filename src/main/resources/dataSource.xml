@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
-       xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <jpa:repositories base-package="jp.ddd.server.domain.repository"/>
+    <context:property-placeholder location="classpath:spring/dataSource.properties"/>
 
     <!-- mysql -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -21,9 +17,7 @@
             <value>${jdbc.driver.class}</value>
         </property>
         <property name="url">
-            <value>
-                ${jdbc.connect}://${jdbc.host.port}/${jdbc.schema}?useUnicode=true&amp;characterEncoding=utf-8
-            </value>
+            <value>${jdbc.connect}://${jdbc.host.port}/${jdbc.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;connectionCollation=utf8mb4_general_ci</value>
         </property>
         <property name="username">
             <value>${jdbc.user}</value>
@@ -50,10 +44,15 @@
                 <property name="database" value="MYSQL"/>
             </bean>
         </property>
-        <property name="mappingResources">
-            <list>
-            </list>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+            </props>
         </property>
+        <!--<property name="mappingResources">-->
+        <!--<list>-->
+        <!--</list>-->
+        <!--</property>-->
     </bean>
 
     <!-- redis -->
@@ -68,7 +67,7 @@
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
           p:maxTotal="150" p:minIdle="5" p:maxIdle="15"/>
 
-    <!-- queue -->
+    <!--&lt;!&ndash; queue &ndash;&gt;-->
     <bean id="queue"
           class="org.springframework.data.redis.support.collections.DefaultRedisList">
         <constructor-arg ref="redisTemplate"/>

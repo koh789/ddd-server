@@ -1,11 +1,11 @@
 package jp.ddd.server.other.utils.enums;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import jp.ddd.server.other.exception.InternalException;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import jp.ddd.server.other.exception.InternalException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * {@link LoginIdType}のテストクラスです。
@@ -14,6 +14,7 @@ import jp.ddd.server.other.exception.InternalException;
  */
 public class LoginIdTypeTest {
 
+    @Ignore
     @Test
     public void getTest() {
         assertEquals(LoginIdType.EMAIL, LoginIdType.getBy("test@test.com"));

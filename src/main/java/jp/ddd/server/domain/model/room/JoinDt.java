@@ -18,10 +18,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Embeddable
-public class LastMessageDt implements Serializable {
+public class JoinDt implements Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_message_dt")
-    private Date lastMessageDt;
-
+    @Column(name = "join_dt")
+    private Date joinDt;
 }

@@ -1,4 +1,4 @@
-package jp.ddd.server.domain.model.message;
+package jp.ddd.server.domain.model.room;
 
 import jp.ddd.server.domain.model.base.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -7,36 +7,34 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
- * The persistent class for the message_read database table.
+ * The persistent class for the room database table.
  */
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "room_user")
 @Entity
-@Table(name = "message_read")
-@NamedQueries({// 
+@NamedQueries({ //
 })
-
-public class MessageRead extends BaseEntity {
-    private static final long serialVersionUID = 2377932200497420692L;
+public class RoomUser extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "deleted")
     private byte deleted;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "read_dt")
-    private Date readDt;
+    @Embedded
+    private JoinDt joinDt;
 
-    @Column(name = "message_id")
-    private Long messageId;
+    private String name;
+
+    @Column(name = "room_id")
+    private Integer room_id;
 
     @Column(name = "user_id")
     private Integer userId;

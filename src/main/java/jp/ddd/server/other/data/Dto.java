@@ -1,4 +1,4 @@
-package jp.ddd.server.data;
+package jp.ddd.server.other.data;
 
 import java.io.Serializable;
 

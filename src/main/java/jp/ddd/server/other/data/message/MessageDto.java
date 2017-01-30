@@ -1,6 +1,6 @@
-package jp.ddd.server.data.message;
+package jp.ddd.server.other.data.message;
 
-import jp.ddd.server.data.Dto;
+import jp.ddd.server.other.data.Dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

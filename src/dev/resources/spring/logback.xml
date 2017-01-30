@@ -14,9 +14,7 @@
             </rollingPolicy>
             <encoder>
                 <charset>UTF-8</charset>
-                <Pattern>%date{yyyy-MM-dd HH:mm:ss:SSS} [%20.-20thread] %-5level
-                    %30.30logger{5}#%-30.30method :%4.-4line -> %msg%n
-                </Pattern>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %-5level %logger{2} -> %msg%n</Pattern>
             </encoder>
         </appender>
 
@@ -25,9 +23,7 @@
             <encoder>
                 <charset>UTF-8</charset>
                 <!-- methodは遅いので本番の通常ログには使わない errorは可 -->
-                <Pattern>%date{yyyy-MM-dd HH:mm:ss:SSS} [%20.-20thread] %-5level
-                    %30.30logger{5}#%-30.30method :%4.-4line -> %msg%n
-                </Pattern>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%t] %-5level %logger{2} -> %msg%n</Pattern>
             </encoder>
         </appender>
     </included>

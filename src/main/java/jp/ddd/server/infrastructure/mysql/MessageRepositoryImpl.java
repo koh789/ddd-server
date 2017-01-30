@@ -17,8 +17,8 @@ public class MessageRepositoryImpl implements MessageRepositoryCtm {
     private EntityManager em;
 
     @Override
-    public ImmutableList<Message> find(Integer roomId) {
-        val results = em.createNamedQuery("Message.findByRoomId").setParameter("rid", roomId).getResultList();
+    public ImmutableList<Message> findByRoomId(Integer roomId) {
+        val results = em.createNamedQuery("Message.findByRoomId").setParameter("rid", (Integer) roomId).getResultList();
         return DsLists.toImt(results);
     }
 }

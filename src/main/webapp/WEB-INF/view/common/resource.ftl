@@ -7,4 +7,4 @@
 <script src="../js/all_lib.min.js"></script>
 <script src="../js/app.min.js"></script>
 <#import "/spring.ftl" as spring />
-<#import "/macro.ftl" as macro />
+<#import "../macro.ftl" as macro />

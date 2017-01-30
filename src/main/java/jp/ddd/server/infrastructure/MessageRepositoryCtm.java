@@ -8,5 +8,5 @@ import org.eclipse.collections.api.list.ImmutableList;
  */
 public interface MessageRepositoryCtm {
 
-    ImmutableList<Message> find(Integer roomId);
+    ImmutableList<Message> findByRoomId(Integer roomId);
 }

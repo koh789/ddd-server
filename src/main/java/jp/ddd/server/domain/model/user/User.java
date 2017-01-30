@@ -17,15 +17,13 @@ import javax.persistence.*;
 @Data
 @Entity
 @NamedQueries({// 
-  @NamedQuery(name = "User.findByIdList",//
-    query = "SELECT u FROM User u WHERE u.id in (:ids) AND u.deleted = 0")//
 })
 public class User extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     private byte deleted;
 
