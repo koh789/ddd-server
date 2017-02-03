@@ -22,10 +22,5 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private SessionUserRepository sessionUserRepository;
 
-    @Override
-    public SessionUser login(String sid, String ipAddress, String loginId, String pass) {
-        return User.getOpt(userRepository, loginId, pass) //
-          .map(u -> SessionUser.login(sessionUserRepository, sid, ipAddress, u)) //
-          .orElseThrow(() -> new NotFoundException("invalid loginId and password!" + loginId));
-    }
+
 }

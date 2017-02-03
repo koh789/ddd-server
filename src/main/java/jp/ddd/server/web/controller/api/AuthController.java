@@ -1,6 +1,9 @@
 package jp.ddd.server.web.controller.api;
 
-import jp.ddd.server.application.AuthService;
+import jp.ddd.server.domain.model.user.SessionUser;
+import jp.ddd.server.domain.repository.SessionUserRepository;
+import jp.ddd.server.domain.repository.UserRepository;
+import jp.ddd.server.other.annotation.NotLoginRequired;
 import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.Requests;
 import jp.ddd.server.web.controller.base.BaseApi;
@@ -23,21 +26,27 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping(value = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AuthrController extends BaseApi {
+public class AuthController extends BaseApi {
     @Autowired
-    private AuthService authService;
+    private UserRepository userRepository;
+    @Autowired
+    private SessionUserRepository sessionUserRepository;
 
+    @NotLoginRequired
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultJson<AuthUserJson> register(@RequestBody @Validated AuthForm form, HttpServletRequest req) {
 
-        val sesUser = authService
-          .login(Cookies.getKey(req), Requests.getRemoteAddress(req), form.getLoginId(), form.getPassword());
+        val sid = Cookies.getKey(req);
+        val ipAddress = Requests.getRemoteAddress(req);
+        val sesUser = SessionUser
+          .login(sessionUserRepository, userRepository, sid, ipAddress, form.getLoginId(), form.getPassword());
         return new ResultJson<AuthUserJson>(AuthUserJson.create(sesUser));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResultJson<String> register(HttpServletRequest req) {
-
+        val sid = Cookies.getKey(req);
+        SessionUser.logout(sessionUserRepository, sid);
         return new ResultJson<String>("OK");
     }
 }

@@ -7,5 +7,4 @@ import jp.ddd.server.domain.model.user.SessionUser;
  */
 public interface AuthService {
 
-    SessionUser login(String sid, String ipAddress, String loginId, String pass);
 }

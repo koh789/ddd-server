@@ -1,17 +1,20 @@
 package jp.ddd.server.domain.model.room;
 
 import jp.ddd.server.domain.model.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jp.ddd.server.domain.repository.RoomUserRepository;
+import jp.ddd.server.other.utils.Dates;
+import jp.ddd.server.other.utils.enums.Deleted;
+import lombok.*;
+import org.eclipse.collections.api.set.ImmutableSet;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * The persistent class for the room database table.
  */
 @EqualsAndHashCode(callSuper = false)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -28,14 +31,23 @@ public class RoomUser extends BaseEntity {
 
     private byte deleted;
 
-    @Embedded
-    private JoinDt joinDt;
-
-    private String name;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "join_dt")
+    private Date joinDt;
 
     @Column(name = "room_id")
-    private Integer room_id;
+    private Integer roomId;
 
     @Column(name = "user_id")
     private Integer userId;
+
+    public static RoomUser create(Integer roomId, Integer userId, Date joinDt) {
+        return RoomUser.builder().deleted(Deleted.PUBLIC.getCode()).joinDt(joinDt).roomId(roomId).userId(userId)
+          .build();
+    }
+
+    public static ImmutableSet<RoomUser> register(RoomUserRepository rep, Integer roomId, ImmutableSet<Integer> userIds) {
+        val joinDt = Dates.now();
+        return userIds.collect(uid -> RoomUser.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
+    }
 }

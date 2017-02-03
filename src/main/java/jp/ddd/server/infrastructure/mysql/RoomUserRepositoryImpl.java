@@ -2,6 +2,7 @@ package jp.ddd.server.infrastructure.mysql;
 
 import jp.ddd.server.domain.model.room.Room;
 import jp.ddd.server.infrastructure.RoomRepositoryCtm;
+import jp.ddd.server.infrastructure.RoomUserRepositoryCtm;
 import jp.ddd.server.other.utils.DsLists;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -14,15 +15,9 @@ import javax.persistence.EntityManager;
  * Created by noguchi_kohei 
  */
 @Repository
-public class RoomRepositoryImpl implements RoomRepositoryCtm {
+public class RoomUserRepositoryImpl implements RoomUserRepositoryCtm {
     @Autowired
     private EntityManager em;
 
-    @Override
-    public ImmutableList<Room> findByDtDesc(Integer userId) {
-        val results = em.createNamedQuery("Room.findWithRoomUserByUidDtDesc").setParameter("uid", userId)
-          .getResultList();
-        return DsLists.toImt(results);
-    }
 }
 

@@ -1,23 +1,30 @@
 package jp.ddd.server.domain.model.room;
 
 import jp.ddd.server.domain.model.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jp.ddd.server.domain.model.message.Message;
+import jp.ddd.server.domain.repository.RoomRepository;
+import jp.ddd.server.domain.repository.RoomUserRepository;
+import jp.ddd.server.other.utils.Dates;
+import jp.ddd.server.other.utils.enums.Deleted;
+import lombok.*;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * The persistent class for the room database table.
  */
 @EqualsAndHashCode(callSuper = false)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @NamedQueries({ //
-})
+  @NamedQuery(name = "Room.findWithRoomUserByUidDtDesc", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers JOIN r.messages WHERE r.userId=:uid ORDER BY r.lastMessageDt DESC") })
 public class Room extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -27,13 +34,44 @@ public class Room extends BaseEntity {
 
     private byte deleted;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_message_dt")
-    @Embedded
-    private LastMessageDt lastMessageDt;
+    private Date lastMessageDt;
 
     private String name;
 
     @Column(name = "user_id")
     private Integer userId;
+
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<RoomUser> roomUsers;
+
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<Message> messages;
+
+    public static Room create(Integer userId, String roomName, Date lastMessageDt) {
+        return Room.builder().deleted(Deleted.PUBLIC.getCode()).lastMessageDt(lastMessageDt).name(roomName)
+          .userId(userId).build();
+    }
+
+    /**
+     * メッセージルームを新規作成します。
+     * @param userId
+     * @param roomName
+     * @param joinUserIds
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public static Room registerRoomWithUser(RoomRepository roomRepository, RoomUserRepository roomUserRepository, //
+      Integer userId, String roomName, ImmutableList<Integer> joinUserIds) {
+
+        val entity = Room.create(userId, roomName, Dates.now());
+        val result = roomRepository.save(entity);
+        val userIds = joinUserIds.newWith(userId).toSet().toImmutable();
+        RoomUser.register(roomUserRepository, result.getId(), userIds);
+        return result;
+    }
 
 }

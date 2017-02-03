@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * The persistent class for the message database table.
@@ -29,13 +30,17 @@ public class Message extends BaseEntity {
 
     private byte deleted;
 
-    @Embedded
-    private MessageDt messageDt;
+    @Column(name = "last_edit_dt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastEditDt;
+
+    @Column(name = "message_dt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date messageDt;
 
     @Column(name = "room_id")
     private Integer roomId;
 
     @Column(name = "user_id")
     private Integer userId;
-
 }

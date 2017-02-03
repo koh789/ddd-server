@@ -32,20 +32,19 @@ public class User extends BaseEntity {
 
     private byte deleted;
 
-    private String email;
-
     @Column(name = "login_id")
     private String loginId;
 
-    private String name;
-
     private String pass;
 
-    private String tel;
+    @Embedded
+    private UserInfo userInfo;
 
     public static User create(UserParam param, String hashPass) {
-        return User.builder().deleted(Deleted.PUBLIC.getCode()).email(param.getEmail()).loginId(param.getLoginId())
-          .name(param.getName()).pass(hashPass).tel(param.getTel()).build();
+
+        val userInfo = UserInfo.builder().email(param.getEmail()).tel(param.getTel()).name(param.getName()).build();
+        return User.builder().deleted(Deleted.PUBLIC.getCode()).loginId(param.getLoginId()).pass(hashPass)
+          .userInfo(userInfo).build();
     }
 
     public static User save(UserRepository rep, UserParam param) {

@@ -37,7 +37,7 @@ public class AuthentecateInterceptor extends HandlerInterceptorAdapter {
         if (notLoginRequired != null) {
             return true;
         }
-        if (SessionUser.isLogin(sessionUserRepository, Cookies.getKey(req))) {
+        if (SessionUser.isNotLogin(sessionUserRepository, Cookies.getKey(req))) {
             throw new AuthException("login required!");
         }
 

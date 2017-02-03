@@ -1,4 +1,4 @@
-package jp.ddd.server.web.data.form.user;
+package jp.ddd.server.web.data.form.room;
 
 import jp.ddd.server.other.utils.Msg;
 import jp.ddd.server.web.data.Form;
@@ -15,5 +15,5 @@ public class RoomForm implements Form {
     private String roomName;
 
     @NotNull(message = Msg.NOT_NULL)
-    private List<Integer> roomUserIdList;
+    private List<Integer> joinUserIds;
 }
