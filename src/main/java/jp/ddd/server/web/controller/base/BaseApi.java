@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.IllegalArgumentException;
 
 /**
  * jsonAPI用エラーハンドラー基底クラス。
@@ -52,8 +51,7 @@ public abstract class BaseApi {
         String msgForUser = null;
         if (e instanceof CoreException) {
             msgForUser = ((CoreException) e).getMessageForUser();
-            if (e instanceof IllegalArgumentException) {
-
+            if (e instanceof IllegalDataException) {
                 httpStatus = HttpStatus.BAD_REQUEST;
             } else if (e instanceof AuthException) {
                 httpStatus = HttpStatus.UNAUTHORIZED;

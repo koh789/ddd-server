@@ -37,13 +37,13 @@ public class RoomController extends BaseApi {
     private SessionUserRepository sessionUserRepository;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResultJson<SavedRoomJson> register(@RequestBody @Validated RoomForm roomForm, HttpServletRequest req) {
+    public ResultJson<SavedRoomJson> register(HttpServletRequest req, @RequestBody @Validated RoomForm roomForm) {
         val userId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
           .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
         val joinUserIds = DsLists.toImt(roomForm.getJoinUserIds());
 
         val result = Room
-          .registerRoomWithUser(roomRepository, roomUserRepository, userId, roomForm.getRoomName(), joinUserIds);
-        return new ResultJson<>(SavedRoomJson.create(result));
+          .registerWithRoomUser(roomRepository, roomUserRepository, userId, roomForm.getRoomName(), joinUserIds);
+        return ResultJson.create(SavedRoomJson.create(result));
     }
 }

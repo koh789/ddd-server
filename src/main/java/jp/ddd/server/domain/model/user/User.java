@@ -7,6 +7,7 @@ import jp.ddd.server.other.exception.IllegalDataException;
 import jp.ddd.server.other.utils.Hashes;
 import jp.ddd.server.other.utils.enums.Deleted;
 import lombok.*;
+import org.eclipse.collections.api.list.ImmutableList;
 
 import javax.persistence.*;
 import java.util.Optional;
@@ -22,7 +23,8 @@ import java.util.Optional;
 @Entity
 @NamedQueries({//
   @NamedQuery(name = "User.getByLidWithDel", query = "SELECT u FROM User u WHERE u.loginId=:lid"),
-  @NamedQuery(name = "User.getByLidAndPass", query = "SELECT u FROM User u WHERE u.loginId=:lid AND u.pass=:pass AND u.deleted=0") })
+  @NamedQuery(name = "User.getByLidAndPass", query = "SELECT u FROM User u WHERE u.loginId=:lid AND u.pass=:pass AND u.deleted=0"),
+  @NamedQuery(name = "User.findByIds", query = "SELECT u FROM User u WHERE u.id IN (:ids) AND u.deleted=0") })
 public class User extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +49,7 @@ public class User extends BaseEntity {
           .userInfo(userInfo).build();
     }
 
-    public static User save(UserRepository rep, UserParam param) {
+    public static User register(UserRepository rep, UserParam param) {
         if (isExist(rep, param.getLoginId())) {
             throw new IllegalDataException("登録済みloginIdです。" + param.getLoginId());
         }
@@ -62,5 +64,9 @@ public class User extends BaseEntity {
     public static Optional<User> getOpt(UserRepository rep, String loginId, String pass) {
         val hashedPass = Hashes.toSHA256(pass);
         return rep.getOpt(loginId, hashedPass);
+    }
+
+    public static ImmutableList<User> find(ImmutableList<Integer> userIds, UserRepository rep) {
+        return rep.find(userIds);
     }
 }

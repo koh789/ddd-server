@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 /**
  * Created by noguchi_kohei 
@@ -23,6 +24,14 @@ public class RoomRepositoryImpl implements RoomRepositoryCtm {
         val results = em.createNamedQuery("Room.findWithRoomUserByUidDtDesc").setParameter("uid", userId)
           .getResultList();
         return DsLists.toImt(results);
+    }
+
+    @Override
+    public Optional<Room> getOpt(Integer id) {
+        val results = em //
+          .createNamedQuery("Room.getOptWithRoomUserByRid")//
+          .setParameter("rid", id).getResultList();
+        return DsLists.getFirstOpt(results);
     }
 }
 

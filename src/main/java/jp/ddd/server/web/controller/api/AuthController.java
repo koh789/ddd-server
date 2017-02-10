@@ -40,13 +40,13 @@ public class AuthController extends BaseApi {
         val ipAddress = Requests.getRemoteAddress(req);
         val sesUser = SessionUser
           .login(sessionUserRepository, userRepository, sid, ipAddress, form.getLoginId(), form.getPassword());
-        return new ResultJson<AuthUserJson>(AuthUserJson.create(sesUser));
+        return ResultJson.create(AuthUserJson.create(sesUser));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResultJson<String> register(HttpServletRequest req) {
         val sid = Cookies.getKey(req);
         SessionUser.logout(sessionUserRepository, sid);
-        return new ResultJson<String>("OK");
+        return ResultJson.create("OK");
     }
 }

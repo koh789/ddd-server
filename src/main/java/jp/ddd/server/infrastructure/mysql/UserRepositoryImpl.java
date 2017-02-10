@@ -4,6 +4,7 @@ import jp.ddd.server.domain.model.user.User;
 import jp.ddd.server.infrastructure.UserRepositoryCtm;
 import jp.ddd.server.other.utils.DsLists;
 import lombok.val;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,5 +36,14 @@ public class UserRepositoryImpl implements UserRepositoryCtm {
           .setParameter("pass", hashedPass) //
           .getResultList();
         return DsLists.getFirstOpt(results);
+    }
+
+    @Override
+    public ImmutableList<User> find(ImmutableList<Integer> userIds) {
+        val results = em //
+          .createNamedQuery("User.findByIds")//
+          .setParameter("ids", userIds.castToList()) //
+          .getResultList();
+        return DsLists.toImt(results);
     }
 }

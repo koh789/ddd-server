@@ -1,38 +1,59 @@
 package jp.ddd.server.other.data.message;
 
+import jp.ddd.server.domain.model.message.Message;
+import jp.ddd.server.domain.model.user.User;
 import jp.ddd.server.other.data.Dto;
+import jp.ddd.server.other.exception.NotFoundException;
+import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.other.utils.DsMaps;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
+import lombok.val;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.ImmutableMap;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * メッセージを表現するdtoです。
  *
  * @author noguchi_kohei
  */
+@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Value
 public class MessageDto implements Dto {
     private static final long serialVersionUID = 1L;
 
-    private Integer roomId;
+    private final Integer roomId;
 
-    private Long messageId;
+    private final Long messageId;
 
-    private Integer messageUserId;
+    private final Integer messageUserId;
 
-    private String messageUserName;
+    private final String messageUserName;
 
-    private String messageLoginId;
+    private final String content;
 
-    private String content;
+    private final Date messageDate;
 
-    private Date messageDate;
+    private final ImmutableList<ReadDto> reads;
 
-    private List<ReadDto> readList;
+    public static MessageDto create(Message entity, ImmutableMap<Integer, User> userMap) {
+        val reads = DsLists.toImt(entity.getMessageReads()) //
+          .collect(mr -> ReadDto.create(mr, userMap));
 
+        val messageUserName = DsMaps.getOpt(userMap, entity.getUserId()).map(u -> u.getUserInfo().getName())
+          .orElseThrow(() -> new NotFoundException());
+        return MessageDto.builder()//
+          .roomId(entity.getRoomId())//
+          .messageId(entity.getId())//
+          .messageUserId(entity.getUserId()) //
+          .messageUserName(messageUserName)//
+          .content(entity.getContent())//
+          .messageDate(entity.getMessageDt())//
+          .reads(reads)//
+          .build();
+    }
 }

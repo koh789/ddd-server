@@ -3,6 +3,8 @@ package jp.ddd.server.web.controller.api;
 import jp.ddd.server.domain.model.user.User;
 import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.data.user.UserParam;
+import jp.ddd.server.other.exception.IllegalDataException;
+import jp.ddd.server.other.utils.Msg;
 import jp.ddd.server.web.controller.base.BaseApi;
 import jp.ddd.server.web.data.form.user.UserForm;
 import jp.ddd.server.web.data.json.ResultJson;
@@ -30,9 +32,12 @@ public class UserController extends BaseApi {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResultJson<SavedUserJson> register(@RequestBody @Validated UserForm userForm, HttpServletRequest req) {
         if (!userForm.getPassword().equals(userForm.getConfirmedPassword())) {
-            new IllegalArgumentException();
+            new IllegalDataException(Msg.MISMATCH_PASS, true);
         }
-        val json = SavedUserJson.create(User.save(userRepository, UserParam.create(userForm)).getId());
-        return new ResultJson<SavedUserJson>(json);
+        if (User.isExist(userRepository, userForm.getLoginId())) {
+            new IllegalDataException(Msg.EXISTED_LOGIN_ID, true);
+        }
+        val json = SavedUserJson.create(User.register(userRepository, UserParam.create(userForm)).getId());
+        return ResultJson.create(json);
     }
 }

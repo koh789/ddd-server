@@ -4,7 +4,9 @@ import jp.ddd.server.domain.model.base.BaseEntity;
 import jp.ddd.server.domain.model.message.Message;
 import jp.ddd.server.domain.repository.RoomRepository;
 import jp.ddd.server.domain.repository.RoomUserRepository;
+import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
+import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Deleted;
 import lombok.*;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The persistent class for the room database table.
@@ -24,7 +27,8 @@ import java.util.List;
 @Data
 @Entity
 @NamedQueries({ //
-  @NamedQuery(name = "Room.findWithRoomUserByUidDtDesc", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers JOIN r.messages WHERE r.userId=:uid ORDER BY r.lastMessageDt DESC") })
+  @NamedQuery(name = "Room.findWithRoomUserByUidDtDesc", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.deleted=0 AND ru.deleted=0 ORDER BY r.lastMessageDt DESC"),
+  @NamedQuery(name = "Room.getOptWithRoomUserByRid", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.id=:rid AND r.deleted=0 AND ru.deleted=0") })
 public class Room extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -64,7 +68,7 @@ public class Room extends BaseEntity {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public static Room registerRoomWithUser(RoomRepository roomRepository, RoomUserRepository roomUserRepository, //
+    public static Room registerWithRoomUser(RoomRepository roomRepository, RoomUserRepository roomUserRepository, //
       Integer userId, String roomName, ImmutableList<Integer> joinUserIds) {
 
         val entity = Room.create(userId, roomName, Dates.now());
@@ -74,4 +78,20 @@ public class Room extends BaseEntity {
         return result;
     }
 
+    public static ImmutableList<RoomUser> findRoomUser(Integer roomId, RoomRepository rep) {
+        val room = rep.getOpt(roomId).orElseThrow(() -> new NotFoundException("対象のメッセージルームが存在しません。" + roomId));
+        return DsLists.toImt(room.getRoomUsers());
+    }
+
+    /**
+     * 最終メッセージ日時を更新します。
+     * @param rep
+     * @param roomId
+     * @param dt
+     */
+    public static void updateLastMsgDt(RoomRepository rep, Integer roomId, Date dt) {
+        Room entity = Optional.ofNullable(rep.getOne(roomId)).orElseThrow(() -> new NotFoundException());
+        entity.setLastMessageDt(dt);
+        rep.save(entity);
+    }
 }

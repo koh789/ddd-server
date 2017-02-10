@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class RoomForm implements Form {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -310879856818575460L;
 
     @NotNull(message = Msg.NOT_NULL)
     private String roomName;

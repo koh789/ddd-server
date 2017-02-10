@@ -1,6 +1,7 @@
 package jp.ddd.server.domain.repository.running;
 
 import jp.ddd.server.domain.repository.MessageRepository;
+import jp.ddd.server.other.data.common.Page;
 import lombok.val;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public class MessageRepositoryRunTest {
     @Test
     public void findTest() {
         try {
-            val results = messageRepository.findByRoomId(1);
+            val results = messageRepository.findByRoomId(1, Page.create(1, 50));
             assertTrue(true);
         } catch (Exception e) {
             fail();
