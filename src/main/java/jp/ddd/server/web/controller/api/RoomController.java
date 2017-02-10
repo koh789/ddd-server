@@ -10,16 +10,15 @@ import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.web.controller.base.BaseApi;
 import jp.ddd.server.web.data.form.room.RoomForm;
+import jp.ddd.server.web.data.form.room.RoomUserForm;
 import jp.ddd.server.web.data.json.ResultJson;
 import jp.ddd.server.web.data.json.room.SavedRoomJson;
+import jp.ddd.server.web.data.json.room.SavedRoomUserJson;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,12 +37,26 @@ public class RoomController extends BaseApi {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResultJson<SavedRoomJson> register(HttpServletRequest req, @RequestBody @Validated RoomForm roomForm) {
-        val userId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
+        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
           .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
         val joinUserIds = DsLists.toImt(roomForm.getJoinUserIds());
 
         val result = Room
-          .registerWithRoomUser(roomRepository, roomUserRepository, userId, roomForm.getRoomName(), joinUserIds);
+          .registerWithRoomUser(roomRepository, roomUserRepository, loginUserId, roomForm.getRoomName(), joinUserIds);
         return ResultJson.create(SavedRoomJson.create(result));
+    }
+
+    @RequestMapping(value = "/{roomId}/users", method = RequestMethod.POST)
+    public ResultJson<String> add(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
+      @RequestBody @Validated RoomUserForm form) {
+
+        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
+          .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
+
+        val resultsJson = Room //
+          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
+          .collect(ru -> SavedRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
+
+        return ResultJson.create(resultsJson);
     }
 }

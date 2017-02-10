@@ -15,12 +15,15 @@ import jp.ddd.server.web.data.json.ResultJson;
 import jp.ddd.server.web.data.json.message.MessagesJson;
 import jp.ddd.server.web.data.json.message.SavedMessageJson;
 import lombok.val;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.ImmutableDescriptor;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by noguchi_kohei 
@@ -46,12 +49,13 @@ public class MessageController extends BaseApi {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResultJson<MessagesJson> get(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
+    public ResultJson<ImmutableList<MessagesJson>> get(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
       @RequestParam(value = "p", defaultValue = "1") int pageNum) {
         val user = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req))
           .orElseThrow(() -> new AuthException());
 
         val dtos = messageService.find(roomId, user.getUserId(), Page.create(pageNum, 50));
+
         return ResultJson.create(dtos.collect(dto -> MessagesJson.create(dto)));
     }
 }
