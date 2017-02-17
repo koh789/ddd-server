@@ -21,6 +21,7 @@ import java.util.Date;
 @Table(name = "room_user")
 @Entity
 @NamedQueries({ //
+  @NamedQuery(name = "RoomUser.getWithDelByUnq", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.userId=:uid")
 })
 public class RoomUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -48,6 +49,12 @@ public class RoomUser extends BaseEntity {
 
     public static ImmutableSet<RoomUser> register(RoomUserRepository rep, Integer roomId, ImmutableSet<Integer> userIds) {
         val joinDt = Dates.now();
+        return userIds.collect(uid -> RoomUser.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
+    }
+
+    public static ImmutableSet<RoomUser> update(RoomUserRepository rep, Integer roomId, ImmutableSet<Integer> userIds) {
+        val joinDt = Dates.now();
+
         return userIds.collect(uid -> RoomUser.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
     }
 }

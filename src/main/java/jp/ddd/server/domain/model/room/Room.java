@@ -94,11 +94,24 @@ public class Room extends BaseEntity {
         rep.save(entity);
     }
 
+    /**
+     * 対象ルームからユーザを取得します。
+     * @param roomId
+     * @param rep
+     * @return
+     */
     public static ImmutableList<RoomUser> findRoomUser(Integer roomId, RoomRepository rep) {
         val room = rep.getOpt(roomId).orElseThrow(() -> new NotFoundException("対象のメッセージルームが存在しません。" + roomId));
         return DsLists.toImt(room.getRoomUsers());
     }
 
+    /**
+     * 対象ルームにユーザを追加します。
+     * @param roomId
+     * @param addUserIds
+     * @param rep
+     * @return
+     */
     public static ImmutableList<RoomUser> addRoomUser(Integer roomId, ImmutableList<Integer> addUserIds,
       RoomUserRepository rep) {
         val roomUsers = addUserIds.collect(uid -> RoomUser.create(roomId, uid, Dates.now()));

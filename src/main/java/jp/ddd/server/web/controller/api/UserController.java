@@ -37,7 +37,7 @@ public class UserController extends BaseApi {
         if (User.isExist(userRepository, userForm.getLoginId())) {
             new IllegalDataException(Msg.EXISTED_LOGIN_ID, true);
         }
-        val json = SavedUserJson.create(User.register(userRepository, UserParam.create(userForm)).getId());
-        return ResultJson.create(json);
+        val result = SavedUserJson.create(User.register(userRepository, UserParam.create(userForm)).getId());
+        return ResultJson.create(result);
     }
 }

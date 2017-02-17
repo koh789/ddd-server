@@ -10,7 +10,7 @@ import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.web.controller.base.BaseApi;
 import jp.ddd.server.web.data.form.room.RoomForm;
-import jp.ddd.server.web.data.form.room.RoomUserForm;
+import jp.ddd.server.web.data.form.room.UpdateRoomForm;
 import jp.ddd.server.web.data.json.ResultJson;
 import jp.ddd.server.web.data.json.room.SavedRoomJson;
 import jp.ddd.server.web.data.json.room.SavedRoomUserJson;
@@ -46,17 +46,17 @@ public class RoomController extends BaseApi {
         return ResultJson.create(SavedRoomJson.create(result));
     }
 
-    @RequestMapping(value = "/{roomId}/users", method = RequestMethod.POST)
-    public ResultJson<String> add(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
-      @RequestBody @Validated RoomUserForm form) {
-
-        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
-          .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
-
-        val resultsJson = Room //
-          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
-          .collect(ru -> SavedRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
-
-        return ResultJson.create(resultsJson);
-    }
+//    @RequestMapping(value = "/{roomId}", method = RequestMethod.PUT)
+//    public ResultJson<String> add(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
+//      @RequestBody @Validated UpdateRoomForm form) {
+//
+//        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
+//          .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
+//
+//        val results = Room //
+//          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
+//          .collect(ru -> SavedRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
+//
+//        return ResultJson.create(results);
+//    }
 }
