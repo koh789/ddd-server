@@ -1,6 +1,6 @@
 package jp.ddd.server.application;
 
-import jp.ddd.server.domain.model.message.Message;
+import jp.ddd.server.adapter.repository.mysql.entity.Message;
 import jp.ddd.server.other.data.common.Page;
 import jp.ddd.server.other.data.message.MessageDto;
 import jp.ddd.server.other.data.message.RegisterMessageParam;

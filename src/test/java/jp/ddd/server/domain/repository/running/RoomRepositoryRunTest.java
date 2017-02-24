@@ -1,6 +1,6 @@
 package jp.ddd.server.domain.repository.running;
 
-import jp.ddd.server.domain.repository.RoomRepository;
+import jp.ddd.server.adapter.repository.mysql.RoomRepository;
 import lombok.val;
 import org.junit.Test;
 import org.junit.runner.RunWith;

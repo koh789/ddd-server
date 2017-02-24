@@ -1,13 +1,13 @@
 package jp.ddd.server.application.impl;
 
 import jp.ddd.server.application.MessageService;
-import jp.ddd.server.domain.model.message.Message;
-import jp.ddd.server.domain.model.room.Room;
-import jp.ddd.server.domain.model.user.User;
-import jp.ddd.server.domain.repository.MessageReadRepository;
-import jp.ddd.server.domain.repository.MessageRepository;
-import jp.ddd.server.domain.repository.RoomRepository;
-import jp.ddd.server.domain.repository.UserRepository;
+import jp.ddd.server.adapter.repository.mysql.entity.Message;
+import jp.ddd.server.adapter.repository.mysql.entity.Room;
+import jp.ddd.server.adapter.repository.mysql.entity.User;
+import jp.ddd.server.adapter.repository.mysql.MessageReadRepository;
+import jp.ddd.server.adapter.repository.mysql.MessageRepository;
+import jp.ddd.server.adapter.repository.mysql.RoomRepository;
+import jp.ddd.server.adapter.repository.mysql.UserRepository;
 import jp.ddd.server.other.data.common.Page;
 import jp.ddd.server.other.data.message.MessageDto;
 import jp.ddd.server.other.data.message.RegisterMessageParam;

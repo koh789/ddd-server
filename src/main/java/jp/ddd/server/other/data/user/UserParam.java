@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.user;
 
 import jp.ddd.server.other.data.Dto;
-import jp.ddd.server.web.data.form.user.UserForm;
+import jp.ddd.server.adapter.web.data.input.user.UserForm;
 import lombok.Builder;
 import lombok.Value;
 

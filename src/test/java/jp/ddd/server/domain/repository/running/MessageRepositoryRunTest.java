@@ -1,6 +1,6 @@
 package jp.ddd.server.domain.repository.running;
 
-import jp.ddd.server.domain.repository.MessageRepository;
+import jp.ddd.server.adapter.repository.mysql.MessageRepository;
 import jp.ddd.server.other.data.common.Page;
 import lombok.val;
 import org.junit.Test;

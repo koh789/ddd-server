@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.message;
 
-import jp.ddd.server.domain.model.message.MessageRead;
-import jp.ddd.server.domain.model.user.User;
+import jp.ddd.server.adapter.repository.mysql.entity.MessageRead;
+import jp.ddd.server.adapter.repository.mysql.entity.User;
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.DsMaps;
