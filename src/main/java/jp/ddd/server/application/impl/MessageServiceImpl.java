@@ -42,9 +42,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public ImmutableList<MessageDto> find(Integer roomId, Integer userId, Page page){
+    public ImmutableList<MessageDto> find(Integer roomId, Integer userId, Page page) {
 
-        val messages =Message.loadAndSaveRead(roomId,userId,page,messageRepository, messageReadRepository);
+        val messages = Message.loadAndSaveRead(roomId, userId, page, messageRepository, messageReadRepository);
         val roomUserIds = Room.findRoomUser(roomId, roomRepository).collect(r -> r.getUserId());
         val roomUserMap = User.find(roomUserIds, userRepository).groupByUniqueKey(u -> u.getId());
 
