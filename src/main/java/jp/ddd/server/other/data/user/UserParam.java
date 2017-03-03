@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.user;
 
+import jp.ddd.server.adapter.web.controller.input.user.UserForm;
 import jp.ddd.server.other.data.Dto;
-import jp.ddd.server.web.data.form.user.UserForm;
 import lombok.Builder;
 import lombok.Value;
 
@@ -15,7 +15,7 @@ public class UserParam implements Dto {
 
     private final String loginId;
     private final String name;
-    private final String password;
+    private final String rawPass;
     private String email;
     private String tel;
 
@@ -23,7 +23,7 @@ public class UserParam implements Dto {
         return UserParam.builder() //
           .loginId(form.getLoginId()) //
           .name(form.getName()) //
-          .password(form.getPassword()) //
+          .rawPass(form.getPassword()) //
           .email(form.getEmail()) //
           .tel(form.getTel()).build();
     }

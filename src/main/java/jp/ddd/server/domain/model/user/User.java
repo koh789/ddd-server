@@ -1,72 +1,52 @@
 package jp.ddd.server.domain.model.user;
 
-import jp.ddd.server.domain.model.base.BaseEntity;
-import jp.ddd.server.domain.repository.UserRepository;
-import jp.ddd.server.other.data.user.UserParam;
-import jp.ddd.server.other.exception.IllegalDataException;
-import jp.ddd.server.other.utils.Hashes;
-import jp.ddd.server.other.utils.enums.Deleted;
-import lombok.*;
-import org.eclipse.collections.api.list.ImmutableList;
+import jp.ddd.server.adapter.web.controller.input.user.UserForm;
+import jp.ddd.server.domain.model.Entity;
+import jp.ddd.server.domain.model.user.core.HashPass;
+import jp.ddd.server.domain.model.user.core.LoginId;
+import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.external.mysql.entity.ExtUser;
+import jp.ddd.server.other.utils.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
+import lombok.val;
 
-import javax.persistence.*;
-import java.util.Optional;
-
-/**
- * The persistent class for the user database table.
- */
-@EqualsAndHashCode(callSuper = false)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Entity
-@NamedQueries({//
-  @NamedQuery(name = "User.getByLidWithDel", query = "SELECT u FROM User u WHERE u.loginId=:lid"),
-  @NamedQuery(name = "User.getByLidAndPass", query = "SELECT u FROM User u WHERE u.loginId=:lid AND u.pass=:pass AND u.deleted=0"),
-  @NamedQuery(name = "User.findByIds", query = "SELECT u FROM User u WHERE u.id IN (:ids) AND u.deleted=0") })
-public class User extends BaseEntity {
-    private static final long serialVersionUID = 1L;
+@Value
+public class User implements Entity<User> {
+    private static final long serialVersionUID = 5130723129760236659L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private final UserId id;
 
-    private byte deleted;
+    private final LoginId loginId;
 
-    @Column(name = "login_id")
-    private String loginId;
+    private final HashPass hashPass;
 
-    private String pass;
+    private final Status status;
 
-    @Embedded
-    private UserInfo userInfo;
+    private final UserInfo userInfo;
 
-    public static User create(UserParam param, String hashPass) {
-
-        val userInfo = UserInfo.builder().email(param.getEmail()).tel(param.getTel()).name(param.getName()).build();
-        return User.builder().deleted(Deleted.PUBLIC.getCode()).loginId(param.getLoginId()).pass(hashPass)
-          .userInfo(userInfo).build();
+    public static User create(ExtUser extUser) {
+        val info = UserInfo.builder().email(extUser.getEmail()).name(extUser.getName()).tel(extUser.getTel()).build();
+        return User.builder() //
+          .id(new UserId(extUser.getId())) //
+          .loginId(new LoginId(extUser.getLoginId())) //
+          .hashPass(new HashPass(extUser.getPass())) //
+          .status(extUser.getStatus()) //
+          .userInfo(info) //
+          .build();
     }
 
-    public static User register(UserRepository rep, UserParam param) {
-        if (isExist(rep, param.getLoginId())) {
-            throw new IllegalDataException("登録済みloginIdです。" + param.getLoginId());
-        }
-        val hashPass = Hashes.toSHA256(param.getPassword());
-        return rep.save(create(param, hashPass));
+    public static User create(UserForm form) {
+        val info = UserInfo.builder().email(form.getEmail()).name(form.getName()).tel(form.getTel()).build();
+        return User.builder() //
+          .loginId(new LoginId(form.getLoginId())) //
+          .hashPass(HashPass.createByRawPass(form.getPassword())) //
+          .status(Status.VALID) //
+          .userInfo(info) //
+          .build();
     }
 
-    public static boolean isExist(UserRepository rep, String loginId) {
-        return rep.getOpt(loginId).isPresent();
-    }
-
-    public static Optional<User> getOpt(UserRepository rep, String loginId, String pass) {
-        val hashedPass = Hashes.toSHA256(pass);
-        return rep.getOpt(loginId, hashedPass);
-    }
-
-    public static ImmutableList<User> find(ImmutableList<Integer> userIds, UserRepository rep) {
-        return rep.find(userIds);
-    }
 }

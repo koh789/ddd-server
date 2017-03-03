@@ -1,26 +1,23 @@
 package jp.ddd.server.domain.model.user;
 
-import jp.ddd.server.domain.model.base.ValueObject;
-import lombok.*;
-
-import javax.persistence.Embeddable;
+import jp.ddd.server.domain.model.ValueObject;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
 
 /**
  * Created by noguchi_kohei 
  */
-@EqualsAndHashCode
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Embeddable
+@Value
 public class UserInfo implements ValueObject<UserInfo> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3061170309246132472L;
 
-    private String name;
+    private final String name;
 
-    private String email;
+    private final String email;
 
-    private String tel;
+    private final String tel;
 
 }

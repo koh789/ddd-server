@@ -25,11 +25,11 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="jp.ddd.server.web.interceptor.IOInterceptor"/>
+            <bean class="jp.ddd.server.adapter.web.interceptor.IOInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="jp.ddd.server.web.interceptor.AuthentecateInterceptor"/>
+            <bean class="jp.ddd.server.adapter.web.interceptor.AuthentecateInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 

@@ -1,60 +1,34 @@
 package jp.ddd.server.domain.model.room;
 
-import jp.ddd.server.domain.model.base.BaseEntity;
-import jp.ddd.server.domain.repository.RoomUserRepository;
-import jp.ddd.server.other.utils.Dates;
-import jp.ddd.server.other.utils.enums.Deleted;
-import lombok.*;
-import org.eclipse.collections.api.set.ImmutableSet;
+import jp.ddd.server.domain.model.Entity;
+import jp.ddd.server.domain.model.room.core.JoinDt;
+import jp.ddd.server.domain.model.room.core.RoomId;
+import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.external.mysql.entity.ExtRoomUser;
+import jp.ddd.server.other.utils.enums.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
 
-import javax.persistence.*;
-import java.util.Date;
-
-/**
- * The persistent class for the room database table.
- */
-@EqualsAndHashCode(callSuper = false)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Table(name = "room_user")
-@Entity
-@NamedQueries({ //
-  @NamedQuery(name = "RoomUser.getWithDelByUnq", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.userId=:uid")
-})
-public class RoomUser extends BaseEntity {
-    private static final long serialVersionUID = 1L;
+@Value
+public class RoomUser implements Entity<RoomUser> {
+    private static final long serialVersionUID = 3373581417552541323L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final RoomId roomId;
 
-    private byte deleted;
+    private final UserId userId;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "join_dt")
-    private Date joinDt;
+    private final JoinDt joinDt;
 
-    @Column(name = "room_id")
-    private Integer roomId;
+    private final Status status;
 
-    @Column(name = "user_id")
-    private Integer userId;
-
-    public static RoomUser create(Integer roomId, Integer userId, Date joinDt) {
-        return RoomUser.builder().deleted(Deleted.PUBLIC.getCode()).joinDt(joinDt).roomId(roomId).userId(userId)
-          .build();
-    }
-
-    public static ImmutableSet<RoomUser> register(RoomUserRepository rep, Integer roomId, ImmutableSet<Integer> userIds) {
-        val joinDt = Dates.now();
-        return userIds.collect(uid -> RoomUser.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
-    }
-
-    public static ImmutableSet<RoomUser> update(RoomUserRepository rep, Integer roomId, ImmutableSet<Integer> userIds) {
-        val joinDt = Dates.now();
-
-        return userIds.collect(uid -> RoomUser.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
+    public static RoomUser create(ExtRoomUser extRoomUser) {
+        return RoomUser.builder() //
+          .roomId(new RoomId(extRoomUser.getRoomId())) //
+          .userId(new UserId(extRoomUser.getUserId()))//
+          .joinDt(new JoinDt(extRoomUser.getJoinDt()))//
+          .status(extRoomUser.getStatus()).build();
     }
 }
