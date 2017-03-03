@@ -1,7 +1,7 @@
 package jp.ddd.server.external.mysql.entity;
 
-import jp.ddd.server.adapter.gateway.external.rdb.ExtRoomUserRepository;
 import jp.ddd.server.adapter.gateway.external.rdb.ExtRoomRepository;
+import jp.ddd.server.adapter.gateway.external.rdb.ExtRoomUserRepository;
 import jp.ddd.server.external.mysql.entity.base.BaseEntity;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
@@ -27,8 +27,10 @@ import java.util.Optional;
 @Table(name = "room")
 @Entity
 @NamedQueries({ //
-  @NamedQuery(name = "Room.findWithRoomUserByUidDtDesc", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.deleted=0 AND ru.deleted=0 ORDER BY r.lastMessageDt DESC"),
-  @NamedQuery(name = "Room.getOptWithRoomUserByRid", query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.id=:rid AND r.deleted=0 AND ru.deleted=0") })
+  @NamedQuery(name = "Room.findWithRoomUserByUidDtStatusDesc",//
+    query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.status=:status AND ru.status=:status ORDER BY r.lastMessageDt DESC"),
+  @NamedQuery(name = "Room.getOptWithRoomUserByRidStatus", //
+    query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.id=:rid AND r.status=:status AND ru.status=:status") })
 public class ExtRoom extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -69,7 +71,8 @@ public class ExtRoom extends BaseEntity {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public static ExtRoom registerWithRoomUser(ExtRoomRepository roomRepository, ExtRoomUserRepository roomUserRepository, //
+    public static ExtRoom registerWithRoomUser(ExtRoomRepository roomRepository,
+      ExtRoomUserRepository roomUserRepository, //
       Integer userId, String roomName, ImmutableList<Integer> joinUserIds) {
 
         val entity = ExtRoom.create(userId, roomName, Dates.now());

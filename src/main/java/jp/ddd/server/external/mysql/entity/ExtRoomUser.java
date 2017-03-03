@@ -22,7 +22,7 @@ import java.util.Date;
 @Entity
 @NamedQueries({ //
   @NamedQuery(name = "RoomUser.getByUnq", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.userId=:uid"), //
-  @NamedQuery(name = "RoomUser.getByRoomId", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.status=:status ") })
+  @NamedQuery(name = "RoomUser.getByRoomIdAndStatus", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.status=:status ") })
 public class ExtRoomUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

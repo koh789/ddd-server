@@ -1,6 +1,8 @@
 package jp.ddd.server.domain.repository;
 
 import jp.ddd.server.domain.model.message.Message;
+import jp.ddd.server.domain.model.room.core.RoomId;
+import jp.ddd.server.domain.model.user.core.UserId;
 import jp.ddd.server.other.data.common.Page;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -14,7 +16,5 @@ public interface MessageRepository {
 
     Message register(Message message);
 
-    ImmutableList<Message> findAndSaveRead(Integer roomId, Integer userId, Page page);
-
-    ImmutableList<Message> findUnread(Integer roomId, Integer userId);
+    ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page);
 }

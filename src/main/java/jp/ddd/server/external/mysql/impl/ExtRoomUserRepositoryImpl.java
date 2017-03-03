@@ -34,7 +34,7 @@ public class ExtRoomUserRepositoryImpl implements ExtRoomUserRepositoryCtm {
     @Override
     public ImmutableList<ExtRoomUser> findByRoomId(Integer roomId) {
         val results = em //
-          .createNamedQuery("RoomUser.getByRoomId")//
+          .createNamedQuery("RoomUser.getByRoomIdAndStatus")//
           .setParameter("rid", roomId) //
           .setParameter("status", Status.VALID) //
           .getResultList();

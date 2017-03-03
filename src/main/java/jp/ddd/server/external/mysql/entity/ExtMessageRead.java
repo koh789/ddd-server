@@ -1,7 +1,6 @@
 package jp.ddd.server.external.mysql.entity;
 
 import jp.ddd.server.external.mysql.entity.base.BaseEntity;
-import jp.ddd.server.other.utils.Dates;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,9 +36,9 @@ public class ExtMessageRead extends BaseEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    public static ExtMessageRead create(Long messageId, Integer userId) {
+    public static ExtMessageRead create(Long messageId, Integer userId, Date readDt) {
         return ExtMessageRead.builder()//
-          .readDt(Dates.now())//
+          .readDt(readDt)//
           .messageId(messageId)//
           .userId(userId)//
           .build();

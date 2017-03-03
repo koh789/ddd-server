@@ -21,9 +21,9 @@ import java.util.Optional;
 @Data
 @Entity
 @NamedQueries({//
-  @NamedQuery(name = "User.getByLidWithDel", query = "SELECT u FROM User u WHERE u.loginId=:lid"),
-  @NamedQuery(name = "User.getByLidAndPass", query = "SELECT u FROM User u WHERE u.loginId=:lid AND u.pass=:pass AND u.deleted=0"),
-  @NamedQuery(name = "User.findByIds", query = "SELECT u FROM User u WHERE u.id IN (:ids) AND u.deleted=0") })
+  @NamedQuery(name = "User.getByLid", query = "SELECT u FROM User u WHERE u.loginId=:lid"),
+  @NamedQuery(name = "User.getByLidAndPassAndStatus", query = "SELECT u FROM User u WHERE u.loginId=:lid AND u.pass=:pass AND u.status=:status"),
+  @NamedQuery(name = "User.findByIdsAndStatus", query = "SELECT u FROM User u WHERE u.id IN (:ids) AND u.status=:status") })
 public class ExtUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 

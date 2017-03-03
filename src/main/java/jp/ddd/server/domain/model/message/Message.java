@@ -6,6 +6,7 @@ import jp.ddd.server.domain.model.message.core.MessageDt;
 import jp.ddd.server.domain.model.message.core.MessageId;
 import jp.ddd.server.domain.model.room.core.RoomId;
 import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.external.mysql.entity.ExtMessage;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,4 +38,14 @@ public class Message implements Entity<Message> {
 
     private final ImmutableList<MessageRead> messageReads;
 
+    public static Message create(ExtMessage extMessage) {
+        return Message.builder()//
+          .messageId(new MessageId(extMessage.getId()))//
+          .roomId(new RoomId(extMessage.getRoomId()))//
+          .content(extMessage.getContent())//
+          .lastEditDt(new LastEditDt(extMessage.getLastEditDt()))//
+          .messageDt(new MessageDt(extMessage.getMessageDt()))//
+          .status(extMessage.getStatus())//
+          .userId(new UserId(extMessage.getUserId())).build();
+    }
 }

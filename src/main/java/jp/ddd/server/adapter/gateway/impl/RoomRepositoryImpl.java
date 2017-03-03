@@ -16,6 +16,7 @@ import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Autowired
     private ExtRoomUserRepository extRoomUserRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Room register(UserId userId, String roomName, ImmutableList<UserId> joinUserIds) {
         val now = Dates.now();

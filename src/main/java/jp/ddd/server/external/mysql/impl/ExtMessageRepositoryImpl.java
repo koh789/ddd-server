@@ -4,6 +4,7 @@ import jp.ddd.server.external.mysql.custom.ExtMessageRepositoryCtm;
 import jp.ddd.server.external.mysql.entity.ExtMessage;
 import jp.ddd.server.other.data.common.Page;
 import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.other.utils.enums.Status;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class ExtMessageRepositoryImpl implements ExtMessageRepositoryCtm {
           .setParameter("rid", (Integer) roomId)//
           .setFirstResult(page.getOffset())//
           .setMaxResults(page.getLimit()) //
+          .setParameter("status", Status.VALID) //
           .getResultList();
         return DsLists.toImt(results);
     }
@@ -36,7 +38,7 @@ public class ExtMessageRepositoryImpl implements ExtMessageRepositoryCtm {
         val results = em.createNamedQuery("Message.findUnreadByRidAndUid")//
           .setParameter("rid", roomId)//
           .setParameter("uid", userId)//
-          .getResultList();
+          .setParameter("status", Status.VALID).getResultList();
         return DsLists.toImt(results);
     }
 }
