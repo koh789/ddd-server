@@ -2,7 +2,7 @@ package jp.ddd.server.other.data.room;
 
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.utils.DsLists;
-import jp.ddd.server.adapter.web.data.input.room.RoomForm;
+import jp.ddd.server.adapter.web.controller.input.room.RoomForm;
 import lombok.Builder;
 import lombok.Value;
 import org.eclipse.collections.api.list.ImmutableList;

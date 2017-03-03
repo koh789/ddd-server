@@ -1,14 +1,12 @@
 package jp.ddd.server.adapter.web.controller.api;
 
-import jp.ddd.server.adapter.repository.mysql.entity.User;
-import jp.ddd.server.adapter.repository.mysql.UserRepository;
-import jp.ddd.server.other.data.user.UserParam;
+import jp.ddd.server.adapter.web.controller.BaseApi;
+import jp.ddd.server.adapter.web.controller.input.user.UserForm;
+import jp.ddd.server.adapter.web.presenter.output.ResultJson;
+import jp.ddd.server.adapter.web.presenter.output.user.SavedUserJson;
+import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.exception.IllegalDataException;
 import jp.ddd.server.other.utils.Msg;
-import jp.ddd.server.adapter.web.controller.BaseApi;
-import jp.ddd.server.adapter.web.data.input.user.UserForm;
-import jp.ddd.server.adapter.web.data.output.ResultJson;
-import jp.ddd.server.adapter.web.data.output.user.SavedUserJson;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -34,10 +32,11 @@ public class UserController extends BaseApi {
         if (!userForm.getPassword().equals(userForm.getConfirmedPassword())) {
             new IllegalDataException(Msg.MISMATCH_PASS, true);
         }
-        if (User.isExist(userRepository, userForm.getLoginId())) {
+        val user = jp.ddd.server.domain.model.user.User.create(userForm);
+        if (userRepository.isExist(user.getLoginId())) {
             new IllegalDataException(Msg.EXISTED_LOGIN_ID, true);
         }
-        val result = SavedUserJson.create(User.register(userRepository, UserParam.create(userForm)).getId());
+        val result = SavedUserJson.create(userRepository.register(user).getId());
         return ResultJson.create(result);
     }
 }

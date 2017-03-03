@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.message;
 
-import jp.ddd.server.adapter.repository.mysql.entity.Message;
-import jp.ddd.server.adapter.repository.mysql.entity.User;
+import jp.ddd.server.external.mysql.entity.ExtMessage;
+import jp.ddd.server.external.mysql.entity.ExtUser;
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.DsLists;
@@ -40,11 +40,11 @@ public class MessageDto implements Dto {
 
     private final ImmutableList<ReadDto> reads;
 
-    public static MessageDto create(Message entity, ImmutableMap<Integer, User> userMap) {
+    public static MessageDto create(ExtMessage entity, ImmutableMap<Integer, ExtUser> userMap) {
         val reads = DsLists.toImt(entity.getMessageReads()) //
           .collect(mr -> ReadDto.create(mr, userMap));
 
-        val messageUserName = DsMaps.getOpt(userMap, entity.getUserId()).map(u -> u.getUserInfo().getName())
+        val messageUserName = DsMaps.getOpt(userMap, entity.getUserId()).map(u -> u.getName())
           .orElseThrow(() -> new NotFoundException());
         return MessageDto.builder()//
           .roomId(entity.getRoomId())//

@@ -35,7 +35,7 @@ The meeting is held in the [#jquery-meeting](http://webchat.freenode.net/?channe
 
 ### Make sure it is a jQuery bug
 
-Many bugs reported to our bug tracker are actually bugs in user code, not in jQuery code. Keep in mind that just because your code throws an error and the console points to a line number inside of jQuery, this does *not* mean the bug is a jQuery bug; more often than not, these errors result from providing incorrect arguments when calling a jQuery function.
+Many bugs reported to our bug tracker are actually bugs in extUser code, not in jQuery code. Keep in mind that just because your code throws an error and the console points to a line number inside of jQuery, this does *not* mean the bug is a jQuery bug; more often than not, these errors result from providing incorrect arguments when calling a jQuery function.
 
 If you are new to jQuery, it is usually a much better idea to ask for help first in the [Using jQuery Forum](http://forum.jquery.com/using-jquery) or the [jQuery IRC channel](http://webchat.freenode.net/?channels=%23jquery). You will get much quicker support, and you will help avoid tying up the jQuery team with invalid bug reports. These same resources can also be useful if you want to confirm that your bug is indeed a bug in jQuery before filing any tickets.
 

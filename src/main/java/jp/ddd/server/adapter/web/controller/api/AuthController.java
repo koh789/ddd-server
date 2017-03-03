@@ -1,15 +1,14 @@
 package jp.ddd.server.adapter.web.controller.api;
 
-import jp.ddd.server.adapter.repository.redis.entity.SessionUser;
-import jp.ddd.server.adapter.repository.redis.SessionUserRepository;
-import jp.ddd.server.adapter.repository.mysql.UserRepository;
+import jp.ddd.server.adapter.web.controller.BaseApi;
+import jp.ddd.server.adapter.web.controller.input.auth.AuthForm;
+import jp.ddd.server.adapter.web.presenter.output.ResultJson;
+import jp.ddd.server.adapter.web.presenter.output.auth.AuthUserJson;
+import jp.ddd.server.domain.model.user.core.HashPass;
+import jp.ddd.server.domain.model.user.core.LoginId;
+import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.annotation.NotLoginRequired;
 import jp.ddd.server.other.utils.Cookies;
-import jp.ddd.server.other.utils.Requests;
-import jp.ddd.server.adapter.web.controller.BaseApi;
-import jp.ddd.server.adapter.web.data.input.auth.AuthForm;
-import jp.ddd.server.adapter.web.data.output.ResultJson;
-import jp.ddd.server.adapter.web.data.output.auth.AuthUserJson;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -29,24 +28,21 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthController extends BaseApi {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private SessionUserRepository sessionUserRepository;
 
     @NotLoginRequired
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultJson<AuthUserJson> register(@RequestBody @Validated AuthForm form, HttpServletRequest req) {
 
         val sid = Cookies.getKey(req);
-        val ipAddress = Requests.getRemoteAddress(req);
-        val sesUser = SessionUser
-          .login(sessionUserRepository, userRepository, sid, ipAddress, form.getLoginId(), form.getPassword());
-        return ResultJson.create(AuthUserJson.create(sesUser));
+        val user = userRepository
+          .login(sid, new LoginId(form.getLoginId()), HashPass.createByRawPass(form.getPassword()));
+        return ResultJson.create(AuthUserJson.create(sid, user));
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public ResultJson<String> register(HttpServletRequest req) {
         val sid = Cookies.getKey(req);
-        SessionUser.logout(sessionUserRepository, sid);
+        userRepository.logout(sid);
         return ResultJson.create("OK");
     }
 }

@@ -3,7 +3,7 @@ package jp.ddd.server.other.data.auth;
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.Requests;
-import jp.ddd.server.adapter.web.data.input.auth.AuthForm;
+import jp.ddd.server.adapter.web.controller.input.auth.AuthForm;
 import lombok.Builder;
 import lombok.Value;
 

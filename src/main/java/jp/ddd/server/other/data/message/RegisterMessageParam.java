@@ -2,7 +2,7 @@ package jp.ddd.server.other.data.message;
 
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.utils.Dates;
-import jp.ddd.server.adapter.web.data.input.message.MessageForm;
+import jp.ddd.server.adapter.web.controller.input.message.MessageForm;
 import lombok.Builder;
 import lombok.Value;
 

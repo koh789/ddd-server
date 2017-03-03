@@ -1,7 +1,6 @@
 package jp.ddd.server.adapter.web.interceptor;
 
-import jp.ddd.server.adapter.repository.redis.entity.SessionUser;
-import jp.ddd.server.adapter.repository.redis.SessionUserRepository;
+import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.annotation.NotLoginRequired;
 import jp.ddd.server.other.exception.AuthException;
 import jp.ddd.server.other.utils.Cookies;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthentecateInterceptor extends HandlerInterceptorAdapter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private SessionUserRepository sessionUserRepository;
+    private UserRepository userRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
@@ -37,7 +36,7 @@ public class AuthentecateInterceptor extends HandlerInterceptorAdapter {
         if (notLoginRequired != null) {
             return true;
         }
-        if (SessionUser.isNotLogin(sessionUserRepository, Cookies.getKey(req))) {
+        if (!userRepository.isLogin(Cookies.getKey(req))) {
             throw new AuthException("login required!");
         }
         return true;
