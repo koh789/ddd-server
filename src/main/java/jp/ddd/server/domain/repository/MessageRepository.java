@@ -1,8 +1,8 @@
 package jp.ddd.server.domain.repository;
 
-import jp.ddd.server.domain.model.message.Message;
-import jp.ddd.server.domain.model.room.core.RoomId;
-import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.domain.entity.message.Message;
+import jp.ddd.server.domain.entity.room.core.RoomId;
+import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.other.data.common.Page;
 import org.eclipse.collections.api.list.ImmutableList;
 

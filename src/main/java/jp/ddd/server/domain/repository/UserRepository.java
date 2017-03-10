@@ -1,9 +1,9 @@
 package jp.ddd.server.domain.repository;
 
-import jp.ddd.server.domain.model.user.core.HashPass;
-import jp.ddd.server.domain.model.user.core.LoginId;
-import jp.ddd.server.domain.model.user.User;
-import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.domain.entity.user.core.HashPass;
+import jp.ddd.server.domain.entity.user.core.LoginId;
+import jp.ddd.server.domain.entity.user.User;
+import jp.ddd.server.domain.entity.user.core.UserId;
 import org.eclipse.collections.api.list.ImmutableList;
 
 import java.util.Optional;

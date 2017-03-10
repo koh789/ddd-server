@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.message;
 
-import jp.ddd.server.external.mysql.entity.ExtMessageRead;
-import jp.ddd.server.external.mysql.entity.ExtUser;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageReadExt;
+import jp.ddd.server.adapter.gateway.rds.entity.UserExt;
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.DsMaps;
@@ -30,7 +30,7 @@ public class ReadDto implements Dto {
 
     private final Date readDate;
 
-    public static ReadDto create(ExtMessageRead entity, ImmutableMap<Integer, ExtUser> userMap) {
+    public static ReadDto create(MessageReadExt entity, ImmutableMap<Integer, UserExt> userMap) {
         val userName = DsMaps.getOpt(userMap, entity.getUserId()).map(u -> u.getName())
           .orElseThrow(() -> new NotFoundException());
         return ReadDto.builder()//

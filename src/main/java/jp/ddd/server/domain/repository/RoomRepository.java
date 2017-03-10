@@ -1,10 +1,10 @@
 package jp.ddd.server.domain.repository;
 
-import jp.ddd.server.domain.model.room.Room;
-import jp.ddd.server.domain.model.room.RoomUser;
-import jp.ddd.server.domain.model.room.core.LastMessageDt;
-import jp.ddd.server.domain.model.room.core.RoomId;
-import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.domain.entity.room.Room;
+import jp.ddd.server.domain.entity.room.RoomUser;
+import jp.ddd.server.domain.entity.room.core.LastMessageDt;
+import jp.ddd.server.domain.entity.room.core.RoomId;
+import jp.ddd.server.domain.entity.user.core.UserId;
 import org.eclipse.collections.api.list.ImmutableList;
 
 import java.util.Optional;

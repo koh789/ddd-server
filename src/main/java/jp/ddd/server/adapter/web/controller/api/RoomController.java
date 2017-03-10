@@ -2,14 +2,15 @@ package jp.ddd.server.adapter.web.controller.api;
 
 import jp.ddd.server.adapter.web.controller.BaseApi;
 import jp.ddd.server.adapter.web.controller.input.room.RoomForm;
-import jp.ddd.server.adapter.web.presenter.output.ResultJson;
-import jp.ddd.server.adapter.web.presenter.output.room.SavedRoomJson;
-import jp.ddd.server.domain.model.user.core.UserId;
+import jp.ddd.server.adapter.web.presenter.api.output.ResultJson;
+import jp.ddd.server.adapter.web.presenter.api.output.room.RegisteredRoomJson;
+import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.RoomRepository;
 import jp.ddd.server.domain.repository.UserRepository;
-import jp.ddd.server.other.exception.AuthException;
 import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.usecase.web.inputport.RoomUseCase;
+import jp.ddd.server.usecase.web.outputport.RoomPresenter;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,19 +29,16 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/api/v1/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RoomController extends BaseApi {
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomUseCase roomUseCase;
     @Autowired
-    private UserRepository userRepository;
+    private RoomPresenter roomPresenter;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResultJson<SavedRoomJson> register(HttpServletRequest req, @RequestBody @Validated RoomForm roomForm) {
-        val loginUserId = userRepository.getOptBySid(Cookies.getKey(req)) //
-          .map(u -> u.getId()).orElseThrow(() -> new AuthException());
+    public ResultJson<RegisteredRoomJson> register(HttpServletRequest req, @RequestBody @Validated RoomForm roomForm) {
 
         val joinUserIds = DsLists.toImt(roomForm.getJoinUserIds()).collect(uid -> new UserId(uid));
-        val result = roomRepository.register(loginUserId, roomForm.getRoomName(), joinUserIds);
-
-        return ResultJson.create(SavedRoomJson.create(result));
+        return roomPresenter.toRegisteredJson( //
+          roomUseCase.register(Cookies.getKey(req), roomForm.getRoomName(), joinUserIds));
     }
 
     //    @RequestMapping(value = "/{roomId}", method = RequestMethod.PUT)
@@ -50,9 +48,9 @@ public class RoomController extends BaseApi {
     //        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
     //          .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
     //
-    //        val results = ExtRoom //
+    //        val results = RoomExt //
     //          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
-    //          .collect(ru -> SavedRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
+    //          .collect(ru -> RegisteredRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
     //
     //        return ResultJson.create(results);
     //    }

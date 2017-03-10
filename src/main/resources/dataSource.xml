@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <jpa:repositories base-package="jp.ddd.server.adapter.gateway.external.rdb"/>
+    <jpa:repositories base-package="jp.ddd.server.adapter.gateway.rds"/>
     <context:property-placeholder location="classpath:spring/dataSource.properties"/>
 
     <!-- mysql -->
@@ -20,7 +20,7 @@
             <value>${jdbc.connect}://${jdbc.host.port}/${jdbc.schema}?useUnicode=true&amp;characterEncoding=UTF-8&amp;connectionCollation=utf8mb4_general_ci</value>
         </property>
         <property name="username">
-            <value>${jdbc.extUser}</value>
+            <value>${jdbc.user}</value>
         </property>
         <property name="password">
             <value>${jdbc.pass}</value>
@@ -34,7 +34,7 @@
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="packagesToScan" value="jp.ddd.server.domain.model"/>
+        <property name="packagesToScan" value="jp.ddd.server.adapter.gateway.rds.entity"/>
         <property name="dataSource" ref="dataSource"/>
         <!-- <property name="persistenceXmlLocation" value="classpath:persistence.xml"/> -->
         <property name="jpaVendorAdapter">
