@@ -48,7 +48,7 @@ public class RoomController extends BaseApi {
     //        val loginUserId = SessionUser.getOpt(sessionUserRepository, Cookies.getKey(req)) //
     //          .map(su -> su.getUserId()).orElseThrow(() -> new AuthException());
     //
-    //        val results = RoomExt //
+    //        val results = RoomRds //
     //          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
     //          .collect(ru -> RegisteredRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
     //

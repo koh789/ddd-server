@@ -6,7 +6,7 @@ import jp.ddd.server.domain.entity.core.MessageDt;
 import jp.ddd.server.domain.entity.core.MessageId;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
-import jp.ddd.server.adapter.gateway.rds.entity.MessageExt;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,14 +38,14 @@ public class Message implements Entity<Message> {
 
     private final ImmutableList<MessageRead> messageReads;
 
-    public static Message create(MessageExt messageExt) {
+    public static Message create(MessageRds messageRds) {
         return Message.builder()//
-          .messageId(new MessageId(messageExt.getId()))//
-          .roomId(new RoomId(messageExt.getRoomId()))//
-          .content(messageExt.getContent())//
-          .lastEditDt(new LastEditDt(messageExt.getLastEditDt()))//
-          .messageDt(new MessageDt(messageExt.getMessageDt()))//
-          .status(messageExt.getStatus())//
-          .userId(new UserId(messageExt.getUserId())).build();
+          .messageId(new MessageId(messageRds.getId()))//
+          .roomId(new RoomId(messageRds.getRoomId()))//
+          .content(messageRds.getContent())//
+          .lastEditDt(new LastEditDt(messageRds.getLastEditDt()))//
+          .messageDt(new MessageDt(messageRds.getMessageDt()))//
+          .status(messageRds.getStatus())//
+          .userId(new UserId(messageRds.getUserId())).build();
     }
 }

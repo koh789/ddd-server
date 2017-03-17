@@ -3,8 +3,10 @@ ddd_server
 spring4.0
 
 
-### ddd検証  
+### ddd(クリーンアーキテクチャ)検証  
 * 認証などの実装が省かれています。
+* dynamodb.propertiesはgitignoreに追加しているため、clone時はローカルに用意する必要があります。
+  （dynamodb.propetiesは外部公開できないため）　
 
 ### 課題
 * ドメインモデルにおけるエンティティをJPAのエンティティで置き換えた場合

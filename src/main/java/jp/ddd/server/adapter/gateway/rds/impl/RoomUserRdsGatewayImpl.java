@@ -1,7 +1,7 @@
 package jp.ddd.server.adapter.gateway.rds.impl;
 
-import jp.ddd.server.adapter.gateway.rds.custom.RoomRdsCtm;
-import jp.ddd.server.adapter.gateway.rds.entity.RoomExt;
+import jp.ddd.server.adapter.gateway.rds.custom.RoomUserRdsGatewayCtm;
+import jp.ddd.server.adapter.gateway.rds.entity.RoomUserRds;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.val;
@@ -16,28 +16,29 @@ import java.util.Optional;
  * Created by noguchi_kohei 
  */
 @Repository
-public class RoomRdsImpl implements RoomRdsCtm {
+public class RoomUserRdsGatewayImpl implements RoomUserRdsGatewayCtm {
     @Autowired
     private EntityManager em;
 
     @Override
-    public ImmutableList<RoomExt> findByDtDesc(Integer userId) {
-        val results = em.createNamedQuery("Room.findWithRoomUserByUidDtStatusDesc") //
+    public Optional<RoomUserRds> getOptByUnq(Integer roomId, Integer userId) {
+        val results = em //
+          .createNamedQuery("RoomUser.getByUnq")//
+          .setParameter("rid", roomId) //
           .setParameter("uid", userId) //
+          .getResultList();
+
+        return DsLists.getFirstOpt(results);
+    }
+
+    @Override
+    public ImmutableList<RoomUserRds> findByRoomId(Integer roomId) {
+        val results = em //
+          .createNamedQuery("RoomUser.getByRoomIdAndStatus")//
+          .setParameter("rid", roomId) //
           .setParameter("status", Status.VALID) //
           .getResultList();
         return DsLists.toImt(results);
     }
-
-    @Override
-    public Optional<RoomExt> getOpt(Integer id) {
-        val results = em //
-          .createNamedQuery("Room.getOptWithRoomUserByRidStatus")//
-          .setParameter("rid", id) //
-          .setParameter("status", Status.VALID) //
-          .getResultList();
-        return DsLists.getFirstOpt(results);
-    }
-
 }
 

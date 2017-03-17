@@ -1,7 +1,7 @@
 package jp.ddd.server.adapter.gateway.rds.entity;
 
-import jp.ddd.server.usecase.gateway.rds.RoomRds;
-import jp.ddd.server.usecase.gateway.rds.RoomUserRds;
+import jp.ddd.server.usecase.gateway.rds.RoomRdsGateway;
+import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGateway;
 import jp.ddd.server.adapter.gateway.rds.entity.base.BaseEntity;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
@@ -31,7 +31,7 @@ import java.util.Optional;
     query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.status=:status AND ru.status=:status ORDER BY r.lastMessageDt DESC"),
   @NamedQuery(name = "Room.getOptWithRoomUserByRidStatus", //
     query = "SELECT r FROM Room r JOIN FETCH r.roomUsers ru WHERE r.id=:rid AND r.status=:status AND ru.status=:status") })
-public class RoomExt extends BaseEntity {
+public class RoomRds extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -52,14 +52,14 @@ public class RoomExt extends BaseEntity {
 
     @OneToMany
     @JoinColumn(name = "room_id")
-    private List<RoomUserExt> roomUsers;
+    private List<RoomUserRds> roomUsers;
 
     @OneToMany
     @JoinColumn(name = "room_id")
-    private List<MessageExt> messages;
+    private List<MessageRds> messages;
 
-    public static RoomExt create(Integer userId, String roomName, Date lastMessageDt) {
-        return RoomExt.builder().status(Status.VALID).lastMessageDt(lastMessageDt).name(roomName).userId(userId)
+    public static RoomRds create(Integer userId, String roomName, Date lastMessageDt) {
+        return RoomRds.builder().status(Status.VALID).lastMessageDt(lastMessageDt).name(roomName).userId(userId)
           .build();
     }
 
@@ -71,18 +71,18 @@ public class RoomExt extends BaseEntity {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public static RoomExt registerWithRoomUser(RoomRds roomRepository,
-      RoomUserRds roomUserRepository, //
+    public static RoomRds registerWithRoomUser(RoomRdsGateway roomRepository,
+      RoomUserRdsGateway roomUserRepository, //
       Integer userId, String roomName, ImmutableList<Integer> joinUserIds) {
 
-        val entity = RoomExt.create(userId, roomName, Dates.now());
+        val entity = RoomRds.create(userId, roomName, Dates.now());
         val result = roomRepository.save(entity);
         val userIds = joinUserIds.newWith(userId).toSet().toImmutable();
-        RoomUserExt.register(roomUserRepository, result.getId(), userIds);
+        RoomUserRds.register(roomUserRepository, result.getId(), userIds);
         return result;
     }
 
-    public static Optional<RoomExt> getOpt(Integer roomId, RoomRds roomRepository) {
+    public static Optional<RoomRds> getOpt(Integer roomId, RoomRdsGateway roomRepository) {
         return Optional.ofNullable(roomRepository.getOne(roomId));
     }
 
@@ -92,8 +92,8 @@ public class RoomExt extends BaseEntity {
      * @param roomId
      * @param dt
      */
-    public static void updateLastMsgDt(RoomRds rep, Integer roomId, Date dt) {
-        RoomExt entity = Optional.ofNullable(rep.getOne(roomId)).orElseThrow(() -> new NotFoundException());
+    public static void updateLastMsgDt(RoomRdsGateway rep, Integer roomId, Date dt) {
+        RoomRds entity = Optional.ofNullable(rep.getOne(roomId)).orElseThrow(() -> new NotFoundException());
         entity.setLastMessageDt(dt);
         rep.save(entity);
     }
@@ -104,7 +104,7 @@ public class RoomExt extends BaseEntity {
      * @param rep
      * @return
      */
-    public static ImmutableList<RoomUserExt> findRoomUser(Integer roomId, RoomRds rep) {
+    public static ImmutableList<RoomUserRds> findRoomUser(Integer roomId, RoomRdsGateway rep) {
         val room = rep.getOpt(roomId).orElseThrow(() -> new NotFoundException("対象のメッセージルームが存在しません。" + roomId));
         return DsLists.toImt(room.getRoomUsers());
     }
@@ -116,9 +116,9 @@ public class RoomExt extends BaseEntity {
      * @param rep
      * @return
      */
-    public static ImmutableList<RoomUserExt> addRoomUser(Integer roomId, ImmutableList<Integer> addUserIds,
-      RoomUserRds rep) {
-        val roomUsers = addUserIds.collect(uid -> RoomUserExt.create(roomId, uid, Dates.now()));
+    public static ImmutableList<RoomUserRds> addRoomUser(Integer roomId, ImmutableList<Integer> addUserIds,
+      RoomUserRdsGateway rep) {
+        val roomUsers = addUserIds.collect(uid -> RoomUserRds.create(roomId, uid, Dates.now()));
         return DsLists.toImt(rep.save(roomUsers.castToList()));
     }
 }

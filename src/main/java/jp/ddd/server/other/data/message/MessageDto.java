@@ -1,7 +1,7 @@
 package jp.ddd.server.other.data.message;
 
-import jp.ddd.server.adapter.gateway.rds.entity.MessageExt;
-import jp.ddd.server.adapter.gateway.rds.entity.UserExt;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
+import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.other.data.Dto;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.DsLists;
@@ -40,7 +40,7 @@ public class MessageDto implements Dto {
 
     private final ImmutableList<ReadDto> reads;
 
-    public static MessageDto create(MessageExt entity, ImmutableMap<Integer, UserExt> userMap) {
+    public static MessageDto create(MessageRds entity, ImmutableMap<Integer, UserRds> userMap) {
         val reads = DsLists.toImt(entity.getMessageReads()) //
           .collect(mr -> ReadDto.create(mr, userMap));
 

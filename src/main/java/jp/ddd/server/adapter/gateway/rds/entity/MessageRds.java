@@ -23,7 +23,7 @@ import java.util.List;
     query = "SELECT m FROM Message m JOIN FETCH  m.messageReads mr WHERE m.roomId=:rid AND m.status=:status ORDER BY m.id DESC"),
   @NamedQuery(name = "Message.findUnreadByRidAndUid",//
     query = "SELECT m FROM Message m LEFT JOIN FETCH m.messageReads mr WHERE m.roomId=:rid AND m.userId<>:uid AND (mr.id IS NULL OR mr.userId <> :uid) AND m.status=:status") })
-public class MessageExt extends BaseEntity {
+public class MessageRds extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -51,10 +51,10 @@ public class MessageExt extends BaseEntity {
 
     @OneToMany
     @JoinColumn(name = "message_id")
-    private List<MessageReadExt> messageReads;
+    private List<MessageReadRds> messageReads;
 
-    public static MessageExt create(Message message) {
-        return MessageExt.builder().content(message.getContent()).status(Status.VALID)
+    public static MessageRds create(Message message) {
+        return MessageRds.builder().content(message.getContent()).status(Status.VALID)
           .lastEditDt(message.getLastEditDt().getDate()).messageDt(message.getMessageDt().getDate())
           .roomId(message.getRoomId().getId()).userId(message.getUserId().getId()).build();
     }

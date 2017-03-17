@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * Created by noguchi_kohei 
  */
-public interface SessionUserRedis {
+public interface SessionUserRedisGateway {
 
     SessionUser save(SessionUser sessionUser);
 

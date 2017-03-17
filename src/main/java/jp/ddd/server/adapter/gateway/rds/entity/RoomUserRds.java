@@ -1,6 +1,6 @@
 package jp.ddd.server.adapter.gateway.rds.entity;
 
-import jp.ddd.server.usecase.gateway.rds.RoomUserRds;
+import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGateway;
 import jp.ddd.server.adapter.gateway.rds.entity.base.BaseEntity;
 import jp.ddd.server.other.utils.Dates;
 import jp.ddd.server.other.utils.enums.Status;
@@ -23,7 +23,7 @@ import java.util.Date;
 @NamedQueries({ //
   @NamedQuery(name = "RoomUser.getByUnq", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.userId=:uid"), //
   @NamedQuery(name = "RoomUser.getByRoomIdAndStatus", query = "SELECT r FROM RoomUser r WHERE r.roomId=:rid AND r.status=:status ") })
-public class RoomUserExt extends BaseEntity {
+public class RoomUserRds extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -43,20 +43,20 @@ public class RoomUserExt extends BaseEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    public static RoomUserExt create(Integer roomId, Integer userId, Date joinDt) {
-        return RoomUserExt.builder().status(Status.VALID).joinDt(joinDt).roomId(roomId).userId(userId).build();
+    public static RoomUserRds create(Integer roomId, Integer userId, Date joinDt) {
+        return RoomUserRds.builder().status(Status.VALID).joinDt(joinDt).roomId(roomId).userId(userId).build();
     }
 
-    public static ImmutableSet<RoomUserExt> register(RoomUserRds rep, Integer roomId,
+    public static ImmutableSet<RoomUserRds> register(RoomUserRdsGateway rep, Integer roomId,
       ImmutableSet<Integer> userIds) {
         val joinDt = Dates.now();
-        return userIds.collect(uid -> RoomUserExt.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
+        return userIds.collect(uid -> RoomUserRds.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
     }
 
-    public static ImmutableSet<RoomUserExt> update(RoomUserRds rep, Integer roomId,
+    public static ImmutableSet<RoomUserRds> update(RoomUserRdsGateway rep, Integer roomId,
       ImmutableSet<Integer> userIds) {
         val joinDt = Dates.now();
 
-        return userIds.collect(uid -> RoomUserExt.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
+        return userIds.collect(uid -> RoomUserRds.create(roomId, uid, joinDt)).collect(entity -> rep.save(entity));
     }
 }

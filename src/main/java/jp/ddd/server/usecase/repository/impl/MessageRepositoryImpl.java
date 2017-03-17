@@ -1,13 +1,13 @@
 package jp.ddd.server.usecase.repository.impl;
 
-import jp.ddd.server.usecase.gateway.rds.MessageReadRds;
-import jp.ddd.server.usecase.gateway.rds.MessageRds;
+import jp.ddd.server.usecase.gateway.rds.MessageReadRdsGateway;
+import jp.ddd.server.usecase.gateway.rds.MessageRdsGateway;
 import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.MessageRepository;
-import jp.ddd.server.adapter.gateway.rds.entity.MessageExt;
-import jp.ddd.server.adapter.gateway.rds.entity.MessageReadExt;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageReadRds;
 import jp.ddd.server.other.data.common.Page;
 import jp.ddd.server.other.utils.Dates;
 import lombok.val;
@@ -24,20 +24,20 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MessageRepositoryImpl implements MessageRepository {
     @Autowired
-    private MessageRds messageRds;
+    private MessageRdsGateway messageRdsGateway;
     @Autowired
-    private MessageReadRds messageReadRds;
+    private MessageReadRdsGateway messageReadRdsGateway;
 
     @Override
     public Message register(Message message) {
-        val result = messageRds.save(MessageExt.create(message));
+        val result = messageRdsGateway.save(MessageRds.create(message));
         return Message.create(result);
     }
 
     @Override
     public ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page) {
-        messageRds.findUnread(roomId.getId(), userId.getId())
-          .each(m -> messageReadRds.save(MessageReadExt.create(m.getId(), userId.getId(), Dates.now())));
-        return messageRds.findByRoomId(roomId.getId(), page).collect(m -> Message.create(m));
+        messageRdsGateway.findUnread(roomId.getId(), userId.getId())
+          .each(m -> messageReadRdsGateway.save(MessageReadRds.create(m.getId(), userId.getId(), Dates.now())));
+        return messageRdsGateway.findByRoomId(roomId.getId(), page).collect(m -> Message.create(m));
     }
 }

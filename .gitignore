@@ -19,6 +19,8 @@ dbflute_cb-batch/log/
 src/main/resources/application.properties
 src/main/resources/dataSource.properties
 src/main/resources/logback.xml
+src/main/resources/spring/dynamoDb.properties
+src/dev/resources/spring/dynamoDb.properties
 
 ######################
 # Windows

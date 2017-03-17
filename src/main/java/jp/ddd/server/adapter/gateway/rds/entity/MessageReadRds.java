@@ -19,7 +19,7 @@ import java.util.Date;
 @NamedQueries({//
   @NamedQuery(name = "MessageRead.findByUidAndMids",//
     query = "SELECT mr FROM MessageRead mr WHERE mr.userId=:uid AND mr.messageId IN (:mids)") })
-public class MessageReadExt extends BaseEntity {
+public class MessageReadRds extends BaseEntity {
     private static final long serialVersionUID = 2377932200497420692L;
 
     @Id
@@ -36,8 +36,8 @@ public class MessageReadExt extends BaseEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    public static MessageReadExt create(Long messageId, Integer userId, Date readDt) {
-        return MessageReadExt.builder()//
+    public static MessageReadRds create(Long messageId, Integer userId, Date readDt) {
+        return MessageReadRds.builder()//
           .readDt(readDt)//
           .messageId(messageId)//
           .userId(userId)//

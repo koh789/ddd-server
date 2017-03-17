@@ -5,13 +5,12 @@ import jp.ddd.server.domain.entity.Entity;
 import jp.ddd.server.domain.entity.user.core.HashPass;
 import jp.ddd.server.domain.entity.user.core.LoginId;
 import jp.ddd.server.domain.entity.user.core.UserId;
-import jp.ddd.server.adapter.gateway.rds.entity.UserExt;
+import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 import lombok.val;
-import org.springframework.stereotype.Component;
 
 @Builder
 @AllArgsConstructor
@@ -29,13 +28,13 @@ public class User implements Entity<User> {
 
     private final UserInfo userInfo;
 
-    public static User create(UserExt userExt) {
-        val info = UserInfo.builder().email(userExt.getEmail()).name(userExt.getName()).tel(userExt.getTel()).build();
+    public static User create(UserRds userRds) {
+        val info = UserInfo.builder().email(userRds.getEmail()).name(userRds.getName()).tel(userRds.getTel()).build();
         return User.builder() //
-          .id(new UserId(userExt.getId())) //
-          .loginId(new LoginId(userExt.getLoginId())) //
-          .hashPass(new HashPass(userExt.getPass())) //
-          .status(userExt.getStatus()) //
+          .id(new UserId(userRds.getId())) //
+          .loginId(new LoginId(userRds.getLoginId())) //
+          .hashPass(new HashPass(userRds.getPass())) //
+          .status(userRds.getStatus()) //
           .userInfo(info) //
           .build();
     }

@@ -17,6 +17,8 @@
         <spring.framework.data.redis.version>1.4.0.RELEASE</spring.framework.data.redis.version>
         <hibernate.version>5.1.0.Final</hibernate.version>
         <redis.clients.version>2.6.0</redis.clients.version>
+        <spring.data.dynamodb.version>4.5.0</spring.data.dynamodb.version>
+
         <apache.commons.version>2.3</apache.commons.version>
 
         <jackson.version>2.5.0</jackson.version>
@@ -142,6 +144,14 @@
             <artifactId>commons-pool2</artifactId>
             <version>${apache.commons.version}</version>
         </dependency>
+
+        <!-- dynamodb -->
+        <dependency>
+            <groupId>com.github.derjust</groupId>
+            <artifactId>spring-data-dynamodb</artifactId>
+            <version>${spring.data.dynamodb.version}</version>
+        </dependency>
+
 
         <!-- jackson(json) -->
         <dependency>

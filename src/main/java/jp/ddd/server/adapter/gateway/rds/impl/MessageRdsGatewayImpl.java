@@ -1,7 +1,7 @@
 package jp.ddd.server.adapter.gateway.rds.impl;
 
-import jp.ddd.server.adapter.gateway.rds.custom.MessageRdsCtm;
-import jp.ddd.server.adapter.gateway.rds.entity.MessageExt;
+import jp.ddd.server.adapter.gateway.rds.custom.MessageRdsGatewayCtm;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
 import jp.ddd.server.other.data.common.Page;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Status;
@@ -16,12 +16,12 @@ import javax.persistence.EntityManager;
  * Created by noguchi_kohei 
  */
 @Repository
-public class MessageRdsImpl implements MessageRdsCtm {
+public class MessageRdsGatewayImpl implements MessageRdsGatewayCtm {
     @Autowired
     private EntityManager em;
 
     @Override
-    public ImmutableList<MessageExt> findByRoomId(Integer roomId, Page page) {
+    public ImmutableList<MessageRds> findByRoomId(Integer roomId, Page page) {
 
         val results = em //
           .createNamedQuery("Message.findWithReadByRoomIdOrderByIdDesc")//
@@ -34,7 +34,7 @@ public class MessageRdsImpl implements MessageRdsCtm {
     }
 
     @Override
-    public ImmutableList<MessageExt> findUnread(Integer roomId, Integer userId) {
+    public ImmutableList<MessageRds> findUnread(Integer roomId, Integer userId) {
         val results = em.createNamedQuery("Message.findUnreadByRidAndUid")//
           .setParameter("rid", roomId)//
           .setParameter("uid", userId)//

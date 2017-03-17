@@ -1,6 +1,6 @@
 package jp.ddd.server.adapter.gateway.redis.impl;
 
-import jp.ddd.server.usecase.gateway.redis.SessionUserRedis;
+import jp.ddd.server.usecase.gateway.redis.SessionUserRedisGateway;
 import jp.ddd.server.adapter.gateway.redis.base.RedisMapper;
 import jp.ddd.server.adapter.gateway.redis.entity.SessionUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.Optional;
  * Created by noguchi_kohei 
  */
 @Repository
-public class SessionUserRedisImpl implements SessionUserRedis {
+public class SessionUserRedisGatewayImpl implements SessionUserRedisGateway {
     @Autowired
     private RedisMapper<SessionUser> redisMapper;
     private final String nameSpace = "nameSpaceSessionUser";

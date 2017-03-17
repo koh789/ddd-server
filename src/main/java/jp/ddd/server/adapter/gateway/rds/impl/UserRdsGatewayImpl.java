@@ -1,7 +1,7 @@
 package jp.ddd.server.adapter.gateway.rds.impl;
 
-import jp.ddd.server.adapter.gateway.rds.custom.UserRdsCtm;
-import jp.ddd.server.adapter.gateway.rds.entity.UserExt;
+import jp.ddd.server.adapter.gateway.rds.custom.UserRdsGatewayCtm;
+import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.val;
@@ -16,12 +16,12 @@ import java.util.Optional;
  * Created by noguchi_kohei 
  */
 @Repository
-public class UserRdsImpl implements UserRdsCtm {
+public class UserRdsGatewayImpl implements UserRdsGatewayCtm {
     @Autowired
     private EntityManager em;
 
     @Override
-    public Optional<UserExt> getOpt(String loginId) {
+    public Optional<UserRds> getOpt(String loginId) {
         val results = em //
           .createNamedQuery("User.getByLid") //
           .setParameter("lid", (String) loginId) //
@@ -30,7 +30,7 @@ public class UserRdsImpl implements UserRdsCtm {
     }
 
     @Override
-    public Optional<UserExt> getOpt(String loginId, String hashedPass) {
+    public Optional<UserRds> getOpt(String loginId, String hashedPass) {
         val results = em. //
           createNamedQuery("User.getByLidAndPassAndStatus") //
           .setParameter("lid", loginId) //
@@ -41,7 +41,7 @@ public class UserRdsImpl implements UserRdsCtm {
     }
 
     @Override
-    public ImmutableList<UserExt> find(ImmutableList<Integer> userIds) {
+    public ImmutableList<UserRds> find(ImmutableList<Integer> userIds) {
         val results = em //
           .createNamedQuery("User.findByIdsAndStatus")//
           .setParameter("ids", userIds.castToList()) //
