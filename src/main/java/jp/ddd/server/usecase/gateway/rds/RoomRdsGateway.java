@@ -1,6 +1,5 @@
 package jp.ddd.server.usecase.gateway.rds;
 
-import jp.ddd.server.adapter.gateway.rds.custom.RoomRdsGatewayCtm;
 import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
 import org.springframework.data.jpa.repository.JpaRepository;
 

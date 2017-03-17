@@ -1,13 +1,12 @@
 package jp.ddd.server.adapter.gateway.rds.impl;
 
-import jp.ddd.server.adapter.gateway.rds.custom.RoomRdsGatewayCtm;
+import jp.ddd.server.usecase.gateway.rds.RoomRdsGatewayCtm;
 import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
@@ -15,7 +14,6 @@ import java.util.Optional;
 /**
  * Created by noguchi_kohei 
  */
-@Repository
 public class RoomRdsGatewayImpl implements RoomRdsGatewayCtm {
     @Autowired
     private EntityManager em;

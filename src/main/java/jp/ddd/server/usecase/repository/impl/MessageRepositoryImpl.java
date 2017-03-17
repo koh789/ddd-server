@@ -13,7 +13,7 @@ import jp.ddd.server.other.utils.Dates;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
  * 当クラスでDDDにおけるドメインレポジトリを表現します。
  * Created by noguchi_kohei
  */
-@Repository
+@Component
 public class MessageRepositoryImpl implements MessageRepository {
     @Autowired
     private MessageRdsGateway messageRdsGateway;

@@ -14,7 +14,7 @@ import jp.ddd.server.domain.repository.UserRepository;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -24,10 +24,10 @@ import java.util.Optional;
  * 当クラスでDDDにおけるドメインレポジトリを表現します。
  * Created by noguchi_kohei
  */
-@Repository
+@Component
 public class UserRepositoryImpl implements UserRepository {
     @Autowired
-    private UserRdsGateway userRepository;
+    private UserRdsGateway userRdsGateway;
     @Autowired
     private SessionUserRedisGateway sessionUserRedisGateway;
 
@@ -37,28 +37,28 @@ public class UserRepositoryImpl implements UserRepository {
             throw new IllegalDataException("登録済みloginIdです。" + user.getLoginId().getId());
         }
 
-        val result = userRepository.save(UserRds.create(user));
+        val result = userRdsGateway.save(UserRds.create(user));
         return User.create(result);
     }
 
     @Override
     public boolean isExist(LoginId loginId) {
-        return userRepository.getOpt(loginId.getId()).isPresent();
+        return userRdsGateway.getOpt(loginId.getId()).isPresent();
     }
 
     @Override
     public Optional<User> getOpt(LoginId loginId, HashPass hashPass) {
-        return userRepository.getOpt(loginId.getId(), hashPass.getPass()).map(res -> User.create(res));
+        return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()).map(res -> User.create(res));
     }
 
     @Override
     public ImmutableList<User> find(ImmutableList<UserId> userIds) {
-        return userRepository.find(userIds.collect(uid -> uid.getId())).collect(res -> User.create(res));
+        return userRdsGateway.find(userIds.collect(uid -> uid.getId())).collect(res -> User.create(res));
     }
 
     @Override
     public User login(String sid, LoginId loginId, HashPass hashPass) {
-        return userRepository.getOpt(loginId.getId(), hashPass.getPass()) //
+        return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()) //
           .map(u -> {
               val sessionUser = SessionUser.create(sid, User.create(u));
               return sessionUserRedisGateway.save(sessionUser).getUser();

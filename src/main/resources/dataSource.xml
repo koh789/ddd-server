@@ -10,9 +10,8 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         http://docs.socialsignin.org/schema/data/dynamodb http://docs.socialsignin.org/schema/data/dynamodb/spring-dynamodb.xsd">
 
-    <jpa:repositories base-package="jp.ddd.server.adapter.gateway"/>
-    <context:property-placeholder
-            location="classpath:spring/dataSource.properties, classpath:spring/dynamoDb.properties"/>
+    <jpa:repositories base-package="jp.ddd.server.usecase.gateway.rds"/>
+    <context:property-placeholder location="classpath:spring/*.properties"/>
 
     <!-- ================================ mysql ================================  -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -74,6 +73,7 @@
     </bean>
 
     <!-- ================================ dynamodb ================================ -->
+    <!--
     <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
         <constructor-arg ref="amazonAWSCredentials"/>
         <property name="endpoint" value="${aws.dynamodb.endpoint}"/>
@@ -84,8 +84,9 @@
         <constructor-arg value="${aws.secretkey}"/>
     </bean>
 
-    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb"
+    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway"
                            amazon-dynamodb-ref="amazonDynamoDB"/>
+    -->
 
     <!-- spring-cache -->
     <!-- <cache:annotation-driven /> -->

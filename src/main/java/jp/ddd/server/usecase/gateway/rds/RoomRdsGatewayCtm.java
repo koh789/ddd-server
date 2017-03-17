@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.rds.custom;
+package jp.ddd.server.usecase.gateway.rds;
 
 import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
 import org.eclipse.collections.api.list.ImmutableList;

@@ -34,7 +34,7 @@
     </mvc:interceptors>
 
     <context:property-placeholder
-            location="classpath:core.properties, classpath:spring/dataSource.properties, classpath:messages/validator_ja.properties"/>
+            location="classpath:core.properties, classpath:spring/*.properties, classpath:messages/validator_ja.properties"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <tx:annotation-driven proxy-target-class="true" order="2"/>

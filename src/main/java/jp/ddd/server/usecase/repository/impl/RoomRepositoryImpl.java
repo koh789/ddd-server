@@ -15,7 +15,7 @@ import jp.ddd.server.domain.repository.RoomRepository;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -26,7 +26,7 @@ import java.util.Optional;
  * 当クラスでDDDにおけるドメインレポジトリを表現します。
  * Created by noguchi_kohei
  */
-@Repository
+@Component
 public class RoomRepositoryImpl implements RoomRepository {
     @Autowired
     private RoomRdsGateway roomRdsGateway;

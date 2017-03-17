@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.rds.custom;
+package jp.ddd.server.usecase.gateway.rds;
 
 /**
  * Created by noguchi_kohei 

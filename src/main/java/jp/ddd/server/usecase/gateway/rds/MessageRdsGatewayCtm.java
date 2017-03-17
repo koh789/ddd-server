@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.rds.custom;
+package jp.ddd.server.usecase.gateway.rds;
 
 import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
 import jp.ddd.server.other.data.common.Page;

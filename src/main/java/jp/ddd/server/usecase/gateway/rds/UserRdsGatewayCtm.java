@@ -1,13 +1,15 @@
-package jp.ddd.server.adapter.gateway.rds.custom;
+package jp.ddd.server.usecase.gateway.rds;
 
 import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 /**
  * Created by noguchi_kohei 
  */
+@Repository
 public interface UserRdsGatewayCtm {
 
     Optional<UserRds> getOpt(String loginId);

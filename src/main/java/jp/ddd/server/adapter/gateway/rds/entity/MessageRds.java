@@ -20,9 +20,9 @@ import java.util.List;
 @Entity
 @NamedQueries({ //
   @NamedQuery(name = "Message.findWithReadByRoomIdOrderByIdDesc", //
-    query = "SELECT m FROM Message m JOIN FETCH  m.messageReads mr WHERE m.roomId=:rid AND m.status=:status ORDER BY m.id DESC"),
+    query = "SELECT m FROM MessageRds m JOIN FETCH  m.messageReads mr WHERE m.roomId=:rid AND m.status=:status ORDER BY m.id DESC"),
   @NamedQuery(name = "Message.findUnreadByRidAndUid",//
-    query = "SELECT m FROM Message m LEFT JOIN FETCH m.messageReads mr WHERE m.roomId=:rid AND m.userId<>:uid AND (mr.id IS NULL OR mr.userId <> :uid) AND m.status=:status") })
+    query = "SELECT m FROM MessageRds m LEFT JOIN FETCH m.messageReads mr WHERE m.roomId=:rid AND m.userId<>:uid AND (mr.id IS NULL OR mr.userId <> :uid) AND m.status=:status") })
 public class MessageRds extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
