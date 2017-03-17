@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.rds.entity.impl;
+package jp.ddd.server.adapter.gateway.rds.impl;
 
 import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGatewayCtm;
 import jp.ddd.server.adapter.gateway.rds.entity.RoomUserRds;
