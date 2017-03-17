@@ -5,6 +5,7 @@ import jp.ddd.server.adapter.web.controller.input.user.UserForm;
 import jp.ddd.server.adapter.web.presenter.api.output.ResultJson;
 import jp.ddd.server.adapter.web.presenter.api.output.user.RegisteredUserJson;
 import jp.ddd.server.domain.entity.user.User;
+import jp.ddd.server.other.annotation.NotLoginRequired;
 import jp.ddd.server.other.exception.IllegalDataException;
 import jp.ddd.server.other.utils.Msg;
 import jp.ddd.server.usecase.web.inputport.UserUseCase;
@@ -31,6 +32,7 @@ public class UserController extends BaseApi {
     @Autowired
     private UserPresenter userPresenter;
 
+    @NotLoginRequired
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResultJson<RegisteredUserJson> register(@RequestBody @Validated UserForm userForm, HttpServletRequest req) {
         if (!userForm.getPassword().equals(userForm.getConfirmedPassword())) {

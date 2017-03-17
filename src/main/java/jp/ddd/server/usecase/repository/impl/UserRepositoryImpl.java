@@ -3,7 +3,6 @@ package jp.ddd.server.usecase.repository.impl;
 import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.usecase.gateway.rds.UserRdsGateway;
 import jp.ddd.server.usecase.gateway.redis.SessionUserRedisGateway;
-import jp.ddd.server.domain.entity.user.User;
 import jp.ddd.server.domain.entity.user.core.HashPass;
 import jp.ddd.server.domain.entity.user.core.LoginId;
 import jp.ddd.server.domain.entity.user.core.UserId;
@@ -32,13 +31,13 @@ public class UserRepositoryImpl implements UserRepository {
     private SessionUserRedisGateway sessionUserRedisGateway;
 
     @Override
-    public User register(User user) {
+    public jp.ddd.server.domain.entity.user.User register(jp.ddd.server.domain.entity.user.User user) {
         if (isExist(user.getLoginId())) {
             throw new IllegalDataException("登録済みloginIdです。" + user.getLoginId().getId());
         }
 
         val result = userRdsGateway.save(UserRds.create(user));
-        return User.create(result);
+        return jp.ddd.server.domain.entity.user.User.create(result);
     }
 
     @Override
@@ -47,20 +46,22 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getOpt(LoginId loginId, HashPass hashPass) {
-        return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()).map(res -> User.create(res));
+    public Optional<jp.ddd.server.domain.entity.user.User> getOpt(LoginId loginId, HashPass hashPass) {
+        return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()).map(res -> jp.ddd.server.domain.entity.user.User
+          .create(res));
     }
 
     @Override
-    public ImmutableList<User> find(ImmutableList<UserId> userIds) {
-        return userRdsGateway.find(userIds.collect(uid -> uid.getId())).collect(res -> User.create(res));
+    public ImmutableList<jp.ddd.server.domain.entity.user.User> find(ImmutableList<UserId> userIds) {
+        return userRdsGateway.find(userIds.collect(uid -> uid.getId())).collect(res -> jp.ddd.server.domain.entity.user.User
+          .create(res));
     }
 
     @Override
-    public User login(String sid, LoginId loginId, HashPass hashPass) {
+    public jp.ddd.server.domain.entity.user.User login(String sid, LoginId loginId, HashPass hashPass) {
         return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()) //
           .map(u -> {
-              val sessionUser = SessionUser.create(sid, User.create(u));
+              val sessionUser = SessionUser.create(sid, jp.ddd.server.domain.entity.user.User.create(u));
               return sessionUserRedisGateway.save(sessionUser).getUser();
           }).orElseThrow(() -> new AuthException("invalid loginId and password!" + loginId.getId()));
     }
@@ -76,7 +77,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getOptBySid(String sid) {
+    public Optional<jp.ddd.server.domain.entity.user.User> getOptBySid(String sid) {
         return sessionUserRedisGateway.getOpt(sid).map(su -> su.getUser());
     }
 }

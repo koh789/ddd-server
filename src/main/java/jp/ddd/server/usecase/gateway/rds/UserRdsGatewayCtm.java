@@ -9,7 +9,6 @@ import java.util.Optional;
 /**
  * Created by noguchi_kohei 
  */
-@Repository
 public interface UserRdsGatewayCtm {
 
     Optional<UserRds> getOpt(String loginId);

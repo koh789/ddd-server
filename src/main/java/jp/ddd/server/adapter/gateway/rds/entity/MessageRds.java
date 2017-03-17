@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "message")
 @Entity
 @NamedQueries({ //
   @NamedQuery(name = "Message.findWithReadByRoomIdOrderByIdDesc", //

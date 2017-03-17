@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.rds.impl;
+package jp.ddd.server.adapter.gateway.rds.entity.impl;
 
 import jp.ddd.server.usecase.gateway.rds.MessageRdsGatewayCtm;
 import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
@@ -8,12 +8,14 @@ import jp.ddd.server.other.utils.enums.Status;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 
 /**
  * Created by noguchi_kohei 
  */
+@Component
 public class MessageRdsGatewayImpl implements MessageRdsGatewayCtm {
     @Autowired
     private EntityManager em;
