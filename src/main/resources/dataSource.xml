@@ -83,8 +83,8 @@
         <constructor-arg value="${aws.secretkey}"/>
     </bean>
 
-    <dynamodb:repositories base-package="jp.ddd.server.adapter.gateway.dynamodb"
-                           amazon-dynamodb-ref="amazonDynamoDB"/>
+    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb"
+                           amazon-dynamodb-ref="amazonDynamoDB" />
 
     <!-- spring-cache -->
     <!-- <cache:annotation-driven /> -->
