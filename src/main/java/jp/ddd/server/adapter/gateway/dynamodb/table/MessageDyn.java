@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @NoArgsConstructor
 @Data
-@DynamoDBTable(tableName = "ds_message")
+//@DynamoDBTable(tableName = "ds_message")
 public class MessageDyn implements Serializable {
     private static final long serialVersionUID = 1L;
 
