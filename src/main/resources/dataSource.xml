@@ -72,20 +72,6 @@
         <constructor-arg value="queue-key"/>
     </bean>
 
-    <!-- ================================ dynamodb ================================ -->
-    <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
-        <constructor-arg ref="amazonAWSCredentials"/>
-        <property name="endpoint" value="${aws.dynamodb.endpoint}"/>
-    </bean>
-
-    <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
-        <constructor-arg value="${aws.accesskey}"/>
-        <constructor-arg value="${aws.secretkey}"/>
-    </bean>
-
-    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb"
-                           amazon-dynamodb-ref="amazonDynamoDB" />
-
     <!-- spring-cache -->
     <!-- <cache:annotation-driven /> -->
     <!--<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"

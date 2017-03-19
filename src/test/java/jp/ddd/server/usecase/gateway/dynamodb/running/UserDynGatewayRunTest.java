@@ -1,13 +1,21 @@
 package jp.ddd.server.usecase.gateway.dynamodb.running;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.model.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
 import jp.ddd.server.usecase.gateway.dynamodb.UserDynGateway;
 import lombok.val;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.fail;
 
@@ -17,9 +25,9 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-context.xml" })
 public class UserDynGatewayRunTest {
-
     @Autowired
     private UserDynGateway userDynGateway;
+
 
     @Test
     public void saveTest() {
