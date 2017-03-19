@@ -15,15 +15,15 @@
 
     <!-- ================================ dynamodb ================================ -->
 
-    <bean id="tableNameOverride" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="staticMethod"
-                  value="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix"/>
-        <property name="arguments" value="ds_"/>
-    </bean>
+    <!--<bean id="tableNameOverride" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">-->
+    <!--<property name="staticMethod"-->
+    <!--value="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix"/>-->
+    <!--<property name="arguments" value="ds_"/>-->
+    <!--</bean>-->
 
-    <bean id="dynamoDBMapperConfig" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig">
-        <constructor-arg index="0" ref="tableNameOverride"/>
-    </bean>
+    <!--<bean id="dynamoDBMapperConfig" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig">-->
+    <!--<constructor-arg index="0" ref="tableNameOverride"/>-->
+    <!--</bean>-->
 
     <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
         <constructor-arg value="${aws.accesskey}"/>
@@ -35,15 +35,9 @@
         <property name="endpoint" value="${aws.dynamodb.endpoint}"/>
     </bean>
 
-    <bean id="dynamoDBMapper" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper">
-        <constructor-arg index="0" ref="amazonDynamoDB"/>
-        <constructor-arg index="1" ref="dynamoDBMapperConfig"/>
-    </bean>
-    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb" amazon-dynamodb-ref="amazonDynamoDB"
-                           dynamodb-mapper-config-ref="dynamoDBMapperConfig"/>
-
-    <!-- spring-cache -->
-    <!-- <cache:annotation-driven /> -->
-    <!--<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"
-        c:template-ref="redisTemplate" /> -->
+    <!--<bean id="dynamoDBMapper" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper">-->
+    <!--<constructor-arg index="0" ref="amazonDynamoDB"/>-->
+    <!--<constructor-arg index="1" ref="dynamoDBMapperConfig"/>-->
+    <!--</bean>-->
+    <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb" amazon-dynamodb-ref="amazonDynamoDB"/>
 </beans>

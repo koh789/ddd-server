@@ -6,10 +6,11 @@ import org.socialsignin.spring.data.dynamodb.repository.DynamoDBCrudRepository;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * Created by noguchi_kohei 
  */
 @EnableScan
-public interface UserDynGateway extends JpaRepository<UserDyn, Integer>, UserDynGatewayCtm {
+public interface UserDynGateway extends CrudRepository<UserDyn, Integer>, UserDynGatewayCtm {
 }
