@@ -26,8 +26,8 @@
     <!--</bean>-->
 
     <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
-        <constructor-arg value="${aws.accesskey}"/>
-        <constructor-arg value="${aws.secretkey}"/>
+        <constructor-arg name="accessKey" value="${aws.accessKey}"/>
+        <constructor-arg name="secretKey" value="${aws.secretKey}"/>
     </bean>
 
     <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
