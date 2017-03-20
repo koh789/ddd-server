@@ -46,11 +46,8 @@
         <property name="basenames" value="messages.validator"/>
     </bean>
 
-    <!-- mysql -->
+    <!-- mysql ,redis, dynamoDb -->
     <import resource="classpath:dataSource.xml"/>
-
-    <!-- dynamodb -->
-    <import resource="classpath:dynamoDb.xml"/>
 
     <!-- FreeMarker -->
     <import resource="classpath:/freemarker.xml"/>

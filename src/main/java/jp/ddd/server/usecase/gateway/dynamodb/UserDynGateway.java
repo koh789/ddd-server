@@ -17,5 +17,5 @@ import java.util.Optional;
 @EnableScan
 public interface UserDynGateway extends DynamoDBPagingAndSortingRepository<UserDyn, String>, UserDynGatewayCtm {
 
-    Optional<UserDyn> getByLoginId(String loginId);
+//    Optional<UserDyn> getByLoginId(String loginId);
 }
