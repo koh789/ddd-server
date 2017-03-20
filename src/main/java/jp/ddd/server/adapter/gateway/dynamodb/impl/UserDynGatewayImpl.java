@@ -1,11 +1,10 @@
-package jp.ddd.server.adapter.gateway;
+package jp.ddd.server.adapter.gateway.dynamodb.impl;
 
 import jp.ddd.server.adapter.gateway.dynamodb.custom.UserDynGatewayCtm;
-import org.springframework.stereotype.Repository;
 
 /**
- * Created by kohei on 2017/03/19.
+ * Created by kohei on 2017/03/20.
  */
-@Repository
 public class UserDynGatewayImpl implements UserDynGatewayCtm {
+
 }

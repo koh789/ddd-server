@@ -9,9 +9,13 @@ import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRep
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 /**
  * Created by noguchi_kohei 
  */
 @EnableScan
 public interface UserDynGateway extends DynamoDBPagingAndSortingRepository<UserDyn, String>, UserDynGatewayCtm {
+
+    Optional<UserDyn> getByLoginId(String loginId);
 }
