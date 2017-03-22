@@ -22,5 +22,5 @@ import java.util.Optional;
 @EnableScan
 public interface UserDynGateway extends DynamoDBCrudRepository<UserDyn, String>, UserDynGatewayCtm {
 
-    List<UserDyn> findByLoginId(String loginId);
+    Optional<UserDyn> getOptByLoginId(String loginId);
 }

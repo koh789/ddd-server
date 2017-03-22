@@ -31,13 +31,13 @@ public class UserDynGatewayRunTest {
     @Test
     public void saveTest() {
         try {
-            //            val userDyn = UserDyn.builder().loginId("dummy@gmail.com").email("dummy@gmail.com")
-            //              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001000").build();
-            //            val result = userDynGateway.save(userDyn);
+//            val userDyn = UserDyn.builder().loginId("dummy3@gmail.com").email("dummy3@gmail.com")
+//              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001002").build();
+//            val result = userDynGateway.save(userDyn);
 
-//            val result = userDynGateway.findOne("aa");
-            val result = userDynGateway.findByLoginId("dummy@gmail.com");
-            System.out.println(result);
+            val userDyn1 = userDynGateway.findOne("47872f28-aece-4f1c-89fe-cb7af09a36fb");
+            val results = userDynGateway.getOptByLoginId("dummy@gmail.com");
+            System.out.println(userDyn1);
         } catch (Exception e) {
             fail();
         }

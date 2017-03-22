@@ -17,7 +17,7 @@
         <spring.framework.data.redis.version>1.4.0.RELEASE</spring.framework.data.redis.version>
         <hibernate.version>5.1.0.Final</hibernate.version>
         <redis.clients.version>2.6.0</redis.clients.version>
-        <spring.data.dynamodb.version>4.2.0</spring.data.dynamodb.version>
+        <spring.data.dynamodb.version>4.4.1</spring.data.dynamodb.version>
         <aws.java.sdk.version>1.11.80</aws.java.sdk.version>
 
         <apache.commons.version>2.3</apache.commons.version>
