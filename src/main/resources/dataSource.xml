@@ -8,7 +8,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-        http://docs.socialsignin.org/schema/data/dynamodb http://docs.socialsignin.org/schema/data/dynamodb/spring-dynamodb.xsd">
+        ">
 
     <jpa:repositories base-package="jp.ddd.server.usecase.gateway.rds"/>
     <context:property-placeholder location="classpath:spring/*.properties"/>
@@ -72,6 +72,7 @@
         <constructor-arg value="queue-key"/>
     </bean>
 
+<<<<<<< HEAD
     <!-- ================================ dynamodb ================================ -->
     <!--
     <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
@@ -88,6 +89,13 @@
                            amazon-dynamodb-ref="amazonDynamoDB" />
     -->
     <!-- spring-cache -->
+=======
+    <!-- ================================ dynamoDb ================================ -->
+    <!-- import java config -->
+    <bean name="/DynamoDbConfig" class="jp.ddd.server.other.config.DynamoDbConfig"/>
+
+    <!-- ================================ spring-cache ================================ -->
+>>>>>>> feat/toDynamo
     <!-- <cache:annotation-driven /> -->
     <!--<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"
         c:template-ref="redisTemplate" /> -->

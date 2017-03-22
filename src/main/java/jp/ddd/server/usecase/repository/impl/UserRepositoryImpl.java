@@ -1,6 +1,9 @@
 package jp.ddd.server.usecase.repository.impl;
 
+import jp.ddd.server.adapter.gateway.dynamodb.table.SequenceDyn;
 import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
+import jp.ddd.server.usecase.gateway.dynamodb.SequenceDynGateway;
+import jp.ddd.server.usecase.gateway.dynamodb.UserDynGateway;
 import jp.ddd.server.usecase.gateway.rds.UserRdsGateway;
 import jp.ddd.server.usecase.gateway.redis.SessionUserRedisGateway;
 import jp.ddd.server.domain.entity.user.core.HashPass;
@@ -10,6 +13,7 @@ import jp.ddd.server.adapter.gateway.redis.entity.SessionUser;
 import jp.ddd.server.other.exception.AuthException;
 import jp.ddd.server.other.exception.IllegalDataException;
 import jp.ddd.server.domain.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,8 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
     @Autowired
     private UserRdsGateway userRdsGateway;
+    @Autowired
+    private UserDynGateway userDynGateway;
     @Autowired
     private SessionUserRedisGateway sessionUserRedisGateway;
 

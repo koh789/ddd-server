@@ -1,8 +1,7 @@
 package jp.ddd.server.usecase.gateway.dynamodb.running;
 
 import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
-import jp.ddd.server.usecase.gateway.dynamodb.UserDynGateway;
-import lombok.val;
+import jp.ddd.server.usecase.gateway.dynamodb.SequenceDynGateway;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +15,15 @@ import static org.junit.Assert.fail;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-context.xml" })
-public class UserDynGatewayRunTest {
-
+public class SequenceDynGatewayRunTest {
     @Autowired
-    private UserDynGateway userDynGateway;
+    private SequenceDynGateway sequenceDynGateway;
 
     @Test
-    public void saveTest() {
+    public void incrementNumTest() {
         try {
-            val userDyn = UserDyn.builder().loginId("dummy3@gmail.com").email("dummy3@gmail.com")
-              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001002").build();
-            val result = userDynGateway.saveWithIncrementKey(userDyn);
-            val results = userDynGateway.getOptByLoginId("dummy@gmail.com");
-            System.out.println(results);
+            sequenceDynGateway.incrementNum(UserDyn.TABLE_NAME);
+            System.out.println("");
         } catch (Exception e) {
             fail();
         }
