@@ -10,6 +10,7 @@ import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRep
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,9 @@ import java.util.Optional;
 /**
  * Created by noguchi_kohei 
  */
+@Repository
 @EnableScan
 public interface UserDynGateway extends DynamoDBCrudRepository<UserDyn, String>, UserDynGatewayCtm {
 
+    List<UserDyn> findByLoginId(String loginId);
 }

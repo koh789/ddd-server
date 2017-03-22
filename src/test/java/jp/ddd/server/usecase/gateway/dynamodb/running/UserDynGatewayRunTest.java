@@ -35,7 +35,8 @@ public class UserDynGatewayRunTest {
             //              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001000").build();
             //            val result = userDynGateway.save(userDyn);
 
-            val result = userDynGateway.findOne("aa");
+//            val result = userDynGateway.findOne("aa");
+            val result = userDynGateway.findByLoginId("dummy@gmail.com");
             System.out.println(result);
         } catch (Exception e) {
             fail();

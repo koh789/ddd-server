@@ -8,7 +8,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
-        http://docs.socialsignin.org/schema/data/dynamodb http://docs.socialsignin.org/schema/data/dynamodb/spring-dynamodb.xsd">
+        ">
 
     <jpa:repositories base-package="jp.ddd.server.usecase.gateway.rds"/>
     <context:property-placeholder location="classpath:spring/*.properties"/>
@@ -74,36 +74,8 @@
 
     <!-- ================================ dynamoDb ================================ -->
     <!-- import java config -->
-    <bean name="/DynamoDbConfig" class="jp.ddd.server.other.config.DynamoDbConfig" />
+    <bean name="/DynamoDbConfig" class="jp.ddd.server.other.config.DynamoDbConfig"/>
 
-
-    <!--
-        <bean id="tableNameOverride" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="staticMethod"
-        value="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix"/>
-        <property name="arguments" value="ds_"/>
-        </bean>
-
-        <bean id="dynamoDBMapperConfig" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig">
-        <constructor-arg index="0" ref="tableNameOverride"/>
-        </bean>
-
-        <bean id="amazonAWSCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
-            <constructor-arg name="accessKey" value="${aws.accessKey}"/>
-            <constructor-arg name="secretKey" value="${aws.secretKey}"/>
-        </bean>
-
-        <bean id="amazonDynamoDB" class="com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient">
-            <constructor-arg ref="amazonAWSCredentials"/>
-            <property name="endpoint" value="${aws.dynamodb.endpoint}"/>
-        </bean>
-
-        <bean id="dynamoDBMapper" class="com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper">
-        <constructor-arg index="0" ref="amazonDynamoDB"/>
-        <constructor-arg index="1" ref="dynamoDBMapperConfig"/>
-        </bean>
-        <dynamodb:repositories base-package="jp.ddd.server.usecase.gateway.dynamodb" amazon-dynamodb-ref="amazonDynamoDB"/>
-    -->
     <!-- ================================ spring-cache ================================ -->
     <!-- <cache:annotation-driven /> -->
     <!--<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"
