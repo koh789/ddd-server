@@ -20,9 +20,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableDynamoDBRepositories(dynamoDBMapperConfigRef = "dynamoDBMapperConfig", basePackages = "jp.ddd.server.usecase.gateway.dynamodb")
 public class DynamoDbConfig {
 
-    @Value("${aws.dynamodb.endpoint}")
+    @Value("${aws.dynamoDb.endpoint}")
     private String dynamoDBEndpoint;
-    @Value("${aws.dynamodb.prefix}")
+    @Value("${aws.dynamoDb.prefix}")
     private String tableNamePrefix;
     @Value("${aws.accessKey}")
     private String awsAccessKey;

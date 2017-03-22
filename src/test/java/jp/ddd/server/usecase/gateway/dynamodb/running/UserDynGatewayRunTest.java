@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.BeforeTransaction;
@@ -31,13 +32,11 @@ public class UserDynGatewayRunTest {
     @Test
     public void saveTest() {
         try {
-//            val userDyn = UserDyn.builder().loginId("dummy3@gmail.com").email("dummy3@gmail.com")
-//              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001002").build();
-//            val result = userDynGateway.save(userDyn);
-
-            val userDyn1 = userDynGateway.findOne("47872f28-aece-4f1c-89fe-cb7af09a36fb");
+            val userDyn = UserDyn.builder().loginId("dummy3@gmail.com").email("dummy3@gmail.com")
+              .pass("B5A2C96250612366EA272FFAC6D9744AAF4B45AACD96AA7CFCB931EE3B558259").tel("08010001002").build();
+            val result = userDynGateway.saveWithIncrementKey(userDyn);
             val results = userDynGateway.getOptByLoginId("dummy@gmail.com");
-            System.out.println(userDyn1);
+            System.out.println(results);
         } catch (Exception e) {
             fail();
         }

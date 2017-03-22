@@ -18,9 +18,8 @@ import java.util.Optional;
 /**
  * Created by noguchi_kohei 
  */
-@Repository
 @EnableScan
-public interface UserDynGateway extends DynamoDBCrudRepository<UserDyn, String>, UserDynGatewayCtm {
+public interface UserDynGateway extends DynamoDBPagingAndSortingRepository<UserDyn, String>, UserDynGatewayCtm {
 
     Optional<UserDyn> getOptByLoginId(String loginId);
 }
