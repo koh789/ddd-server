@@ -1,5 +1,6 @@
 package jp.ddd.server.domain.entity.user;
 
+import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
 import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.adapter.web.controller.input.user.UserForm;
 import jp.ddd.server.domain.entity.Entity;
@@ -35,6 +36,16 @@ public class User implements Entity<User> {
           .loginId(new LoginId(userRds.getLoginId())) //
           .hashPass(new HashPass(userRds.getPass())) //
           .status(userRds.getStatus()) //
+          .userInfo(info) //
+          .build();
+    }
+
+    public static User create(UserDyn userDyn) {
+        val info = UserInfo.builder().email(userDyn.getEmail()).name(userDyn.getName()).tel(userDyn.getTel()).build();
+        return jp.ddd.server.domain.entity.user.User.builder() //
+          .id(new UserId(userDyn.getUserId())) //
+          .loginId(new LoginId(userDyn.getLoginId())) //
+          .hashPass(new HashPass(userDyn.getPass())) //
           .userInfo(info) //
           .build();
     }

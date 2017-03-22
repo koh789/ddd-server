@@ -40,13 +40,4 @@ public class UserRdsGatewayImpl implements UserRdsGatewayCtm {
         return DsLists.getFirstOpt(results);
     }
 
-    @Override
-    public ImmutableList<UserRds> find(ImmutableList<Integer> userIds) {
-        val results = em //
-          .createNamedQuery("User.findByIdsAndStatus")//
-          .setParameter("ids", userIds.castToList()) //
-          .setParameter("status", Status.VALID)//
-          .getResultList();
-        return DsLists.toImt(results);
-    }
 }
