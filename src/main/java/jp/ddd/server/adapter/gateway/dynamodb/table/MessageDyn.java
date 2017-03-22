@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @NoArgsConstructor
 @Data
-@DynamoDBTable(tableName = "ds_message")
+@DynamoDBTable(tableName = "message")
 public class MessageDyn implements Serializable {
     private static final long serialVersionUID = 1L;
 
