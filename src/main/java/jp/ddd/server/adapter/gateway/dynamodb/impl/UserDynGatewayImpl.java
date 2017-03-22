@@ -42,11 +42,4 @@ public class UserDynGatewayImpl implements UserDynGatewayCtm {
         return DsLists.getFirstOpt(results);
     }
 
-    //    @Override
-    //    public ImmutableList<UserDyn> find(ImmutableList<Integer> userIds) {
-    //        //        val exp = new DynamoDBScanExpression();
-    //
-    //
-    //        return Lists.immutable.empty();
-    //    }
 }

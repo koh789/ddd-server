@@ -1,12 +1,10 @@
 package jp.ddd.server.usecase.repository.impl;
 
 import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
-import jp.ddd.server.adapter.gateway.rds.entity.UserRds;
 import jp.ddd.server.adapter.gateway.redis.entity.SessionUser;
 import jp.ddd.server.domain.entity.user.User;
 import jp.ddd.server.domain.entity.user.core.HashPass;
 import jp.ddd.server.domain.entity.user.core.LoginId;
-import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.exception.AuthException;
 import jp.ddd.server.other.exception.IllegalDataException;
@@ -14,7 +12,6 @@ import jp.ddd.server.usecase.gateway.dynamodb.UserDynGateway;
 import jp.ddd.server.usecase.gateway.rds.UserRdsGateway;
 import jp.ddd.server.usecase.gateway.redis.SessionUserRedisGateway;
 import lombok.val;
-import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,10 +54,10 @@ public class UserRepositoryImpl implements UserRepository {
           .map(u -> User.create(u));
     }
 
-
     @Override
     public User login(String sid, LoginId loginId, HashPass hashPass) {
-        return userRdsGateway.getOpt(loginId.getId(), hashPass.getPass()) //
+        return userDynGateway.getOptByLoginId(loginId.getId()) //
+          .filter(u -> u.getPass().equals(hashPass.getPass())) //
           .map(u -> {
               val sessionUser = SessionUser.create(sid, User.create(u));
               return sessionUserRedisGateway.save(sessionUser).getUser();

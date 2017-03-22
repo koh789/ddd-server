@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.DateDynamoDbConverter;
 import jp.ddd.server.adapter.gateway.dynamodb.table.id.RoomUserId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,6 +15,8 @@ import java.util.Date;
 /**
  * Created by noguchi_kohei 
  */
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @DynamoDBTable(tableName = "room_user")
@@ -22,7 +26,7 @@ public class RoomUserDyn implements BaseDyn {
 
     @Id
     @DynamoDBIgnore
-    private RoomUserId roomUserId;
+    private RoomUserId roomUserId = new RoomUserId();
 
     @DynamoDBHashKey(attributeName = "room_id")
     public Integer getRoomId() {
@@ -34,7 +38,7 @@ public class RoomUserDyn implements BaseDyn {
     }
 
     @DynamoDBHashKey(attributeName = "user_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
+//    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
     public Integer getUserId() {
         return this.roomUserId.getUserId();
     }
@@ -45,7 +49,7 @@ public class RoomUserDyn implements BaseDyn {
 
     /** yyyy-MM-dd HH:mm:ss */
     @DynamoDBAttribute(attributeName = "last_room_message_at")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "last_room_message_at")
+//    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "last_room_message_at")
     private String lastRoomMessageAt;
 
     /** yyyy-MM-dd HH:mm:ss */

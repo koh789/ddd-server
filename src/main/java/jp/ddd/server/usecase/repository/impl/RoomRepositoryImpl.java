@@ -1,17 +1,19 @@
 package jp.ddd.server.usecase.repository.impl;
 
 import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
-import jp.ddd.server.usecase.gateway.rds.RoomRdsGateway;
-import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGateway;
+import jp.ddd.server.adapter.gateway.rds.entity.RoomUserRds;
 import jp.ddd.server.domain.entity.room.Room;
 import jp.ddd.server.domain.entity.room.RoomUser;
 import jp.ddd.server.domain.entity.room.core.LastMessageDt;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
-import jp.ddd.server.adapter.gateway.rds.entity.RoomUserRds;
+import jp.ddd.server.domain.repository.RoomRepository;
 import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
-import jp.ddd.server.domain.repository.RoomRepository;
+import jp.ddd.server.usecase.gateway.dynamodb.RoomDynGateway;
+import jp.ddd.server.usecase.gateway.dynamodb.RoomUserDynGateway;
+import jp.ddd.server.usecase.gateway.rds.RoomRdsGateway;
+import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGateway;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,11 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Autowired
     private RoomRdsGateway roomRdsGateway;
     @Autowired
+    private RoomDynGateway roomDynGateway;
+    @Autowired
     private RoomUserRdsGateway roomUserRdsGateway;
+    @Autowired
+    private RoomUserDynGateway roomUserDynGateway;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -48,7 +54,8 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public Optional<Room> getOpt(RoomId roomId) {
-        return roomRdsGateway.getOpt(roomId.getId()).map(r -> Room.create(r, roomUserRdsGateway.findByRoomId(r.getId())));
+        return roomRdsGateway.getOpt(roomId.getId())
+          .map(r -> Room.create(r, roomUserRdsGateway.findByRoomId(r.getId())));
     }
 
     @Override
