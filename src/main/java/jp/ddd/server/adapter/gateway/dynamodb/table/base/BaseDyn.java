@@ -6,5 +6,4 @@ import java.io.Serializable;
  * Created by noguchi_kohei 
  */
 public interface BaseDyn extends Serializable {
-
 }

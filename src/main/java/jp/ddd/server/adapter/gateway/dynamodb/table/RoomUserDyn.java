@@ -38,7 +38,7 @@ public class RoomUserDyn implements BaseDyn {
     }
 
     @DynamoDBHashKey(attributeName = "user_id")
-//    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
     public Integer getUserId() {
         return this.roomUserId.getUserId();
     }
@@ -49,12 +49,17 @@ public class RoomUserDyn implements BaseDyn {
 
     /** yyyy-MM-dd HH:mm:ss */
     @DynamoDBAttribute(attributeName = "last_room_message_at")
-//    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "last_room_message_at")
-    private String lastRoomMessageAt;
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "last_room_message_at")
+    @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
+    private Date lastRoomMessageAt;
 
     /** yyyy-MM-dd HH:mm:ss */
     @DynamoDBAttribute(attributeName = "join_at")
     @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
     private Date joinAt;
 
+    public static RoomUserDyn create(Integer roomId, Integer userId, Date joinAt, Date lastRoomMessageAt) {
+        return RoomUserDyn.builder().joinAt(joinAt).lastRoomMessageAt(lastRoomMessageAt)
+          .roomUserId(RoomUserId.builder().roomId(roomId).userId(userId).build()).build();
+    }
 }

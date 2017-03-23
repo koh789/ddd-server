@@ -29,8 +29,8 @@ public class RoomUserRds extends BaseEntity {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "join_dt")
-    private Date joinDt;
+    @Column(name = "join_at")
+    private Date joinAt;
 
     @Column(name = "room_id")
     private Integer roomId;
@@ -42,6 +42,6 @@ public class RoomUserRds extends BaseEntity {
     private Integer userId;
 
     public static RoomUserRds create(Integer roomId, Integer userId, Date joinDt) {
-        return RoomUserRds.builder().status(Status.VALID).joinDt(joinDt).roomId(roomId).userId(userId).build();
+        return RoomUserRds.builder().status(Status.VALID).joinAt(joinDt).roomId(roomId).userId(userId).build();
     }
 }

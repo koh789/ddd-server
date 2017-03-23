@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @NamedQueries({ //
   @NamedQuery(name = "Room.findWithRoomUserByUidDtStatusDesc",//
-    query = "SELECT r FROM RoomRds r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.status=:status AND ru.status=:status ORDER BY r.lastMessageDt DESC"),
+    query = "SELECT r FROM RoomRds r JOIN FETCH r.roomUsers ru WHERE r.userId=:uid AND r.status=:status AND ru.status=:status ORDER BY r.lastMessageAt DESC"),
   @NamedQuery(name = "Room.getOptWithRoomUserByRidStatus", //
     query = "SELECT r FROM RoomRds r JOIN FETCH r.roomUsers ru WHERE r.id=:rid AND r.status=:status AND ru.status=:status") })
 public class RoomRds extends BaseEntity {
@@ -31,8 +31,8 @@ public class RoomRds extends BaseEntity {
     private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_message_dt")
-    private Date lastMessageDt;
+    @Column(name = "last_message_At")
+    private Date lastMessageAt;
 
     private String name;
 
@@ -51,9 +51,7 @@ public class RoomRds extends BaseEntity {
     private List<MessageRds> messages;
 
     public static RoomRds create(Integer userId, String roomName, Date lastMessageDt) {
-        return RoomRds.builder().status(Status.VALID).lastMessageDt(lastMessageDt).name(roomName).userId(userId)
+        return RoomRds.builder().status(Status.VALID).lastMessageAt(lastMessageDt).name(roomName).userId(userId)
           .build();
     }
-
-
 }

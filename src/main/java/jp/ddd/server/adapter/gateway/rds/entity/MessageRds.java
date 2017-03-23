@@ -1,7 +1,7 @@
 package jp.ddd.server.adapter.gateway.rds.entity;
 
-import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.adapter.gateway.rds.entity.base.BaseEntity;
+import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.*;
 
@@ -33,13 +33,13 @@ public class MessageRds extends BaseEntity {
 
     private String content;
 
-    @Column(name = "last_edit_dt")
+    @Column(name = "last_edit_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastEditDt;
+    private Date lastEditAt;
 
-    @Column(name = "message_dt")
+    @Column(name = "message_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date messageDt;
+    private Date messageAt;
 
     @Column(name = "room_id")
     private Integer roomId;
@@ -56,7 +56,7 @@ public class MessageRds extends BaseEntity {
 
     public static MessageRds create(Message message) {
         return MessageRds.builder().content(message.getContent()).status(Status.VALID)
-          .lastEditDt(message.getLastEditDt().getDate()).messageDt(message.getMessageDt().getDate())
+          .lastEditAt(message.getLastEditDt().getDate()).messageAt(message.getMessageDt().getDate())
           .roomId(message.getRoomId().getId()).userId(message.getUserId().getId()).build();
     }
 }

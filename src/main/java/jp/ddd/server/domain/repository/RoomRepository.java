@@ -2,7 +2,7 @@ package jp.ddd.server.domain.repository;
 
 import jp.ddd.server.domain.entity.room.Room;
 import jp.ddd.server.domain.entity.room.RoomUser;
-import jp.ddd.server.domain.entity.room.core.LastMessageDt;
+import jp.ddd.server.domain.entity.room.core.LastMessageAt;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -21,7 +21,7 @@ public interface RoomRepository {
 
     Optional<Room> getOpt(RoomId roomId);
 
-    void updateLastMsgDt(RoomId roomId, LastMessageDt lastMessageDt);
-
-    ImmutableList<RoomUser> findRoomUser(RoomId roomId);
+//    void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt);
+//
+//    ImmutableList<RoomUser> findRoomUser(RoomId roomId);
 }

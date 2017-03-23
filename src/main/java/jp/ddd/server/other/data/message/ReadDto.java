@@ -37,6 +37,6 @@ public class ReadDto implements Dto {
           .messageId(entity.getMessageId())//
           .readUserId(entity.getUserId())//
           .readUserName(userName)//
-          .readDate(entity.getReadDt()).build();
+          .readDate(entity.getReadAt()).build();
     }
 }

@@ -27,8 +27,8 @@ public class MessageReadRds extends BaseEntity {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "read_dt")
-    private Date readDt;
+    @Column(name = "read_At")
+    private Date readAt;
 
     @Column(name = "message_id")
     private Long messageId;
@@ -36,9 +36,9 @@ public class MessageReadRds extends BaseEntity {
     @Column(name = "user_id")
     private Integer userId;
 
-    public static MessageReadRds create(Long messageId, Integer userId, Date readDt) {
+    public static MessageReadRds create(Long messageId, Integer userId, Date readAt) {
         return MessageReadRds.builder()//
-          .readDt(readDt)//
+          .readAt(readAt)//
           .messageId(messageId)//
           .userId(userId)//
           .build();

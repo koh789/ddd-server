@@ -20,7 +20,7 @@ public class RegisteredMessageJson implements Json {
     private String lastEditDt;
 
     public static RegisteredMessageJson create(MessageRds message) {
-        return RegisteredMessageJson.builder().messageId(message.getId()).messageDt(Dates.toString(message.getMessageDt()))
-          .lastEditDt(Dates.toString(message.getLastEditDt())).build();
+        return RegisteredMessageJson.builder().messageId(message.getId()).messageDt(Dates.toString(message.getMessageAt()))
+          .lastEditDt(Dates.toString(message.getLastEditAt())).build();
     }
 }

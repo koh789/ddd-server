@@ -14,7 +14,7 @@ import org.eclipse.collections.api.list.ImmutableList;
  */
 public interface MessageRepository {
 
-    Message register(Message message);
-
-    ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page);
+//    Message register(Message message);
+//
+//    ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page);
 }

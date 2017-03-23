@@ -1,6 +1,7 @@
 package jp.ddd.server.adapter.gateway.dynamodb.table.id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 /**
  * Created by noguchi_kohei 
  */
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -43,8 +43,8 @@ public class Message implements Entity<Message> {
           .messageId(new MessageId(messageRds.getId()))//
           .roomId(new RoomId(messageRds.getRoomId()))//
           .content(messageRds.getContent())//
-          .lastEditDt(new LastEditDt(messageRds.getLastEditDt()))//
-          .messageDt(new MessageDt(messageRds.getMessageDt()))//
+          .lastEditDt(new LastEditDt(messageRds.getLastEditAt()))//
+          .messageDt(new MessageDt(messageRds.getMessageAt()))//
           .status(messageRds.getStatus())//
           .userId(new UserId(messageRds.getUserId())).build();
     }

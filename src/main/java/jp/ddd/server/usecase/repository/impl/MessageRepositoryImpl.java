@@ -28,16 +28,16 @@ public class MessageRepositoryImpl implements MessageRepository {
     @Autowired
     private MessageReadRdsGateway messageReadRdsGateway;
 
-    @Override
-    public Message register(Message message) {
-        val result = messageRdsGateway.save(MessageRds.create(message));
-        return Message.create(result);
-    }
-
-    @Override
-    public ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page) {
-        messageRdsGateway.findUnread(roomId.getId(), userId.getId())
-          .each(m -> messageReadRdsGateway.save(MessageReadRds.create(m.getId(), userId.getId(), Dates.now())));
-        return messageRdsGateway.findByRoomId(roomId.getId(), page).collect(m -> Message.create(m));
-    }
+//    @Override
+//    public Message register(Message message) {
+//        val result = messageRdsGateway.save(MessageRds.create(message));
+//        return Message.create(result);
+//    }
+//
+//    @Override
+//    public ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page) {
+//        messageRdsGateway.findUnread(roomId.getId(), userId.getId())
+//          .each(m -> messageReadRdsGateway.save(MessageReadRds.create(m.getId(), userId.getId(), Dates.now())));
+//        return messageRdsGateway.findByRoomId(roomId.getId(), page).collect(m -> Message.create(m));
+//    }
 }

@@ -52,7 +52,7 @@ public class MessageDto implements Dto {
           .messageUserId(entity.getUserId()) //
           .messageUserName(messageUserName)//
           .content(entity.getContent())//
-          .messageDate(entity.getMessageDt())//
+          .messageDate(entity.getMessageAt())//
           .reads(reads)//
           .build();
     }

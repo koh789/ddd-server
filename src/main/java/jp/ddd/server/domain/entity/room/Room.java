@@ -1,8 +1,10 @@
 package jp.ddd.server.domain.entity.room;
 
+import jp.ddd.server.adapter.gateway.dynamodb.table.RoomDyn;
+import jp.ddd.server.adapter.gateway.dynamodb.table.RoomUserDyn;
 import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
 import jp.ddd.server.domain.entity.Entity;
-import jp.ddd.server.domain.entity.room.core.LastMessageDt;
+import jp.ddd.server.domain.entity.room.core.LastMessageAt;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.adapter.gateway.rds.entity.RoomUserRds;
@@ -10,6 +12,7 @@ import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 
 @Builder
@@ -20,13 +23,11 @@ public class Room implements Entity<Room> {
 
     private final RoomId roomId;
 
-    private final LastMessageDt lastMessageDt;
+    private final LastMessageAt lastMessageAt;
 
     private final String name;
 
     private final UserId userId;
-
-    private final Status status;
 
     private final ImmutableList<RoomUser> roomUsers;
 
@@ -36,10 +37,21 @@ public class Room implements Entity<Room> {
 
         return Room.builder()//
           .roomId(new RoomId(roomRds.getId()))//
-          .lastMessageDt(new LastMessageDt(roomRds.getLastMessageDt()))//
+          .lastMessageAt(new LastMessageAt(roomRds.getLastMessageAt()))//
           .name(roomRds.getName())//
           .userId(new UserId(roomRds.getUserId()))//
-          .status(roomRds.getStatus())//
+          .roomUsers(roomUsers).build();
+    }
+
+    public static Room create(RoomDyn roomDyn, ImmutableList<RoomUserDyn> roomUserDynList) {
+
+        val roomUsers = roomUserDynList.collect(ru -> RoomUser.create(ru));
+
+        return Room.builder()//
+          .roomId(new RoomId(roomDyn.getRoomId()))//
+          .lastMessageAt(new LastMessageAt(roomDyn.getLastMessageAt()))//
+          .name(roomDyn.getName())//
+          .userId(new UserId(roomDyn.getCreateUserId()))//
           .roomUsers(roomUsers).build();
     }
 }
