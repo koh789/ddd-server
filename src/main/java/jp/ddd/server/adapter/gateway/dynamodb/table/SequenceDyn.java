@@ -19,11 +19,13 @@ import lombok.NoArgsConstructor;
 @DynamoDBTable(tableName = "sequence")
 public class SequenceDyn implements BaseDyn {
     private static final long serialVersionUID = 4034253252658415216L;
-    public static final String TABLE_NAME = "sequence";
 
     @DynamoDBHashKey(attributeName = "name")
     private String name;
     @DynamoDBAttribute(attributeName = "current_num")
     private Integer currentNum;
 
+    public static SequenceDyn create(String name, Integer currentNum) {
+        return SequenceDyn.builder().name(name).currentNum(currentNum).build();
+    }
 }

@@ -4,8 +4,10 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import jp.ddd.server.adapter.gateway.dynamodb.table.SequenceDyn;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
+import jp.ddd.server.other.exception.InternalException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -65,15 +67,27 @@ public class DynamoDbClient<T extends BaseDyn> {
         val seqOpt = Optional.ofNullable(mapper.load(SequenceDyn.class, tableName, mapperConfig));
         return seqOpt.map(seq -> {
             val currentNum = seq.getCurrentNum() + 1;
-            val updateSeq = SequenceDyn.builder().name(seq.getName()).currentNum(currentNum).build();
-            mapper.save(updateSeq, mapperConfig);
+            mapper.save(SequenceDyn.create(seq.getName(), currentNum), mapperConfig);
             return currentNum;
         }).orElseGet(() -> {
             val currentNum = 1;
-            val updateSeq = SequenceDyn.builder().name(tableName).currentNum(currentNum).build();
-            mapper.save(updateSeq, mapperConfig);
+            mapper.save(SequenceDyn.create(tableName, currentNum), mapperConfig);
             return currentNum;
         });
+    }
+
+    /**
+     * sequenceテーブルで保持している指定テーブルのcurrent_numを
+     * インクリメント後、その値を返却します。
+     * 対応クラスに@DynamoDBTableが付与されていることを前提としています。
+     * @param clazz
+     * @return
+     * @exception InternalException
+     */
+    public Integer incrementNum(Class<T> clazz) {
+        val annotation = Optional.ofNullable(clazz.getDeclaredAnnotation(DynamoDBTable.class))
+          .orElseThrow(() -> new InternalException("DynamoDBTableアノテーションが付与されていません。"));
+        return incrementNum(annotation.tableName());
     }
 
     public T save(T t) {

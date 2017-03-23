@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @DynamoDBTable(tableName = "user")
 public class UserDyn implements BaseDyn {
     private static final long serialVersionUID = 5533582298663995575L;
-    public static final String TABLE_NAME = "user";
 
     @DynamoDBHashKey(attributeName = "user_id")
     private Integer userId;

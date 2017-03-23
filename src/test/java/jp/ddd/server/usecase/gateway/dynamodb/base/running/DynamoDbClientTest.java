@@ -1,7 +1,9 @@
-package jp.ddd.server.usecase.gateway.dynamodb.running;
+package jp.ddd.server.usecase.gateway.dynamodb.base.running;
 
+import jp.ddd.server.adapter.gateway.dynamodb.impl.base.DynamoDbClient;
 import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
-import jp.ddd.server.usecase.gateway.dynamodb.SequenceDynGateway;
+import jp.ddd.server.usecase.gateway.dynamodb.RoomDynGateway;
+import lombok.val;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,15 @@ import static org.junit.Assert.fail;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-context.xml" })
-public class SequenceDynGatewayRunTest {
+public class DynamoDbClientTest {
     @Autowired
-    private SequenceDynGateway sequenceDynGateway;
+    private DynamoDbClient<UserDyn> dynamoDbClient;
 
     @Test
-    public void incrementNumTest() {
+    public void incrementTest() {
         try {
-            sequenceDynGateway.incrementNum(UserDyn.TABLE_NAME);
-            System.out.println("");
+            val result = dynamoDbClient.incrementNum(UserDyn.class);
+            System.out.println(result);
         } catch (Exception e) {
             fail();
         }

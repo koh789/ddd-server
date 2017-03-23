@@ -23,7 +23,6 @@ import java.util.Date;
 @DynamoDBTable(tableName = "room")
 public class RoomDyn implements BaseDyn {
     private static final long serialVersionUID = -4244111566039113744L;
-    public static final String TABLE_NAME = "room";
 
     @DynamoDBHashKey(attributeName = "room_id")
     private Integer roomId;

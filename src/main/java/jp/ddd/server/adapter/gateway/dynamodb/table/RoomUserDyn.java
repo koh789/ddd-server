@@ -22,7 +22,6 @@ import java.util.Date;
 @DynamoDBTable(tableName = "room_user")
 public class RoomUserDyn implements BaseDyn {
     private static final long serialVersionUID = 5215040292663232116L;
-    public static final String TABLE_NAME = "room_user";
 
     @Id
     @DynamoDBIgnore
