@@ -36,7 +36,7 @@ public class RoomUserDyn implements BaseDyn {
         this.roomUserId.setRoomId(roomId);
     }
 
-    @DynamoDBHashKey(attributeName = "user_id")
+    @DynamoDBRangeKey(attributeName = "user_id")
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
     public Integer getUserId() {
         return this.roomUserId.getUserId();
