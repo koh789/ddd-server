@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @AllArgsConstructor
 @Value
-public class MessageDt implements Serializable {
+public class MessageAt implements Serializable {
     private static final long serialVersionUID = 4935513382112496976L;
 
     private final Date date;

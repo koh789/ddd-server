@@ -60,14 +60,14 @@ public class RoomRepositoryImpl implements RoomRepository {
 
 //    @Override
 //    public void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt) {
-//        RoomRds roomRds = roomRdsGateway.getOpt(roomId.getId()) //
-//          .orElseThrow(() -> new NotFoundException("対象roomが存在しません" + roomId.getId()));
+//        RoomRds roomRds = roomRdsGateway.getOpt(roomId.getUserId()) //
+//          .orElseThrow(() -> new NotFoundException("対象roomが存在しません" + roomId.getUserId()));
 //        roomRds.setLastMessageAt(lastMessageAt.getDate());
 //        roomRdsGateway.save(roomRds);
 //    }
 //
 //    @Override
 //    public ImmutableList<RoomUser> findRoomUser(RoomId roomId) {
-//        return roomUserRdsGateway.findByRoomId(roomId.getId()).collect(eru -> RoomUser.create(eru));
+//        return roomUserRdsGateway.findByRoomId(roomId.getUserId()).collect(eru -> RoomUser.create(eru));
 //    }
 }

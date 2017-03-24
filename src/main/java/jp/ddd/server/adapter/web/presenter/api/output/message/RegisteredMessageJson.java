@@ -1,7 +1,8 @@
 package jp.ddd.server.adapter.web.presenter.api.output.message;
 
-import jp.ddd.server.adapter.web.presenter.api.output.Json;
 import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
+import jp.ddd.server.adapter.web.presenter.api.output.Json;
+import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.other.utils.Dates;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +16,13 @@ public class RegisteredMessageJson implements Json {
 
     private Long messageId;
     /** yyyy/MM/dd hh:mm:ss */
-    private String messageDt;
+    private String messageAt;
     /** yyyy/MM/dd hh:mm:ss */
-    private String lastEditDt;
+    private String lastEditAt;
 
-    public static RegisteredMessageJson create(MessageRds message) {
-        return RegisteredMessageJson.builder().messageId(message.getId()).messageDt(Dates.toString(message.getMessageAt()))
-          .lastEditDt(Dates.toString(message.getLastEditAt())).build();
+    public static RegisteredMessageJson create(Message message) {
+        return RegisteredMessageJson.builder().messageId(message.getMessageId().getId())
+          .messageAt(Dates.toString(message.getMessageAt().getDate()))
+          .lastEditAt(Dates.toString(message.getLastEditAt().getDate())).build();
     }
 }

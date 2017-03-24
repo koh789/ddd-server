@@ -1,17 +1,22 @@
 package jp.ddd.server.domain.entity.message;
 
+import jp.ddd.server.adapter.gateway.dynamodb.table.MessageDyn;
+import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
+import jp.ddd.server.adapter.web.controller.input.message.MessageForm;
 import jp.ddd.server.domain.entity.Entity;
-import jp.ddd.server.domain.entity.core.LastEditDt;
-import jp.ddd.server.domain.entity.core.MessageDt;
+import jp.ddd.server.domain.entity.core.LastEditAt;
+import jp.ddd.server.domain.entity.core.MessageAt;
 import jp.ddd.server.domain.entity.core.MessageId;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
-import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
-import jp.ddd.server.other.utils.enums.Status;
+import jp.ddd.server.other.utils.Dates;
+import jp.ddd.server.other.utils.DsLists;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.impl.factory.Lists;
 
 /**
  * The persistent class for the message database table.
@@ -28,11 +33,9 @@ public class Message implements Entity<Message> {
 
     private final String content;
 
-    private final LastEditDt lastEditDt;
+    private final LastEditAt lastEditAt;
 
-    private final MessageDt messageDt;
-
-    private final Status status;
+    private final MessageAt messageAt;
 
     private final UserId userId;
 
@@ -43,9 +46,32 @@ public class Message implements Entity<Message> {
           .messageId(new MessageId(messageRds.getId()))//
           .roomId(new RoomId(messageRds.getRoomId()))//
           .content(messageRds.getContent())//
-          .lastEditDt(new LastEditDt(messageRds.getLastEditAt()))//
-          .messageDt(new MessageDt(messageRds.getMessageAt()))//
-          .status(messageRds.getStatus())//
+          .lastEditAt(new LastEditAt(messageRds.getLastEditAt()))//
+          .messageAt(new MessageAt(messageRds.getMessageAt()))//
           .userId(new UserId(messageRds.getUserId())).build();
+    }
+
+    public static Message create(MessageDyn messageDyn) {
+        val messageReads = DsLists.toImt(messageDyn.getMessageReads());
+        return Message.builder()//
+          .messageId(new MessageId(messageDyn.getMessageId()))//
+          .roomId(new RoomId(messageDyn.getRoomId()))//
+          .content(messageDyn.getContent())//
+          .lastEditAt(new LastEditAt(messageDyn.getLastEditAt()))//
+          .messageAt(new MessageAt(messageDyn.getMessageAt()))//
+          .userId(new UserId(messageDyn.getUserId()))
+          .messageReads(messageReads.collect(mr -> MessageRead.create(mr))) //
+          .build();
+    }
+
+    public static Message create(Integer roomId, Integer userId, String content) {
+        val now = Dates.now();
+        return Message.builder()//
+          .roomId(new RoomId(roomId))//
+          .content(content)//
+          .lastEditAt(new LastEditAt(now))//
+          .messageAt(new MessageAt(now))//
+          .userId(new UserId(userId)) //
+          .messageReads(Lists.immutable.empty()).build();
     }
 }

@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.DateDynamoDbConverter;
+import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,5 +36,10 @@ public class RoomDyn implements BaseDyn {
 
     public static RoomDyn create(Integer userId, String roomName, Date lastMessageDt) {
         return RoomDyn.builder().lastMessageAt(lastMessageDt).name(roomName).createUserId(userId).build();
+    }
+
+    public RoomDyn withRoomId(Integer roomId) {
+        this.roomId = roomId;
+        return this;
     }
 }

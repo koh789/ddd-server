@@ -2,7 +2,7 @@ package jp.ddd.server.adapter.gateway.dynamodb.table;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.DateDynamoDbConverter;
+import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConverter;
 import jp.ddd.server.adapter.gateway.dynamodb.table.id.RoomUserId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

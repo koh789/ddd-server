@@ -56,7 +56,7 @@ public class MessageRds extends BaseEntity {
 
     public static MessageRds create(Message message) {
         return MessageRds.builder().content(message.getContent()).status(Status.VALID)
-          .lastEditAt(message.getLastEditDt().getDate()).messageAt(message.getMessageDt().getDate())
+          .lastEditAt(message.getLastEditAt().getDate()).messageAt(message.getMessageAt().getDate())
           .roomId(message.getRoomId().getId()).userId(message.getUserId().getId()).build();
     }
 }

@@ -14,4 +14,8 @@ public class MessageReadId implements Serializable {
     private static final long serialVersionUID = 4935513382112496976L;
 
     private final Long id;
+
+    public boolean isEmpty() {
+        return (id == null);
+    }
 }

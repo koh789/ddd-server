@@ -16,13 +16,13 @@ public class UserPresenterImpl implements UserPresenter {
 
     @Override
     public ResultJson<RegisteredUserJson> toRegisteredJson(User user) {
-        val json = RegisteredUserJson.builder().userId(user.getId().getId()).build();
+        val json = RegisteredUserJson.builder().userId(user.getUserId().getId()).build();
         return ResultJson.create(json);
     }
 
     @Override
     public ResultJson<AuthUserJson> toAuthenticatedJson(String sid, User user) {
-        val json = AuthUserJson.builder().sessionId(sid).userId(user.getId().getId()).loginId(user.getLoginId().getId())
+        val json = AuthUserJson.builder().sessionId(sid).userId(user.getUserId().getId()).loginId(user.getLoginId().getId())
           .name(user.getUserInfo().getName()).email(user.getUserInfo().getEmail()).tel(user.getUserInfo().getTel())
           .build();
         return ResultJson.create(json);

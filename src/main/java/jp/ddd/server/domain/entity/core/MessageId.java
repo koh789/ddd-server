@@ -1,6 +1,7 @@
 package jp.ddd.server.domain.entity.core;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 import java.io.Serializable;

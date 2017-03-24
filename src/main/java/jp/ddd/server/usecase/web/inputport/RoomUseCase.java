@@ -11,4 +11,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 public interface RoomUseCase {
 
     Room register(String loginSessionId, String roomName, ImmutableList<UserId> joinUserIds);
+
+    boolean isRoomUser(Integer roomId, Integer userId);
 }

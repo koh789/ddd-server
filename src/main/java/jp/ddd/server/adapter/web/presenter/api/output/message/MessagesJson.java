@@ -25,7 +25,7 @@ public class MessagesJson implements Json {
 
     private String content;
 
-    private String messageDate;
+    private String messageAt;
 
     private List<ReadJson> reads;
 
@@ -36,7 +36,7 @@ public class MessagesJson implements Json {
           .messageUserId(dto.getMessageUserId())//
           .messageUserName(dto.getMessageUserName())//
           .content(dto.getContent())//
-          .messageDate(Dates.toString(dto.getMessageDate()))//
+          .messageAt(Dates.toString(dto.getMessageDate()))//
           .reads(dto.getReads().collect(r -> ReadJson.create(r)).castToList()) //
           .build();
     }

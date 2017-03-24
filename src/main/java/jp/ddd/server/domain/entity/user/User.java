@@ -19,7 +19,7 @@ import lombok.val;
 public class User implements Entity<User> {
     private static final long serialVersionUID = 5130723129760236659L;
 
-    private final UserId id;
+    private final UserId userId;
 
     private final LoginId loginId;
 
@@ -32,7 +32,7 @@ public class User implements Entity<User> {
     public static User create(UserRds userRds) {
         val info = UserInfo.builder().email(userRds.getEmail()).name(userRds.getName()).tel(userRds.getTel()).build();
         return jp.ddd.server.domain.entity.user.User.builder() //
-          .id(new UserId(userRds.getId())) //
+          .userId(new UserId(userRds.getId())) //
           .loginId(new LoginId(userRds.getLoginId())) //
           .hashPass(new HashPass(userRds.getPass())) //
           .status(userRds.getStatus()) //
@@ -43,7 +43,7 @@ public class User implements Entity<User> {
     public static User create(UserDyn userDyn) {
         val info = UserInfo.builder().email(userDyn.getEmail()).name(userDyn.getName()).tel(userDyn.getTel()).build();
         return jp.ddd.server.domain.entity.user.User.builder() //
-          .id(new UserId(userDyn.getUserId())) //
+          .userId(new UserId(userDyn.getUserId())) //
           .loginId(new LoginId(userDyn.getLoginId())) //
           .hashPass(new HashPass(userDyn.getPass())) //
           .userInfo(info) //

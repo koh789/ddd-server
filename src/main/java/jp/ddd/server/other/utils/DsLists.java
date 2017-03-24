@@ -7,16 +7,17 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DsLists {
 
     public static <T> ImmutableList<T> toImt(List<T> list) {
         return Lists.immutable.ofAll(list);
+    }
+
+    public static <T> ImmutableList<T> toImt(Set<T> set) {
+        return Lists.immutable.ofAll(set);
     }
 
     public static <T> MutableList<T> toMt(List<T> list) {

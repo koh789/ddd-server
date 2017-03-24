@@ -2,26 +2,27 @@ package jp.ddd.server.adapter.gateway.dynamodb.table;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.DateDynamoDbConverter;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConverter;
+import jp.ddd.server.domain.entity.message.Message;
+import lombok.*;
 
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by noguchi_kohei 
  */
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 @DynamoDBTable(tableName = "message")
 public class MessageDyn implements BaseDyn {
     private static final long serialVersionUID = 8630209538476323532L;
 
-    public static final String TABLE_NAME = "message";
-
     @DynamoDBHashKey(attributeName = "message_id")
-    private Integer messageId;
+    private Long messageId;
 
     @DynamoDBAttribute(attributeName = "room_id")
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_rid_mat")
@@ -33,7 +34,7 @@ public class MessageDyn implements BaseDyn {
     private Date messageAt;
 
     @DynamoDBAttribute(attributeName = "user_id")
-    private String userId;
+    private Integer userId;
 
     private String content;
 
@@ -41,7 +42,25 @@ public class MessageDyn implements BaseDyn {
     @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
     private Date lastEditAt;
 
-    @DynamoDBAttribute(attributeName = "user_read_map")
-    private Map<String, Boolean> userReadMap;
+    @DynamoDBAttribute(attributeName = "message_reads")
+    @DynamoDBTypeConvertedJson()
+    private List<MessageReadDyn> messageReads;
 
+    public MessageDyn withMessageId(Long messageId) {
+        this.messageId = messageId;
+        return this;
+    }
+
+    public static MessageDyn create(Message message) {
+        val builder = MessageDyn.builder() //
+          .roomId(message.getRoomId().getId())//
+          .messageAt(message.getMessageAt().getDate())//
+          .userId(message.getUserId().getId()).content(message.getContent())//
+          .lastEditAt(message.getLastEditAt().getDate())//
+          .messageReads(Arrays.asList());
+        if (message.getMessageId() != null) {
+            builder.messageId(message.getMessageId().getId());
+        }
+        return builder.build();
+    }
 }

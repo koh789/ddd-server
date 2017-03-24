@@ -23,9 +23,9 @@ public class SequenceDyn implements BaseDyn {
     @DynamoDBHashKey(attributeName = "name")
     private String name;
     @DynamoDBAttribute(attributeName = "current_num")
-    private Integer currentNum;
+    private Long currentNum;
 
-    public static SequenceDyn create(String name, Integer currentNum) {
+    public static SequenceDyn create(String name, Long currentNum) {
         return SequenceDyn.builder().name(name).currentNum(currentNum).build();
     }
 }

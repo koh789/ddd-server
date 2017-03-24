@@ -1,6 +1,7 @@
 package jp.ddd.server.usecase.web.interactor;
 
 import jp.ddd.server.domain.entity.room.Room;
+import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.RoomRepository;
 import jp.ddd.server.domain.repository.UserRepository;
@@ -25,7 +26,15 @@ public class RoomUseCaseImpl implements RoomUseCase {
     @Override
     public Room register(String loginSessionId, String roomName, ImmutableList<UserId> joinUserIds) {
         val loginUserId = userRepository.getOptBySid(loginSessionId) //
-          .map(u -> u.getId()).orElseThrow(() -> new AuthException());
+          .map(u -> u.getUserId()).orElseThrow(() -> new AuthException());
         return roomRepository.register(loginUserId, roomName, joinUserIds);
     }
+
+    @Override
+    public boolean isRoomUser(Integer roomId, Integer userId) {
+        return roomRepository.getOpt(new RoomId(roomId))
+          .map(room -> room.getRoomUsers().anySatisfy(ru -> ru.getUserId().equals(userId))) //
+          .orElseGet(() -> false);
+    }
+
 }

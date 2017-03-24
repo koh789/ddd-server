@@ -31,7 +31,7 @@ public class AuthUserJson implements Serializable {
 
     public static AuthUserJson create(String sid, User user) {
 
-        return AuthUserJson.builder().sessionId(sid).userId(user.getId().getId()).loginId(user.getLoginId().getId())
+        return AuthUserJson.builder().sessionId(sid).userId(user.getUserId().getId()).loginId(user.getLoginId().getId())
           .name(user.getUserInfo().getName()).email(user.getUserInfo().getEmail()).tel(user.getUserInfo().getTel())
           .build();
     }

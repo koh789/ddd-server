@@ -41,6 +41,7 @@ public class RoomController extends BaseApi {
           roomUseCase.register(Cookies.getKey(req), roomForm.getRoomName(), joinUserIds));
     }
 
+
     //    @RequestMapping(value = "/{roomId}", method = RequestMethod.PUT)
     //    public ResultJson<String> add(HttpServletRequest req, @PathVariable("roomId") Integer roomId,
     //      @RequestBody @Validated UpdateRoomForm form) {
@@ -50,7 +51,7 @@ public class RoomController extends BaseApi {
     //
     //        val results = RoomRds //
     //          .addRoomUser(roomId, DsLists.toImt(form.getUserIds()), roomUserRepository)
-    //          .collect(ru -> RegisteredRoomUserJson.create(ru.getId(), ru.getUserId(), ru.getJoinDt()));
+    //          .collect(ru -> RegisteredRoomUserJson.create(ru.getUserId(), ru.getUserId(), ru.getJoinDt()));
     //
     //        return ResultJson.create(results);
     //    }

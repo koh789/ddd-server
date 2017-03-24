@@ -1,4 +1,4 @@
-package jp.ddd.server.adapter.gateway.dynamodb.table.base;
+package jp.ddd.server.adapter.gateway.dynamodb.table.converter;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import jp.ddd.server.other.utils.Dates;

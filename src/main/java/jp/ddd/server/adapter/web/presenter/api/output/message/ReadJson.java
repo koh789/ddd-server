@@ -21,14 +21,14 @@ public class ReadJson implements Json {
 
     private final String readUserName;
 
-    private final String readDate;
+    private final String readAt;
 
     public static ReadJson create(ReadDto dto) {
         return ReadJson.builder()//
           .messageId(dto.getMessageId())//
           .readUserId(dto.getReadUserId())//
           .readUserName(dto.getReadUserName())//
-          .readDate(Dates.toString(dto.getReadDate()))//
+          .readAt(Dates.toString(dto.getReadDate()))//
           .build();
     }
 }

@@ -57,25 +57,24 @@ public class DynamoDbClient<T extends BaseDyn> {
 
     /**
      * sequenceテーブルで保持している指定テーブルのcurrent_numを更新後
-     * インクリメントした値を返却します。
+     * インクリメントした値(Long型)を返却します。
      * @param tableName プレフィックスなしのテーブル名を指定してください。
      * @return
      */
-    public Integer incrementNum(String tableName) {
+    public Long incrementLongNum(String tableName) {
         val mapper = getMapper();
         val mapperConfig = getMapperConfig();
         val seqOpt = Optional.ofNullable(mapper.load(SequenceDyn.class, tableName, mapperConfig));
         return seqOpt.map(seq -> {
-            val currentNum = seq.getCurrentNum() + 1;
+            val currentNum = seq.getCurrentNum() + 1L;
             mapper.save(SequenceDyn.create(seq.getName(), currentNum), mapperConfig);
             return currentNum;
         }).orElseGet(() -> {
-            val currentNum = 1;
+            val currentNum = 1L;
             mapper.save(SequenceDyn.create(tableName, currentNum), mapperConfig);
             return currentNum;
         });
     }
-
     /**
      * sequenceテーブルで保持している指定テーブルのcurrent_numを
      * インクリメント後、その値を返却します。
@@ -87,7 +86,13 @@ public class DynamoDbClient<T extends BaseDyn> {
     public Integer incrementNum(Class<T> clazz) {
         val annotation = Optional.ofNullable(clazz.getDeclaredAnnotation(DynamoDBTable.class))
           .orElseThrow(() -> new InternalException("DynamoDBTableアノテーションが付与されていません。"));
-        return incrementNum(annotation.tableName());
+        return incrementLongNum(annotation.tableName()).intValue();
+    }
+
+    public Long incrementLongNum(Class<T> clazz) {
+        val annotation = Optional.ofNullable(clazz.getDeclaredAnnotation(DynamoDBTable.class))
+          .orElseThrow(() -> new InternalException("DynamoDBTableアノテーションが付与されていません。"));
+        return incrementLongNum(annotation.tableName());
     }
 
     public T save(T t) {
