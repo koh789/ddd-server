@@ -5,8 +5,6 @@ import jp.ddd.server.adapter.web.controller.input.room.RoomForm;
 import jp.ddd.server.adapter.web.presenter.api.output.ResultJson;
 import jp.ddd.server.adapter.web.presenter.api.output.room.RegisteredRoomJson;
 import jp.ddd.server.domain.entity.user.core.UserId;
-import jp.ddd.server.domain.repository.RoomRepository;
-import jp.ddd.server.domain.repository.UserRepository;
 import jp.ddd.server.other.utils.Cookies;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.usecase.web.inputport.RoomUseCase;
@@ -15,10 +13,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,6 +36,12 @@ public class RoomController extends BaseApi {
           roomUseCase.register(Cookies.getKey(req), roomForm.getRoomName(), joinUserIds));
     }
 
+//    @RequestMapping(value = "", method = RequestMethod.GET)
+//    public ResultJson<RegisteredRoomJson> register(HttpServletRequest req, @RequestParam("room_id") Integer roomId) {
+//
+//        //TODO 未実装
+//        return new ResultJson<>(null);
+//    }
 
     //    @RequestMapping(value = "/{roomId}", method = RequestMethod.PUT)
     //    public ResultJson<String> add(HttpServletRequest req, @PathVariable("roomId") Integer roomId,

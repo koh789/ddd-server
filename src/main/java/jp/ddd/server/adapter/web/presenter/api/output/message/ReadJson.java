@@ -1,7 +1,6 @@
 package jp.ddd.server.adapter.web.presenter.api.output.message;
 
 import jp.ddd.server.adapter.web.presenter.api.output.Json;
-import jp.ddd.server.other.data.message.ReadDto;
 import jp.ddd.server.other.utils.Dates;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +22,4 @@ public class ReadJson implements Json {
 
     private final String readAt;
 
-    public static ReadJson create(ReadDto dto) {
-        return ReadJson.builder()//
-          .messageId(dto.getMessageId())//
-          .readUserId(dto.getReadUserId())//
-          .readUserName(dto.getReadUserName())//
-          .readAt(Dates.toString(dto.getReadDate()))//
-          .build();
-    }
 }

@@ -3,7 +3,7 @@ package jp.ddd.server.adapter.gateway.dynamodb.table;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
+import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @DynamoDBTable(tableName = "sequence")
-public class SequenceDyn implements BaseDyn {
+public class SequenceDyn implements Dyn {
     private static final long serialVersionUID = 4034253252658415216L;
 
     @DynamoDBHashKey(attributeName = "name")

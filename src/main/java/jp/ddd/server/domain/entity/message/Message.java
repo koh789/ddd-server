@@ -11,6 +11,7 @@ import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.other.utils.Dates;
 import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
@@ -38,6 +39,8 @@ public class Message implements Entity<Message> {
     private final MessageAt messageAt;
 
     private final UserId userId;
+
+    private final Status status;
 
     private final ImmutableList<MessageRead> messageReads;
 

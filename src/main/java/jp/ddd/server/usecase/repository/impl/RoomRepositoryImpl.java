@@ -2,20 +2,15 @@ package jp.ddd.server.usecase.repository.impl;
 
 import jp.ddd.server.adapter.gateway.dynamodb.table.RoomDyn;
 import jp.ddd.server.adapter.gateway.dynamodb.table.RoomUserDyn;
-import jp.ddd.server.adapter.gateway.rds.entity.RoomRds;
 import jp.ddd.server.domain.entity.room.Room;
-import jp.ddd.server.domain.entity.room.RoomUser;
-import jp.ddd.server.domain.entity.room.core.LastMessageAt;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.RoomRepository;
-import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
 import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.other.utils.enums.Status;
 import jp.ddd.server.usecase.gateway.dynamodb.RoomDynGateway;
 import jp.ddd.server.usecase.gateway.dynamodb.RoomUserDynGateway;
-import jp.ddd.server.usecase.gateway.rds.RoomRdsGateway;
-import jp.ddd.server.usecase.gateway.rds.RoomUserRdsGateway;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +36,8 @@ public class RoomRepositoryImpl implements RoomRepository {
     @Override
     public Room register(UserId userId, String roomName, ImmutableList<UserId> joinUserIds) {
         val now = Dates.now();
-        val roomDynResult = roomDynGateway.saveWithIncrementKey(RoomDyn.create(userId.getId(), roomName, now));
+        val roomDynResult = roomDynGateway
+          .saveWithIncrementKey(RoomDyn.create(userId.getId(), roomName, now, Status.VALID));
         ImmutableList<RoomUserDyn> roomUserDynResults = joinUserIds.distinct() //
           .collect(uid -> RoomUserDyn.create(roomDynResult.getRoomId(), uid.getId(), now, now))
           .collect(ru -> roomUserDynGateway.save(ru));
@@ -51,23 +47,22 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public Optional<Room> getOpt(RoomId roomId) {
-        return roomDynGateway.getOptByRoomId(String.valueOf(roomId.getId()))
-        .map(r ->{
-            val roomUserDynList=DsLists.toImt(roomUserDynGateway.findByRoomId(String.valueOf(roomId.getId())));
+        return roomDynGateway.getOptByRoomId(String.valueOf(roomId.getId())).map(r -> {
+            val roomUserDynList = DsLists.toImt(roomUserDynGateway.findByRoomId(String.valueOf(roomId.getId())));
             return Room.create(r, roomUserDynList);
         });
     }
 
-//    @Override
-//    public void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt) {
-//        RoomRds roomRds = roomRdsGateway.getOpt(roomId.getUserId()) //
-//          .orElseThrow(() -> new NotFoundException("対象roomが存在しません" + roomId.getUserId()));
-//        roomRds.setLastMessageAt(lastMessageAt.getDate());
-//        roomRdsGateway.save(roomRds);
-//    }
-//
-//    @Override
-//    public ImmutableList<RoomUser> findRoomUser(RoomId roomId) {
-//        return roomUserRdsGateway.findByRoomId(roomId.getUserId()).collect(eru -> RoomUser.create(eru));
-//    }
+    //    @Override
+    //    public void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt) {
+    //        RoomRds roomRds = roomRdsGateway.getOpt(roomId.getUserId()) //
+    //          .orElseThrow(() -> new NotFoundException("対象roomが存在しません" + roomId.getUserId()));
+    //        roomRds.setLastMessageAt(lastMessageAt.getDate());
+    //        roomRdsGateway.save(roomRds);
+    //    }
+    //
+    //    @Override
+    //    public ImmutableList<RoomUser> findRoomUser(RoomId roomId) {
+    //        return roomUserRdsGateway.findByRoomId(roomId.getUserId()).collect(eru -> RoomUser.create(eru));
+    //    }
 }

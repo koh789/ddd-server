@@ -1,6 +1,6 @@
 package jp.ddd.server.adapter.gateway.dynamodb.table;
 
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
+import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import jp.ddd.server.other.utils.Dates;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @NoArgsConstructor
 @Data
-public class MessageReadDyn implements BaseDyn {
+public class MessageReadDyn implements Dyn {
     private static final long serialVersionUID = 8630209538476323532L;
     private Long messageId;
     private Integer userId;

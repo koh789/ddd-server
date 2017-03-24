@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import jp.ddd.server.adapter.gateway.dynamodb.table.SequenceDyn;
-import jp.ddd.server.adapter.gateway.dynamodb.table.base.BaseDyn;
+import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import jp.ddd.server.other.exception.InternalException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * Created by noguchi_kohei 
  */
 @Repository
-public class DynamoDbClient<T extends BaseDyn> {
+public class DynamoDbClient<T extends Dyn> {
     @Value("${aws.dynamoDb.endpoint}")
     protected String dynamoDBEndpoint;
     @Value("${aws.dynamoDb.prefix}")
