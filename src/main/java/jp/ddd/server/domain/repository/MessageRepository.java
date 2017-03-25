@@ -16,5 +16,13 @@ public interface MessageRepository {
 
     Message register(Message message);
 
-//    ImmutableList<Message> findAndSaveRead(RoomId roomId, UserId userId, Page page);
+    /**
+     * メッセージを読み込みます。
+     * 読み込んだメッセージ情報に応じて既読情報も更新します。
+     * @param roomId
+     * @param userId
+     * @param page
+     * @return
+     */
+    ImmutableList<Message> load(RoomId roomId, UserId userId, Page page);
 }

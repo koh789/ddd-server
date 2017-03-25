@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConverter;
 import jp.ddd.server.domain.entity.message.Message;
+import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,11 +29,11 @@ public class MessageDyn implements Dyn {
     private Long messageId;
 
     @DynamoDBAttribute(attributeName = "room_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_rid_mat")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MAT)
     private Integer roomId;
 
     @DynamoDBAttribute(attributeName = "message_at")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_rid_mat")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MAT)
     @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
     private Date messageAt;
 

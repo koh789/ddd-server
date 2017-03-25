@@ -1,5 +1,6 @@
 package jp.ddd.server.adapter.gateway.rds.impl;
 
+import jp.ddd.server.adapter.gateway.dynamodb.table.MessageDyn;
 import jp.ddd.server.usecase.gateway.rds.MessageRdsGatewayCtm;
 import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
 import jp.ddd.server.other.data.common.Page;

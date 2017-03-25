@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConverter;
 import jp.ddd.server.adapter.gateway.dynamodb.table.id.RoomUserId;
+import jp.ddd.server.other.utils.Const;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +38,7 @@ public class RoomUserDyn implements Dyn {
     }
 
     @DynamoDBRangeKey(attributeName = "user_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "user_id")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = Const.ROOM_USER_UID_LASTAT, attributeName = "user_id")
     public Integer getUserId() {
         return this.roomUserId.getUserId();
     }
@@ -48,7 +49,7 @@ public class RoomUserDyn implements Dyn {
 
     /** yyyy-MM-dd HH:mm:ss */
     @DynamoDBAttribute(attributeName = "last_room_message_at")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "idx_uid_lastat", attributeName = "last_room_message_at")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = Const.ROOM_USER_UID_LASTAT, attributeName = "last_room_message_at")
     @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
     private Date lastRoomMessageAt;
 

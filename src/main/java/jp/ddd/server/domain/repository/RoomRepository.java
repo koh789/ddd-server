@@ -20,8 +20,4 @@ public interface RoomRepository {
     Room register(UserId userId, String roomName, ImmutableList<UserId> joinUserIds);
 
     Optional<Room> getOpt(RoomId roomId);
-
-//    void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt);
-//
-//    ImmutableList<RoomUser> findRoomUser(RoomId roomId);
 }

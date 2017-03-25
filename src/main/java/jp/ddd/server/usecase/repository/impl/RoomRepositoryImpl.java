@@ -6,9 +6,11 @@ import jp.ddd.server.domain.entity.room.Room;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.domain.repository.RoomRepository;
+import jp.ddd.server.other.exception.NotFoundException;
 import jp.ddd.server.other.utils.Dates;
 import jp.ddd.server.other.utils.DsLists;
 import jp.ddd.server.other.utils.enums.Status;
+import jp.ddd.server.usecase.gateway.dynamodb.MessageDynGateway;
 import jp.ddd.server.usecase.gateway.dynamodb.RoomDynGateway;
 import jp.ddd.server.usecase.gateway.dynamodb.RoomUserDynGateway;
 import lombok.val;
@@ -52,17 +54,4 @@ public class RoomRepositoryImpl implements RoomRepository {
             return Room.create(r, roomUserDynList);
         });
     }
-
-    //    @Override
-    //    public void updateLastMsgDt(RoomId roomId, LastMessageAt lastMessageAt) {
-    //        RoomRds roomRds = roomRdsGateway.getOpt(roomId.getUserId()) //
-    //          .orElseThrow(() -> new NotFoundException("対象roomが存在しません" + roomId.getUserId()));
-    //        roomRds.setLastMessageAt(lastMessageAt.getDate());
-    //        roomRdsGateway.save(roomRds);
-    //    }
-    //
-    //    @Override
-    //    public ImmutableList<RoomUser> findRoomUser(RoomId roomId) {
-    //        return roomUserRdsGateway.findByRoomId(roomId.getUserId()).collect(eru -> RoomUser.create(eru));
-    //    }
 }

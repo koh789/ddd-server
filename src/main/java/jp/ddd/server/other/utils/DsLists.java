@@ -1,10 +1,14 @@
 package jp.ddd.server.other.utils;
 
+import lombok.val;
 import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.set.ImmutableSet;
+import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Sets;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -18,6 +22,15 @@ public class DsLists {
 
     public static <T> ImmutableList<T> toImt(Set<T> set) {
         return Lists.immutable.ofAll(set);
+    }
+
+    public static <T> ImmutableList<T> toImt(Iterator<T> iterator) {
+        if(iterator == null){
+            return Lists.immutable.empty();
+        }
+        MutableList mutableList = Lists.mutable.empty();
+        iterator.forEachRemaining(t -> mutableList.add(t));
+        return mutableList.toImmutable();
     }
 
     public static <T> MutableList<T> toMt(List<T> list) {

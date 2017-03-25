@@ -3,6 +3,7 @@ package jp.ddd.server.adapter.gateway.dynamodb.table;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import jp.ddd.server.adapter.gateway.dynamodb.table.base.Dyn;
 import jp.ddd.server.domain.entity.user.User;
+import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class UserDyn implements Dyn {
     private Integer userId;
 
     @DynamoDBAttribute(attributeName = "login_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "idx_lid")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = Const.IDX_USER_LID)
     private String loginId;
 
     @DynamoDBAttribute

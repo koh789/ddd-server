@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import jp.ddd.server.adapter.gateway.dynamodb.custom.UserDynGatewayCtm;
 import jp.ddd.server.adapter.gateway.dynamodb.impl.base.DynamoDbClient;
 import jp.ddd.server.adapter.gateway.dynamodb.table.UserDyn;
+import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.DsLists;
 import lombok.val;
 import org.eclipse.collections.impl.factory.Maps;
@@ -34,7 +35,7 @@ public class UserDynGatewayImpl implements UserDynGatewayCtm {
         val queryExpression = new DynamoDBQueryExpression<UserDyn>()//
           .withKeyConditionExpression("login_id=:loginId")
           .withExpressionAttributeValues(Maps.immutable.of(":loginId", new AttributeValue(loginId)).castToMap())
-          .withIndexName("idx_lid")
+          .withIndexName(Const.IDX_USER_LID)
           .withConsistentRead(false);
 
         val results = dynamoDbClient.getMapper()

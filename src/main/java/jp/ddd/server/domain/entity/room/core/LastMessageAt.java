@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * room内での最終メッセージ日時を表現します。
  * Created by noguchi_kohei 
  */
 @AllArgsConstructor
