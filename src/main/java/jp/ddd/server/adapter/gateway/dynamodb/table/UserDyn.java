@@ -24,8 +24,7 @@ public class UserDyn implements Dyn {
     @DynamoDBHashKey(attributeName = "user_id")
     private Integer userId;
 
-    @DynamoDBAttribute(attributeName = "login_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = Const.IDX_USER_LID)
+    @DynamoDBIndexHashKey(attributeName = "login_id", globalSecondaryIndexName = Const.IDX_USER_LID)
     private String loginId;
 
     @DynamoDBAttribute

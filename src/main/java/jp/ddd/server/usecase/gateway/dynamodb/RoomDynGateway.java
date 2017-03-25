@@ -13,5 +13,5 @@ import java.util.Optional;
 @EnableScan
 public interface RoomDynGateway extends DynamoDBPagingAndSortingRepository<RoomDyn, String>, RoomDynGatewayCtm {
 
-    Optional<RoomDyn> getOptByRoomId(String roomId);
+    Optional<RoomDyn> getOptByRoomId(Integer roomId);
 }

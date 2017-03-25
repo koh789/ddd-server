@@ -15,5 +15,5 @@ import java.util.List;
 public interface RoomUserDynGateway
   extends DynamoDBPagingAndSortingRepository<RoomUserDyn, String>, RoomUserDynGatewayCtm {
 
-    List<RoomUserDyn> findByRoomId(String roomId);
+    List<RoomUserDyn> findByRoomId(Integer roomId);
 }

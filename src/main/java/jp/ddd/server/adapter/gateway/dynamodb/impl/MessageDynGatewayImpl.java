@@ -1,6 +1,7 @@
 package jp.ddd.server.adapter.gateway.dynamodb.impl;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import jp.ddd.server.adapter.gateway.dynamodb.custom.MessageDynGatewayCtm;
 import jp.ddd.server.adapter.gateway.dynamodb.impl.base.DynamoDbClient;
@@ -10,8 +11,6 @@ import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.DsLists;
 import lombok.val;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.impl.factory.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,26 +25,31 @@ public class MessageDynGatewayImpl implements MessageDynGatewayCtm {
     @Override
     public MessageDyn saveWithIncrementKey(MessageDyn messageDyn) {
         val id = dynDynamoDbClient.incrementLongNum(MessageDyn.class);
-        return dynDynamoDbClient.save(messageDyn.withMessageId(id));
+        val item = messageDyn.withMessageId(id);
+        dynDynamoDbClient.getMapper().save(item);
+        return item;
     }
 
     @Override
     public ImmutableList<MessageDyn> findDesc(Integer roomId, IdPage idPage) {
-        MutableMap attributeMap = Maps.mutable.of(":rid", new AttributeValue(String.valueOf(roomId)));
-        DynamoDBScanExpression expression = new DynamoDBScanExpression()//
-          .withIndexName(Const.IDX_MESSAGE_RID_MAT) //
-          .withConsistentRead(false)//
-          .withFilterExpression("room_id=:rid") //
-          .withExpressionAttributeValues(attributeMap)//
-          .withLimit(idPage.getLimit());
+
+        DynamoDBQueryExpression expression = new DynamoDBQueryExpression<MessageDyn>();//
+        expression //
+          .withKeyConditionExpression("room_id=:rid")
+          .addExpressionAttributeValuesEntry(":rid", new AttributeValue().withN(String.valueOf(roomId)));
 
         idPage.getLastIdOpt().ifPresent(mid -> {
-            String addExpression = " AND messageId<:mid";
-            expression.setFilterExpression(expression.getFilterExpression() + addExpression);
-            expression.getExpressionAttributeValues().put(":mid", new AttributeValue(String.valueOf(mid)));
+            expression //
+              .withKeyConditionExpression(expression.getKeyConditionExpression() + " AND message_id<:mid") //
+              .addExpressionAttributeValuesEntry(":mid", new AttributeValue().withN(String.valueOf(mid)));
         });
-        val results = dynDynamoDbClient.getMapper()
-          .scan(MessageDyn.class, expression, dynDynamoDbClient.getMapperConfig());
-        return DsLists.toImt(results.iterator());
+        expression //
+          .withIndexName(Const.IDX_MESSAGE_RID_MID) //
+          .withConsistentRead(false) //
+          .withScanIndexForward(false) //
+          .withLimit(idPage.getLimit());
+
+        QueryResultPage<MessageDyn> results = dynDynamoDbClient.getMapper().queryPage(MessageDyn.class, expression);
+        return DsLists.toImt(results.getResults());
     }
 }

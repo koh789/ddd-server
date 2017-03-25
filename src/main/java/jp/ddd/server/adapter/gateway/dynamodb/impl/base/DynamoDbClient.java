@@ -28,7 +28,7 @@ public class DynamoDbClient<T extends Dyn> {
     @Value("${aws.secretKey}")
     protected String awsSecretKey;
 
-    protected AmazonDynamoDBClient getClient() {
+    public AmazonDynamoDBClient getClient() {
 
         val credential = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
         AmazonDynamoDBClient client = new AmazonDynamoDBClient(credential);
@@ -37,22 +37,23 @@ public class DynamoDbClient<T extends Dyn> {
     }
 
     /**
-     * DynamoDbMapperを取得します。
-     * このmapperはスレッドセーフのため、スレッド間の共有も可能です。
-     * @return
-     */
-    public DynamoDBMapper getMapper() {
-        return new DynamoDBMapper(getClient());
-    }
-
-    /**
-     * テーブルにプレフィックスを付与するためmapperのメソッドを使用するために使用してください。
+     * mapperConfigを取得します。
+     * テーブルへのプレフィックスを付与します。
      * @return
      */
     public DynamoDBMapperConfig getMapperConfig() {
         val config = DynamoDBMapperConfig.builder()
           .withTableNameOverride(DynamoDBMapperConfig.TableNameOverride.withTableNamePrefix(tableNamePrefix)).build();
         return config;
+    }
+
+    /**
+     * MapperConfig読み込み済みのDynamoDbMapperを取得します。
+     * このmapperはスレッドセーフのため、スレッド間の共有も可能です。
+     * @return
+     */
+    public DynamoDBMapper getMapper() {
+        return new DynamoDBMapper(getClient(), getMapperConfig());
     }
 
     /**
@@ -63,18 +64,18 @@ public class DynamoDbClient<T extends Dyn> {
      */
     public Long incrementLongNum(String tableName) {
         val mapper = getMapper();
-        val mapperConfig = getMapperConfig();
-        val seqOpt = Optional.ofNullable(mapper.load(SequenceDyn.class, tableName, mapperConfig));
+        val seqOpt = Optional.ofNullable(mapper.load(SequenceDyn.class, tableName));
         return seqOpt.map(seq -> {
             val currentNum = seq.getCurrentNum() + 1L;
-            mapper.save(SequenceDyn.create(seq.getName(), currentNum), mapperConfig);
+            mapper.save(SequenceDyn.create(seq.getName(), currentNum));
             return currentNum;
         }).orElseGet(() -> {
             val currentNum = 1L;
-            mapper.save(SequenceDyn.create(tableName, currentNum), mapperConfig);
+            mapper.save(SequenceDyn.create(tableName, currentNum));
             return currentNum;
         });
     }
+
     /**
      * sequenceテーブルで保持している指定テーブルのcurrent_numを
      * インクリメント後、その値を返却します。
@@ -95,8 +96,4 @@ public class DynamoDbClient<T extends Dyn> {
         return incrementLongNum(annotation.tableName());
     }
 
-    public T save(T t) {
-        getMapper().save(t, getMapperConfig());
-        return t;
-    }
 }

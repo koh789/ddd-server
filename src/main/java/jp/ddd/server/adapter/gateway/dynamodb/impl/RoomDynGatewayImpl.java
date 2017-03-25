@@ -18,6 +18,8 @@ public class RoomDynGatewayImpl implements RoomDynGatewayCtm {
     @Override
     public RoomDyn saveWithIncrementKey(RoomDyn roomDyn) {
         val id = dynamoDbClient.incrementNum(RoomDyn.class);
-        return dynamoDbClient.save(roomDyn.withRoomId(id));
+        val item = roomDyn.withRoomId(id);
+        dynamoDbClient.getMapper().save(item);
+        return item;
     }
 }

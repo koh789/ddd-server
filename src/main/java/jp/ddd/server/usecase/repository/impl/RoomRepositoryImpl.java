@@ -49,8 +49,8 @@ public class RoomRepositoryImpl implements RoomRepository {
 
     @Override
     public Optional<Room> getOpt(RoomId roomId) {
-        return roomDynGateway.getOptByRoomId(String.valueOf(roomId.getId())).map(r -> {
-            val roomUserDynList = DsLists.toImt(roomUserDynGateway.findByRoomId(String.valueOf(roomId.getId())));
+        return roomDynGateway.getOptByRoomId(roomId.getId()).map(r -> {
+            val roomUserDynList = DsLists.toImt(roomUserDynGateway.findByRoomId(roomId.getId()));
             return Room.create(r, roomUserDynList);
         });
     }

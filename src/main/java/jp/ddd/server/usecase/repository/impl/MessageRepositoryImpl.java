@@ -24,11 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageRepositoryImpl implements MessageRepository {
     @Autowired
-    private MessageRdsGateway messageRdsGateway;
-    @Autowired
     private MessageDynGateway messageDynGateway;
-    @Autowired
-    private MessageReadRdsGateway messageReadRdsGateway;
 
     @Override
     public Message register(Message message) {
@@ -44,7 +40,7 @@ public class MessageRepositoryImpl implements MessageRepository {
      * @param page
      * @return
      */
-    public ImmutableList<Message> load(RoomId roomId, UserId userId, Page page){
+    public ImmutableList<Message> load(RoomId roomId, UserId userId, Page page) {
 
         //TODO
         return Lists.immutable.empty();

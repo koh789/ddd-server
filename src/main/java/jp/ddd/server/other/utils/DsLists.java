@@ -25,7 +25,7 @@ public class DsLists {
     }
 
     public static <T> ImmutableList<T> toImt(Iterator<T> iterator) {
-        if(iterator == null){
+        if (iterator == null) {
             return Lists.immutable.empty();
         }
         MutableList mutableList = Lists.mutable.empty();
@@ -137,6 +137,14 @@ public class DsLists {
 
     public static <T> Optional<T> getLastOpt(ListIterable<T> listIterable) {
         return Optional.ofNullable(listIterable.getLast());
+    }
+
+    public static <T> Optional<T> getLastOpt(ImmutableList<T> list) {
+        val lastObj = list.getLast();
+        if (lastObj == null) {
+            return Optional.empty();
+        }
+        return Optional.of(lastObj);
     }
 
     public static byte[] concat(byte[] arr1, byte[] arr2) {

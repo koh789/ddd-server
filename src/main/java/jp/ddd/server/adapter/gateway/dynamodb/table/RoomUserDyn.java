@@ -17,8 +17,8 @@ import java.util.Date;
  * Created by noguchi_kohei 
  */
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @DynamoDBTable(tableName = "room_user")
 public class RoomUserDyn implements Dyn {

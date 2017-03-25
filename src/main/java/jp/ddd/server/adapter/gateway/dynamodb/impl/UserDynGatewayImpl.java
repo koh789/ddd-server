@@ -26,7 +26,8 @@ public class UserDynGatewayImpl implements UserDynGatewayCtm {
     public UserDyn saveWithIncrementKey(UserDyn userDyn) {
         val id = dynamoDbClient.incrementNum(UserDyn.class);
         userDyn.setUserId(id);
-        return dynamoDbClient.save(userDyn);
+        dynamoDbClient.getMapper().save(userDyn);
+        return userDyn;
     }
 
     @Override

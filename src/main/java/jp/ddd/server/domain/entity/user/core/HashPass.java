@@ -21,6 +21,6 @@ public class HashPass implements Serializable {
     }
 
     public static HashPass createByRawPass(String rawPass) {
-        return new HashPass(Hashes.toSHA256(rawPass));
+        return new HashPass(Hashes.toSHA256(rawPass).toLowerCase());
     }
 }

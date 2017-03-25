@@ -24,7 +24,7 @@ public class RoomDynGatewayRunTest {
     public void findTest() {
         try {
 
-            val results = roomDynGateway.getOptByRoomId("1");
+            val results = roomDynGateway.getOptByRoomId(1);
             System.out.println(results);
         } catch (Exception e) {
             fail();

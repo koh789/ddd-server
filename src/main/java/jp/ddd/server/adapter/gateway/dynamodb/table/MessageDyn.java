@@ -6,10 +6,7 @@ import jp.ddd.server.adapter.gateway.dynamodb.table.converter.DateDynamoDbConver
 import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.enums.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.val;
+import lombok.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -19,6 +16,7 @@ import java.util.List;
  * Created by noguchi_kohei 
  */
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @DynamoDBTable(tableName = "message")
@@ -26,14 +24,13 @@ public class MessageDyn implements Dyn {
     private static final long serialVersionUID = 8630209538476323532L;
 
     @DynamoDBHashKey(attributeName = "message_id")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MID)
     private Long messageId;
 
-    @DynamoDBAttribute(attributeName = "room_id")
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MAT)
+    @DynamoDBIndexHashKey(attributeName = "room_id", globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MID)
     private Integer roomId;
 
     @DynamoDBAttribute(attributeName = "message_at")
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = Const.IDX_MESSAGE_RID_MAT)
     @DynamoDBTypeConverted(converter = DateDynamoDbConverter.class)
     private Date messageAt;
 
@@ -50,7 +47,7 @@ public class MessageDyn implements Dyn {
     private Status status;
 
     @DynamoDBAttribute(attributeName = "message_reads")
-    @DynamoDBTypeConvertedJson()
+    @DynamoDBTypeConvertedJson
     private List<MessageReadDyn> messageReads;
 
     public MessageDyn withMessageId(Long messageId) {
@@ -62,8 +59,8 @@ public class MessageDyn implements Dyn {
         val builder = MessageDyn.builder() //
           .roomId(message.getRoomId().getId())//
           .messageAt(message.getMessageAt().getDate())//
-          .userId(message.getUserId().getId()).content(message.getContent())//
-          .lastEditAt(message.getLastEditAt().getDate())//
+          .userId(message.getUserId().getId()) //
+          .content(message.getContent()).lastEditAt(message.getLastEditAt().getDate())//
           .status(message.getStatus()) //
           .messageReads(Arrays.asList());
         if (message.getMessageId() != null) {
