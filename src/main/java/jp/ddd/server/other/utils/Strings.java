@@ -1,11 +1,21 @@
 package jp.ddd.server.other.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jp.ddd.server.other.exception.InternalException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.codec.net.URLCodec;
 
@@ -276,5 +286,75 @@ public final class Strings {
 
   public static String getEmailWithTrim(String context) {
     return context.replaceAll("\\ ", "");
+  }
+
+  public static <T> String toJson(T obj) {
+    try {
+      return new ObjectMapper().writeValueAsString(obj);
+    } catch (JsonProcessingException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> Optional<String> toJsonOpt(T obj) {
+    try {
+      return Optional.ofNullable(new ObjectMapper().writeValueAsString(obj));
+    } catch (JsonProcessingException e) {
+      return Optional.empty();
+    }
+  }
+
+  public static <T> T toObj(String json, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(json, clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> T toObj(S3ObjectInputStream s3is, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(new InputStreamReader(s3is), clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> T toObj(InputStream is, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(is, clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> T toObj(Reader reader, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(reader, clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> T toObj(InputStreamReader isr, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(isr, clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
+  }
+
+  public static <T> T toObj(URL src, Class<T> clazz) {
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(src, clazz);
+    } catch (IOException e) {
+      throw new InternalException(e);
+    }
   }
 }

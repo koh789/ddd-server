@@ -3,6 +3,7 @@ package jp.ddd.server.domain.repository;
 import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
+import jp.ddd.server.other.data.common.IdPage;
 import jp.ddd.server.other.data.common.Page;
 import org.eclipse.collections.api.list.ImmutableList;
 
@@ -21,8 +22,8 @@ public interface MessageRepository {
      * 読み込んだメッセージ情報に応じて既読情報も更新します。
      * @param roomId
      * @param userId
-     * @param page
+     * @param idPage
      * @return
      */
-    ImmutableList<Message> load(RoomId roomId, UserId userId, Page page);
+    ImmutableList<Message> load(RoomId roomId, UserId userId, IdPage idPage);
 }

@@ -5,10 +5,7 @@ import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.set.ImmutableSet;
-import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.factory.Sets;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -18,6 +15,10 @@ public class DsLists {
 
     public static <T> ImmutableList<T> toImt(List<T> list) {
         return Lists.immutable.ofAll(list);
+    }
+
+    public static <T> ImmutableList<T> toImt(Collection<T> collection) {
+        return Lists.immutable.ofAll(collection);
     }
 
     public static <T> ImmutableList<T> toImt(Set<T> set) {

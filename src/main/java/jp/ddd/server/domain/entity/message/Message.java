@@ -2,7 +2,6 @@ package jp.ddd.server.domain.entity.message;
 
 import jp.ddd.server.adapter.gateway.dynamodb.table.MessageDyn;
 import jp.ddd.server.adapter.gateway.rds.entity.MessageRds;
-import jp.ddd.server.adapter.web.controller.input.message.MessageForm;
 import jp.ddd.server.domain.entity.Entity;
 import jp.ddd.server.domain.entity.core.LastEditAt;
 import jp.ddd.server.domain.entity.core.MessageAt;
@@ -11,6 +10,7 @@ import jp.ddd.server.domain.entity.room.core.RoomId;
 import jp.ddd.server.domain.entity.user.core.UserId;
 import jp.ddd.server.other.utils.Dates;
 import jp.ddd.server.other.utils.DsLists;
+import jp.ddd.server.other.utils.DsMaps;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,15 +55,14 @@ public class Message implements Entity<Message> {
     }
 
     public static Message create(MessageDyn messageDyn) {
-        val messageReads = DsLists.toImt(messageDyn.getMessageReads());
+        val messageReads = DsLists.toImt(messageDyn.getUserReadMap().values()).collect(ur -> MessageRead.create(ur));
         return Message.builder()//
           .messageId(new MessageId(messageDyn.getMessageId()))//
           .roomId(new RoomId(messageDyn.getRoomId()))//
           .content(messageDyn.getContent())//
           .lastEditAt(new LastEditAt(messageDyn.getLastEditAt()))//
           .messageAt(new MessageAt(messageDyn.getMessageAt()))//
-          .userId(new UserId(messageDyn.getUserId()))
-          .messageReads(messageReads.collect(mr -> MessageRead.create(mr))) //
+          .userId(new UserId(messageDyn.getUserId())).messageReads(messageReads) //
           .build();
     }
 

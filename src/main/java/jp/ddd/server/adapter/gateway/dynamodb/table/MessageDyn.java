@@ -7,10 +7,10 @@ import jp.ddd.server.domain.entity.message.Message;
 import jp.ddd.server.other.utils.Const;
 import jp.ddd.server.other.utils.enums.Status;
 import lombok.*;
+import org.eclipse.collections.impl.factory.Maps;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by noguchi_kohei 
@@ -46,9 +46,9 @@ public class MessageDyn implements Dyn {
     @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     private Status status;
 
-    @DynamoDBAttribute(attributeName = "message_reads")
+    @DynamoDBAttribute(attributeName = "user_read_map")
     @DynamoDBTypeConvertedJson
-    private List<MessageReadDyn> messageReads;
+    private Map<Integer, MessageReadDyn> userReadMap;
 
     public MessageDyn withMessageId(Long messageId) {
         this.messageId = messageId;
@@ -62,7 +62,7 @@ public class MessageDyn implements Dyn {
           .userId(message.getUserId().getId()) //
           .content(message.getContent()).lastEditAt(message.getLastEditAt().getDate())//
           .status(message.getStatus()) //
-          .messageReads(Arrays.asList());
+          .userReadMap(Maps.mutable.empty());
         if (message.getMessageId() != null) {
             builder.messageId(message.getMessageId().getId());
         }
